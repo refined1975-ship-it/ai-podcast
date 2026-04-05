@@ -4,39 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="AI News">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DAIR">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
-<title>AI Daily News</title>
+<title>デイリーAIラジオ</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, sans-serif; background: #fff; color: #1a1a1a; max-width: 700px; margin: 0 auto; padding: 20px; padding-top: env(safe-area-inset-top, 20px); }
-header { text-align: center; padding: 20px 0; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+body { font-family: -apple-system, sans-serif; background: #0a0a0a; color: #eee; max-width: 700px; margin: 0 auto; padding: 20px; padding-top: env(safe-area-inset-top, 20px); }
+header { text-align: center; padding: 20px 0; border-bottom: 1px solid #222; margin-bottom: 20px; }
 header img { width: 120px; height: 120px; border-radius: 16px; margin-bottom: 12px; }
-h1 { font-size: 22px; }
+h1 { font-size: 22px; color: #fff; }
 .subtitle { color: #666; font-size: 14px; margin-top: 4px; }
-.episode { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
-.episode h2 { font-size: 16px; margin-bottom: 6px; }
-.episode .meta { color: #666; font-size: 13px; margin-bottom: 10px; }
-.episode audio { width: 100%; margin-bottom: 10px; }
-.episode details { font-size: 13px; color: #444; }
-.episode summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; }
+.episode { border: 1px solid #222; border-radius: 12px; padding: 16px; margin-bottom: 12px; background: #111; }
+.episode h2 { font-size: 16px; margin-bottom: 6px; color: #fff; }
+.episode .meta { color: #888; font-size: 13px; margin-bottom: 10px; }
+.episode audio { width: 100%; margin-bottom: 10px; filter: invert(1); }
+.episode details { font-size: 13px; color: #aaa; }
+.episode summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; color: #ccc; }
 .episode .desc { white-space: pre-wrap; font-family: inherit; margin-top: 6px; line-height: 1.6; font-size: 13px; }
 .ep-actions { display: flex; gap: 8px; margin-bottom: 10px; }
-.dl-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid #ddd; border-radius: 8px; background: #fff; font-size: 13px; color: #444; cursor: pointer; }
-.dl-btn:active { background: #f0f0f0; }
+.dl-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
+.dl-btn:active { background: #222; }
 .dl-btn.cached { color: #34c759; border-color: #34c759; }
-.disclaimer { margin-top: 24px; padding: 12px; background: #f5f5f5; border-radius: 8px; font-size: 12px; color: #888; text-align: center; }
-.install-hint { margin-top: 16px; padding: 12px; background: #f0f0f0; border-radius: 8px; font-size: 13px; color: #555; text-align: center; display: none; }
+.disclaimer { margin-top: 24px; padding: 12px; background: #111; border-radius: 8px; font-size: 12px; color: #555; text-align: center; }
+.install-hint { margin-top: 16px; padding: 12px; background: #111; border-radius: 8px; font-size: 13px; color: #555; text-align: center; display: none; }
+.reload-btn { margin-top: 8px; padding: 6px 16px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
+.reload-btn:active { background: #222; }
 </style>
 </head>
 <body>
 <header>
-  <img src="artwork.jpg" alt="AI Daily News">
-  <h1>AI Daily News</h1>
-  <p class="subtitle">POWERED BY AI</p>
-  <button onclick="location.reload()" style="margin-top:8px;padding:6px 16px;border:1px solid #ddd;border-radius:8px;background:#fff;font-size:13px;color:#444;cursor:pointer;">↻ 更新</button>
+  <img src="artwork.jpg" alt="デイリーAIラジオ">
+  <h1>デイリーAIラジオ</h1>
+  <p class="subtitle">DAILY AI RADIO</p>
+  <button class="reload-btn" onclick="location.reload()">↻ 更新</button>
 </header>
 
 <div id="episodes"></div>
@@ -144,7 +147,6 @@ fetch('feed.xml')
       const btn = div.querySelector('.dl-btn');
       btn.addEventListener('click', () => {
         if (btn.classList.contains('cached')) {
-          // Delete cached MP3
           navigator.serviceWorker?.controller?.postMessage({
             type: 'DELETE_CACHE',
             url: url
@@ -166,8 +168,8 @@ fetch('feed.xml')
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: title,
-            artist: 'AI Daily News',
-            album: 'AI Daily News',
+            artist: 'デイリーAIラジオ',
+            album: 'デイリーAIラジオ',
             artwork: [
               { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
               { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }

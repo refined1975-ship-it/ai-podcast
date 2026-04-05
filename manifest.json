@@ -1,11 +1,11 @@
 {
-  "name": "AI Daily News",
-  "short_name": "AI News",
+  "name": "デイリーAIラジオ",
+  "short_name": "DAIR",
   "description": "AI関連の最新ニュースを毎日お届け",
   "start_url": "/ai-podcast/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1a1a1a",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
   "icons": [
     {
       "src": "icon-192.png",
