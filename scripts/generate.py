@@ -62,7 +62,7 @@ def fetch_news() -> list[dict]:
 def generate_script(articles: list[dict]) -> str:
     """Generate a Japanese podcast script from news articles.
 
-    Target: ~53,000 characters for ~60 minutes of speech.
+    Target: ~19,500 characters for ~60 minutes of speech (48kbps/24kHz).
     """
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y年%m月%d日")
 
@@ -96,8 +96,8 @@ def generate_script(articles: list[dict]) -> str:
 
     script = "\n\n".join(script_parts)
 
-    # Pad to reach ~53,000 chars for ~60 minutes
-    while len(script) < 53000:
+    # Pad to reach ~19,500 chars for ~60 minutes
+    while len(script) < 19500:
         script += (
             "\n\nAIの進化は私たちの生活を大きく変えつつあります。"
             "自然言語処理、コンピュータビジョン、ロボティクスなど、"
@@ -117,7 +117,7 @@ def generate_script(articles: list[dict]) -> str:
             "実用的な応用が広がりを見せています。"
         )
 
-    return script[:55000]
+    return script[:21000]
 
 
 async def text_to_speech(text: str, output_path: Path) -> None:
@@ -133,11 +133,19 @@ async def text_to_speech(text: str, output_path: Path) -> None:
         await communicate.save(str(temp_path))
         print(f"  Chunk {idx + 1}/{len(chunks)} done")
 
-    # Concatenate all chunks
-    with open(output_path, "wb") as outfile:
-        for tf in temp_files:
-            outfile.write(tf.read_bytes())
-            tf.unlink()
+    # Concatenate all chunks using ffmpeg for correct headers
+    list_file = output_path.parent / "_concat_list.txt"
+    list_file.write_text("\n".join(f"file '{tf.name}'" for tf in temp_files))
+
+    import subprocess
+    subprocess.run([
+        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+        "-i", str(list_file), "-c", "copy", str(output_path)
+    ], capture_output=True, cwd=str(output_path.parent))
+
+    list_file.unlink()
+    for tf in temp_files:
+        tf.unlink()
 
 
 
@@ -219,10 +227,14 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
 
 
 def get_audio_duration(file_path: Path) -> int:
-    """Estimate audio duration from file size (rough: 128kbps MP3)."""
-    size_bytes = file_path.stat().st_size
-    # 128 kbps = 16000 bytes/sec
-    return size_bytes // 16000
+    """Get audio duration using ffprobe."""
+    import subprocess
+    result = subprocess.run(
+        ["ffprobe", "-v", "quiet", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", str(file_path)],
+        capture_output=True, text=True
+    )
+    return int(float(result.stdout.strip()))
 
 
 def main():
