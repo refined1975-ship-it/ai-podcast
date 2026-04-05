@@ -81,9 +81,20 @@ navigator.serviceWorker?.addEventListener('message', event => {
 
 // Check if a URL is already cached
 async function isCached(url) {
-  const cache = await caches.open('ai-news-v2');
+  const cache = await caches.open('ai-news-v3');
   const response = await cache.match(url);
   return !!response;
+}
+
+// Clean up cached MP3s that are no longer in the feed
+async function cleanOldCache(currentUrls) {
+  const cache = await caches.open('ai-news-v3');
+  const keys = await cache.keys();
+  for (const req of keys) {
+    if (req.url.endsWith('.mp3') && !currentUrls.includes(req.url)) {
+      await cache.delete(req);
+    }
+  }
 }
 
 // Load episodes from feed
@@ -93,6 +104,12 @@ fetch('feed.xml')
     const doc = new DOMParser().parseFromString(xml, 'text/xml');
     const items = doc.querySelectorAll('item');
     const container = document.getElementById('episodes');
+
+    // Collect all current MP3 URLs and clean old cache
+    const currentUrls = Array.from(items).map(item =>
+      item.querySelector('enclosure')?.getAttribute('url') || ''
+    ).filter(Boolean);
+    cleanOldCache(currentUrls);
 
     items.forEach(async item => {
       const title = item.querySelector('title')?.textContent || '';
@@ -122,15 +139,24 @@ fetch('feed.xml')
       `;
       container.appendChild(div);
 
-      // Download button
+      // Download / delete button
       const btn = div.querySelector('.dl-btn');
       btn.addEventListener('click', () => {
-        if (btn.classList.contains('cached')) return;
-        btn.textContent = 'ダウンロード中...';
-        navigator.serviceWorker?.controller?.postMessage({
-          type: 'CACHE_MP3',
-          url: url
-        });
+        if (btn.classList.contains('cached')) {
+          // Delete cached MP3
+          navigator.serviceWorker?.controller?.postMessage({
+            type: 'DELETE_CACHE',
+            url: url
+          });
+          btn.textContent = '⬇ ダウンロード';
+          btn.classList.remove('cached');
+        } else {
+          btn.textContent = 'ダウンロード中...';
+          navigator.serviceWorker?.controller?.postMessage({
+            type: 'CACHE_MP3',
+            url: url
+          });
+        }
       });
 
       // MediaSession API for lock screen controls
