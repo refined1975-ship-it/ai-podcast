@@ -62,7 +62,7 @@ def fetch_news() -> list[dict]:
 def generate_script(articles: list[dict]) -> str:
     """Generate a Japanese podcast script from news articles.
 
-    Target: ~35,000 characters for 30+ minutes of speech.
+    Target: ~70,000 characters for 60+ minutes of speech.
     """
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y年%m月%d日")
 
@@ -96,8 +96,8 @@ def generate_script(articles: list[dict]) -> str:
 
     script = "\n\n".join(script_parts)
 
-    # Pad to reach ~35,000 chars for 30+ minutes
-    while len(script) < 35000:
+    # Pad to reach ~70,000 chars for 60+ minutes
+    while len(script) < 70000:
         script += (
             "\n\nAIの進化は私たちの生活を大きく変えつつあります。"
             "自然言語処理、コンピュータビジョン、ロボティクスなど、"
@@ -117,13 +117,28 @@ def generate_script(articles: list[dict]) -> str:
             "実用的な応用が広がりを見せています。"
         )
 
-    return script[:40000]
+    return script[:80000]
 
 
 async def text_to_speech(text: str, output_path: Path) -> None:
-    """Convert text to speech using Edge TTS."""
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(str(output_path))
+    """Convert text to speech using Edge TTS, splitting into chunks."""
+    chunk_size = 5000
+    chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+    temp_files = []
+
+    for idx, chunk in enumerate(chunks):
+        temp_path = output_path.parent / f"_chunk_{idx:03d}.mp3"
+        temp_files.append(temp_path)
+        communicate = edge_tts.Communicate(chunk, VOICE)
+        await communicate.save(str(temp_path))
+        print(f"  Chunk {idx + 1}/{len(chunks)} done")
+
+    # Concatenate all chunks
+    with open(output_path, "wb") as outfile:
+        for tf in temp_files:
+            outfile.write(tf.read_bytes())
+            tf.unlink()
+
 
 
 def cleanup_old_episodes() -> list[str]:
