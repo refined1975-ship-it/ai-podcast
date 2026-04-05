@@ -23,6 +23,10 @@ h1 { font-size: 22px; }
 .episode details { font-size: 13px; color: #444; }
 .episode summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; }
 .episode .desc { white-space: pre-wrap; font-family: inherit; margin-top: 6px; line-height: 1.6; font-size: 13px; }
+.ep-actions { display: flex; gap: 8px; margin-bottom: 10px; }
+.dl-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid #ddd; border-radius: 8px; background: #fff; font-size: 13px; color: #444; cursor: pointer; }
+.dl-btn:active { background: #f0f0f0; }
+.dl-btn.cached { color: #34c759; border-color: #34c759; }
 .disclaimer { margin-top: 24px; padding: 12px; background: #f5f5f5; border-radius: 8px; font-size: 12px; color: #888; text-align: center; }
 .install-hint { margin-top: 16px; padding: 12px; background: #f0f0f0; border-radius: 8px; font-size: 13px; color: #555; text-align: center; display: none; }
 </style>
@@ -46,13 +50,40 @@ h1 { font-size: 22px; }
 
 <script>
 // Service Worker
+let swReady;
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+  swReady = navigator.serviceWorker.register('sw.js').then(reg => {
+    return navigator.serviceWorker.ready;
+  });
 }
 
 // Show install hint on iOS Safari (not in standalone mode)
 if (navigator.standalone === false) {
   document.getElementById('installHint').style.display = 'block';
+}
+
+// Listen for cache completion messages from SW
+navigator.serviceWorker?.addEventListener('message', event => {
+  if (event.data.type === 'CACHE_DONE') {
+    const btn = document.querySelector(`[data-url="${event.data.url}"]`);
+    if (btn) {
+      btn.textContent = '✓ 保存済み';
+      btn.classList.add('cached');
+    }
+  }
+  if (event.data.type === 'CACHE_ERROR') {
+    const btn = document.querySelector(`[data-url="${event.data.url}"]`);
+    if (btn) {
+      btn.textContent = '⬇ ダウンロード';
+    }
+  }
+});
+
+// Check if a URL is already cached
+async function isCached(url) {
+  const cache = await caches.open('ai-news-v2');
+  const response = await cache.match(url);
+  return !!response;
 }
 
 // Load episodes from feed
@@ -63,7 +94,7 @@ fetch('feed.xml')
     const items = doc.querySelectorAll('item');
     const container = document.getElementById('episodes');
 
-    items.forEach(item => {
+    items.forEach(async item => {
       const title = item.querySelector('title')?.textContent || '';
       const desc = item.querySelector('description')?.textContent || '';
       const url = item.querySelector('enclosure')?.getAttribute('url') || '';
@@ -71,18 +102,36 @@ fetch('feed.xml')
       const dur = item.getElementsByTagNameNS('http://www.itunes.com/dtds/podcast-1.0.dtd', 'duration')[0]?.textContent || '';
       const date = new Date(pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
 
+      const cached = await isCached(url);
+
       const div = document.createElement('div');
       div.className = 'episode';
       div.innerHTML = `
         <h2>${title}</h2>
         <p class="meta">${date} | ${dur}</p>
-        <audio controls preload="none" src="${url}" id="audio-${title}"></audio>
+        <audio controls preload="none" src="${url}"></audio>
+        <div class="ep-actions">
+          <button class="dl-btn ${cached ? 'cached' : ''}" data-url="${url}">
+            ${cached ? '✓ 保存済み' : '⬇ ダウンロード'}
+          </button>
+        </div>
         <details>
           <summary>詳細</summary>
           <div class="desc">${desc}</div>
         </details>
       `;
       container.appendChild(div);
+
+      // Download button
+      const btn = div.querySelector('.dl-btn');
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('cached')) return;
+        btn.textContent = 'ダウンロード中...';
+        navigator.serviceWorker?.controller?.postMessage({
+          type: 'CACHE_MP3',
+          url: url
+        });
+      });
 
       // MediaSession API for lock screen controls
       const audio = div.querySelector('audio');
