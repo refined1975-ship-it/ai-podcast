@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title>AI Daily News</title>
+    <link>https://refined1975-ship-it.github.io/ai-podcast/</link>
+    <language>ja</language>
+    <description>AI関連の最新ニュースを毎日お届けする自動生成ポッドキャスト</description>
+    <itunes:author>AI Daily News</itunes:author>
+    <itunes:summary>AI関連の最新ニュースを毎日お届けする自動生成ポッドキャスト</itunes:summary>
+    <itunes:category text="Technology" />
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
+    <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
+  <item><title>AI Daily News - 2026-04-05</title><description>2026-04-05のAI関連最新ニュースをお届けします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-05.mp3" length="38402064" type="audio/mpeg" /><guid isPermaLink="false">ai-daily-news-2026-04-05</guid><pubDate>Sun, 05 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:40:00</itunes:duration></item></channel>
+</rss>
