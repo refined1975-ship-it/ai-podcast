@@ -157,10 +157,11 @@ async def text_to_speech(script: list[tuple[str, str]], output_path: Path) -> No
         "-i", str(list_file), "-c", "copy", str(temp_concat)
     ], capture_output=True, cwd=str(output_path.parent))
 
-    # Re-encode to fix duration/headers
+    # Re-encode as CBR with correct headers
     subprocess.run([
         "ffmpeg", "-y", "-i", str(temp_concat),
-        "-codec:a", "libmp3lame", "-b:a", "48k", "-ar", "24000", "-ac", "1",
+        "-codec:a", "libmp3lame", "-b:a", "64k", "-ar", "24000", "-ac", "1",
+        "-write_xing", "0",
         str(output_path)
     ], capture_output=True)
     temp_concat.unlink()
