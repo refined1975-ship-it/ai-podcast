@@ -62,7 +62,7 @@ def fetch_news() -> list[dict]:
 def generate_script(articles: list[dict]) -> str:
     """Generate a Japanese podcast script from news articles.
 
-    Target: ~70,000 characters for 60+ minutes of speech.
+    Target: ~53,000 characters for ~60 minutes of speech.
     """
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y年%m月%d日")
 
@@ -96,8 +96,8 @@ def generate_script(articles: list[dict]) -> str:
 
     script = "\n\n".join(script_parts)
 
-    # Pad to reach ~70,000 chars for 60+ minutes
-    while len(script) < 70000:
+    # Pad to reach ~53,000 chars for ~60 minutes
+    while len(script) < 53000:
         script += (
             "\n\nAIの進化は私たちの生活を大きく変えつつあります。"
             "自然言語処理、コンピュータビジョン、ロボティクスなど、"
@@ -117,7 +117,7 @@ def generate_script(articles: list[dict]) -> str:
             "実用的な応用が広がりを見せています。"
         )
 
-    return script[:80000]
+    return script[:55000]
 
 
 async def text_to_speech(text: str, output_path: Path) -> None:
