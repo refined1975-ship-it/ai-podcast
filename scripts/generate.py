@@ -25,7 +25,9 @@ from dateutil import parser as dateparser
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AUDIO_DIR = REPO_ROOT / "audio" / "episodes"
 FEED_PATH = REPO_ROOT / "feed.xml"
-VOICE = "ja-JP-NanamiNeural"
+VOICE_FEMALE = "ja-JP-NanamiNeural"
+VOICE_MALE = "ja-JP-KeitaNeural"
+RATE = "+15%"
 BASE_URL = "https://refined1975-ship-it.github.io/ai-podcast"
 MAX_EPISODE_AGE_DAYS = 7
 
@@ -59,81 +61,92 @@ def fetch_news() -> list[dict]:
     return articles
 
 
-def generate_script(articles: list[dict]) -> str:
-    """Generate a Japanese podcast script from news articles.
+def generate_script(articles: list[dict]) -> list[tuple[str, str]]:
+    """Generate a male-female dialogue podcast script.
 
-    Target: ~19,500 characters for ~60 minutes of speech (48kbps/24kHz).
+    Returns list of (speaker, text) tuples.
+    speaker is "female" (host/questions) or "male" (commentary/analysis).
+    Target total chars: ~25,000 for ~60 minutes at +15% speed.
     """
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y年%m月%d日")
 
-    script_parts = []
-    script_parts.append(
-        f"こんばんは。{today}のAIデイリーニュースへようこそ。"
-        "今日もAIと機械学習に関する最新のニュースをお届けします。"
-        "それでは早速、今日のニュースを見ていきましょう。"
-    )
+    script = []
+
+    # Opening
+    script.append(("female", f"こんばんは。{today}のAIデイリーニュースへようこそ。今日も注目のAIニュースをお届けします。"))
+    script.append(("male", "よろしくお願いします。今日もいくつか面白いニュースが入ってきていますね。早速見ていきましょう。"))
 
     for i, article in enumerate(articles, 1):
         title = article["title"]
-        # Remove source suffix like " - TechCrunch"
         clean_title = re.sub(r"\s*[-–—|]\s*[^-–—|]+$", "", title)
 
-        script_parts.append(
-            f"続いて{i}番目のニュースです。{clean_title}。"
-            f"このニュースについて詳しく見ていきましょう。"
-            f"{clean_title}に関する報道がありました。"
-            "AIの分野では日々新しい技術や発見が生まれており、"
-            "今後の展開にも注目が集まっています。"
-            "この技術が社会にどのような影響を与えるのか、"
-            "引き続き注視していく必要がありそうです。"
-        )
+        # Female introduces the topic
+        script.append(("female", f"{i}番目のトピックです。{clean_title}。これはどういうニュースですか？"))
 
-    script_parts.append(
-        "以上が本日のAIニュースのまとめでした。"
-        "お聴きいただきありがとうございました。"
-        "また明日のエピソードでお会いしましょう。さようなら。"
-    )
+        # Male explains in detail
+        script.append(("male",
+            f"はい。{clean_title}ということですが、"
+            "これはAI業界にとって重要な動きだと思います。"
+            "背景としては、この分野では各社が技術開発を加速させていて、"
+            "競争が非常に激しくなっています。"
+        ))
 
-    script = "\n\n".join(script_parts)
+        # Female asks follow-up
+        script.append(("female", "実際のところ、開発者や一般ユーザーにはどんな影響がありそうですか？"))
 
-    # Pad to reach ~19,500 chars for ~60 minutes
-    while len(script) < 19500:
-        script += (
-            "\n\nAIの進化は私たちの生活を大きく変えつつあります。"
-            "自然言語処理、コンピュータビジョン、ロボティクスなど、"
-            "さまざまな分野で革新的な研究が進められています。"
-            "企業や研究機関はこれらの技術をどのように活用していくのか、"
-            "今後の動向に大きな関心が寄せられています。"
-            "特に大規模言語モデルの発展は目覚ましく、"
-            "テキスト生成、翻訳、要約など多くのタスクで人間に匹敵する"
-            "パフォーマンスを見せるようになってきています。"
-            "また、画像生成AIの分野でも大きな進歩が見られ、"
-            "クリエイティブ産業への応用が期待されています。"
-            "一方で、AIの倫理や安全性に関する議論も活発化しており、"
-            "技術の発展と社会的な受容のバランスが重要になってきています。"
-            "教育分野では、AIを活用した個別最適化学習が注目を集めており、"
-            "一人ひとりの学習者に合わせた教材や指導法の開発が進んでいます。"
-            "医療分野でも、AIによる画像診断支援や創薬プロセスの効率化など、"
-            "実用的な応用が広がりを見せています。"
-        )
+        # Male gives analysis
+        script.append(("male",
+            "短期的には、関連するサービスやツールの選択肢が増えるということですね。"
+            "中長期的には、この技術が標準化されることで、"
+            "ソフトウェア開発のワークフローそのものが変わる可能性があります。"
+            "ただし、技術的な課題やコスト面での問題もまだ残っているので、"
+            "すぐに全面的に置き換わるというわけではないと思います。"
+        ))
 
-    return script[:21000]
+        # Female wraps up topic
+        script.append(("female", "なるほど、引き続き注目していきたいですね。"))
+
+    # Closing
+    script.append(("female", "以上が本日のAIニュースでした。お聴きいただきありがとうございました。"))
+    script.append(("male", "また明日のエピソードでお会いしましょう。おやすみなさい。"))
+
+    # Check total length and pad if needed
+    total_chars = sum(len(text) for _, text in script)
+    while total_chars < 25000:
+        script.insert(-2, ("female", "ところで、最近のAI業界全体のトレンドとして、何か気になることはありますか？"))
+        script.insert(-2, ("male",
+            "そうですね。やはりエージェント型AIの進化が目覚ましいです。"
+            "単にテキストを生成するだけでなく、ツールを使い、計画を立て、"
+            "自律的にタスクを遂行できるAIが実用段階に入りつつあります。"
+            "コーディング、リサーチ、データ分析など、"
+            "知的労働のかなりの部分を自動化できる可能性が出てきています。"
+            "一方で、AIの判断をどこまで信頼するか、"
+            "人間のチェックをどの段階で入れるかという設計の問題は"
+            "まだ業界としてベストプラクティスが確立されていません。"
+        ))
+        script.insert(-2, ("female",
+            "たしかにそうですね。技術の進歩とガバナンスのバランスが"
+            "ますます重要になってきていると感じます。"
+        ))
+        total_chars = sum(len(text) for _, text in script)
+
+    return script
 
 
-async def text_to_speech(text: str, output_path: Path) -> None:
-    """Convert text to speech using Edge TTS, splitting into chunks."""
-    chunk_size = 5000
-    chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+async def text_to_speech(script: list[tuple[str, str]], output_path: Path) -> None:
+    """Convert dialogue script to speech using Edge TTS."""
     temp_files = []
+    total = len(script)
 
-    for idx, chunk in enumerate(chunks):
+    for idx, (speaker, text) in enumerate(script):
+        voice = VOICE_FEMALE if speaker == "female" else VOICE_MALE
         temp_path = output_path.parent / f"_chunk_{idx:03d}.mp3"
         temp_files.append(temp_path)
-        communicate = edge_tts.Communicate(chunk, VOICE)
+        communicate = edge_tts.Communicate(text, voice, rate=RATE)
         await communicate.save(str(temp_path))
-        print(f"  Chunk {idx + 1}/{len(chunks)} done")
+        print(f"  [{speaker}] {idx + 1}/{total} done")
 
-    # Concatenate all chunks using ffmpeg for correct headers
+    # Concatenate with ffmpeg
     list_file = output_path.parent / "_concat_list.txt"
     list_file.write_text("\n".join(f"file '{tf.name}'" for tf in temp_files))
 
@@ -165,7 +178,7 @@ def cleanup_old_episodes() -> list[str]:
     return removed
 
 
-def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_secs: int) -> None:
+def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_secs: int, episode_description: str = "") -> None:
     """Add new episode to RSS feed and remove old entries."""
     ET.register_namespace("", "")
     ET.register_namespace("itunes", "http://www.itunes.com/dtds/podcast-1.0.dtd")
@@ -183,7 +196,7 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
     title.text = f"AI Daily News - {episode_date}"
 
     description = ET.SubElement(item, "description")
-    description.text = f"{episode_date}のAI関連最新ニュースをお届けします。"
+    description.text = episode_description or f"{episode_date}のAI関連最新ニュースをお届けします。"
 
     enclosure = ET.SubElement(item, "enclosure")
     enclosure.set("url", f"{BASE_URL}/audio/episodes/{mp3_filename}")
@@ -254,7 +267,8 @@ def main():
 
     print(f"Found {len(articles)} articles. Generating script...")
     script = generate_script(articles)
-    print(f"Script length: {len(script)} characters")
+    total_chars = sum(len(text) for _, text in script)
+    print(f"Script: {len(script)} segments, {total_chars} characters")
 
     print("Generating audio...")
     asyncio.run(text_to_speech(script, mp3_path))
@@ -262,8 +276,25 @@ def main():
     duration = get_audio_duration(mp3_path)
     print(f"Audio generated: {mp3_filename} ({mp3_size / 1024 / 1024:.1f} MB, ~{duration // 60} min)")
 
+    # Build description with topic list
+    topics = []
+    for article in articles:
+        clean = re.sub(r"\s*[-–—|]\s*[^-–—|]+$", "", article["title"])
+        topics.append(clean)
+    topic_list = "\n".join(f"- {t}" for t in topics)
+    description = (
+        f"{today}のAI関連最新ニュースをお届けします。\n\n"
+        f"【トピック】\n{topic_list}\n\n"
+        "【クレジット】\n"
+        "音声: Microsoft Edge TTS\n"
+        "ニュースソース: Google News\n"
+        "制作: Claude Code による自動生成\n\n"
+        "※この番組はAIによる自動生成です。内容の正確性は保証されません。"
+        "情報の利用は自己責任でお願いします。"
+    )
+
     print("Updating feed...")
-    update_feed(today, mp3_filename, mp3_size, duration)
+    update_feed(today, mp3_filename, mp3_size, duration, description)
 
     print("Cleaning up old episodes...")
     cleanup_old_episodes()
