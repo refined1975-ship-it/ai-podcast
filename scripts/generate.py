@@ -151,10 +151,19 @@ async def text_to_speech(script: list[tuple[str, str]], output_path: Path) -> No
     list_file.write_text("\n".join(f"file '{tf.name}'" for tf in temp_files))
 
     import subprocess
+    temp_concat = output_path.parent / "_concat_raw.mp3"
     subprocess.run([
         "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-        "-i", str(list_file), "-c", "copy", str(output_path)
+        "-i", str(list_file), "-c", "copy", str(temp_concat)
     ], capture_output=True, cwd=str(output_path.parent))
+
+    # Re-encode to fix duration/headers
+    subprocess.run([
+        "ffmpeg", "-y", "-i", str(temp_concat),
+        "-codec:a", "libmp3lame", "-b:a", "48k", "-ar", "24000", "-ac", "1",
+        str(output_path)
+    ], capture_output=True)
+    temp_concat.unlink()
 
     list_file.unlink()
     for tf in temp_files:
