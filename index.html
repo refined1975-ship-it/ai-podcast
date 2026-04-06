@@ -115,13 +115,24 @@ fetch('feed.xml')
     ).filter(Boolean);
     cleanOldCache(currentUrls);
 
-    items.forEach(async item => {
+    // Sort items by pubDate descending (newest first)
+    const sortedItems = Array.from(items).sort((a, b) => {
+      const da = new Date(a.querySelector('pubDate')?.textContent || 0);
+      const db = new Date(b.querySelector('pubDate')?.textContent || 0);
+      return db - da;
+    });
+
+    sortedItems.forEach(async item => {
       const title = item.querySelector('title')?.textContent || '';
       const desc = item.querySelector('description')?.textContent || '';
       const url = item.querySelector('enclosure')?.getAttribute('url') || '';
       const pubDate = item.querySelector('pubDate')?.textContent || '';
-      const dur = item.getElementsByTagNameNS('http://www.itunes.com/dtds/podcast-1.0.dtd', 'duration')[0]?.textContent || '';
+      const durRaw = item.getElementsByTagNameNS('http://www.itunes.com/dtds/podcast-1.0.dtd', 'duration')[0]?.textContent || '';
       const date = new Date(pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+      // Convert HH:MM:SS to "XX分" format
+      const durParts = durRaw.split(':').map(Number);
+      const totalMin = durParts.length === 3 ? durParts[0] * 60 + durParts[1] : durParts[0] || 0;
+      const dur = totalMin > 0 ? `${totalMin}分` : durRaw;
 
       const cached = await isCached(url);
 
