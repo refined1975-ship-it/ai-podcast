@@ -122,7 +122,7 @@ fetch('feed.xml')
       return db - da;
     });
 
-    sortedItems.forEach(async item => {
+    for (const item of sortedItems) {
       const title = item.querySelector('title')?.textContent || '';
       const desc = item.querySelector('description')?.textContent || '';
       const url = item.querySelector('enclosure')?.getAttribute('url') || '';
@@ -192,7 +192,7 @@ fetch('feed.xml')
           navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
         }
       });
-    });
+    }
   });
 </script>
 </body>
