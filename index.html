@@ -85,14 +85,14 @@ navigator.serviceWorker?.addEventListener('message', event => {
 
 // Check if a URL is already cached
 async function isCached(url) {
-  const cache = await caches.open('ai-news-v3');
+  const cache = await caches.open('dair-v1');
   const response = await cache.match(url);
   return !!response;
 }
 
 // Clean up cached MP3s that are no longer in the feed
 async function cleanOldCache(currentUrls) {
-  const cache = await caches.open('ai-news-v3');
+  const cache = await caches.open('dair-v1');
   const keys = await cache.keys();
   for (const req of keys) {
     if (req.url.endsWith('.mp3') && !currentUrls.includes(req.url)) {

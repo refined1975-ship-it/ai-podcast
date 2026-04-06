@@ -1,0 +1,82 @@
+[2026年 4月 7日 火曜日 04時37分13秒 JST] Starting local generate...
+From https://github.com/refined1975-ship-it/ai-podcast
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[2026年 4月 7日 火曜日 04時37分14秒 JST] Found pending script. Generating audio...
+/Users/sokabejunichi/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Loading script from /Users/sokabejunichi/ai-podcast/scripts/pending_script.json...
+Script: 68 segments, 7621 characters
+Generating audio...
+  [female] 1/68 done
+  [male] 2/68 done
+  [female] 3/68 done
+  [male] 4/68 done
+  [female] 5/68 done
+  [male] 6/68 done
+  [female] 7/68 done
+  [male] 8/68 done
+  [female] 9/68 done
+  [male] 10/68 done
+  [female] 11/68 done
+  [male] 12/68 done
+  [female] 13/68 done
+  [male] 14/68 done
+  [female] 15/68 done
+  [male] 16/68 done
+  [female] 17/68 done
+  [male] 18/68 done
+  [female] 19/68 done
+  [male] 20/68 done
+  [female] 21/68 done
+  [male] 22/68 done
+  [female] 23/68 done
+  [male] 24/68 done
+  [female] 25/68 done
+  [male] 26/68 done
+  [female] 27/68 done
+  [male] 28/68 done
+  [female] 29/68 done
+  [male] 30/68 done
+  [female] 31/68 done
+  [male] 32/68 done
+  [female] 33/68 done
+  [male] 34/68 done
+  [female] 35/68 done
+  [male] 36/68 done
+  [female] 37/68 done
+  [male] 38/68 done
+  [female] 39/68 done
+  [male] 40/68 done
+  [female] 41/68 done
+  [male] 42/68 done
+  [female] 43/68 done
+  [male] 44/68 done
+  [female] 45/68 done
+  [male] 46/68 done
+  [female] 47/68 done
+  [male] 48/68 done
+  [female] 49/68 done
+  [male] 50/68 done
+  [female] 51/68 done
+  [male] 52/68 done
+  [female] 53/68 done
+  [male] 54/68 done
+  [female] 55/68 done
+  [male] 56/68 done
+  [female] 57/68 done
+  [male] 58/68 done
+  [female] 59/68 done
+  [male] 60/68 done
+  [female] 61/68 done
+  [male] 62/68 done
+  [female] 63/68 done
+  [male] 64/68 done
+  [female] 65/68 done
+  [male] 66/68 done
+  [female] 67/68 done
+  [male] 68/68 done
+Audio generated: episode-2026-04-07.mp3 (8.6 MB, ~18 min)
+Updating feed...
+Cleaning up old episodes...
+Done!

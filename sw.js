@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ai-news-v3';
+const CACHE_NAME = 'dair-v1';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => {
