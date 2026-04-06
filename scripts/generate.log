@@ -80,3 +80,22 @@ Audio generated: episode-2026-04-07.mp3 (8.6 MB, ~18 min)
 Updating feed...
 Cleaning up old episodes...
 Done!
+[main c115c81] Add episode for 2026-04-07
+ Committer: 曽我部純一 <sokabejunichi@Mac-mini-js.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 135 insertions(+), 45 deletions(-)
+ create mode 100644 audio/episodes/episode-2026-04-07.mp3
+ create mode 100644 scripts/generate.log
+To https://github.com/refined1975-ship-it/ai-podcast.git
+   1319f49..c115c81  main -> main
+[2026年 4月 7日 火曜日 04時39分28秒 JST] Done!
