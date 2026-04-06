@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""AI News Podcast Generator
+"""デイリーAIラジオ - Podcast Generator
 
 Fetches AI news from RSS feeds, generates a Japanese script,
 converts to speech using Edge TTS, and updates the podcast RSS feed.
 """
 
+import argparse
 import asyncio
 import glob
+import json
 import os
 import re
 import sys
@@ -73,7 +75,7 @@ def generate_script(articles: list[dict]) -> list[tuple[str, str]]:
     script = []
 
     # Opening
-    script.append(("female", f"こんばんは。{today}のAIデイリーニュースへようこそ。今日も注目のAIニュースをお届けします。"))
+    script.append(("female", f"こんばんは。{today}のデイリーAIラジオへようこそ。今日も注目のAIニュースをお届けします。"))
     script.append(("male", "よろしくお願いします。今日もいくつか面白いニュースが入ってきていますね。早速見ていきましょう。"))
 
     for i, article in enumerate(articles, 1):
@@ -107,7 +109,7 @@ def generate_script(articles: list[dict]) -> list[tuple[str, str]]:
         script.append(("female", "なるほど、引き続き注目していきたいですね。"))
 
     # Closing
-    script.append(("female", "以上が本日のAIニュースでした。お聴きいただきありがとうございました。"))
+    script.append(("female", "以上が本日のデイリーAIラジオでした。お聴きいただきありがとうございました。"))
     script.append(("male", "また明日のエピソードでお会いしましょう。おやすみなさい。"))
 
     # Check total length and pad if needed
@@ -203,7 +205,7 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
     item = ET.SubElement(channel, "item")
 
     title = ET.SubElement(item, "title")
-    title.text = f"AI Daily News - {episode_date}"
+    title.text = f"デイリーAIラジオ - {episode_date}"
 
     description = ET.SubElement(item, "description")
     description.text = episode_description or f"{episode_date}のAI関連最新ニュースをお届けします。"
@@ -215,7 +217,7 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
 
     guid = ET.SubElement(item, "guid")
     guid.set("isPermaLink", "false")
-    guid.text = f"ai-daily-news-{episode_date}"
+    guid.text = f"dair-{episode_date}"
 
     pub_date = ET.SubElement(item, "pubDate")
     dt = datetime.strptime(episode_date, "%Y-%m-%d").replace(
@@ -260,8 +262,36 @@ def get_audio_duration(file_path: Path) -> int:
     return int(float(result.stdout.strip()))
 
 
+def load_script_from_json(script_path: str) -> tuple[list[tuple[str, str]], str]:
+    """Load script and description from a JSON file.
+
+    Expected format:
+    {
+      "script": [{"speaker": "female", "text": "..."}, ...],
+      "description": "episode description text"
+    }
+    """
+    with open(script_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    script = [(item["speaker"], item["text"]) for item in data["script"]]
+    description = data.get("description", "")
+    return script, description
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--script", type=str, help="Path to script JSON file (skip template generation)")
+    parser.add_argument("--fetch-only", action="store_true", help="Fetch news and print as JSON, then exit")
+    args = parser.parse_args()
+
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+
+    # --fetch-only: output news as JSON for external script generation
+    if args.fetch_only:
+        articles = fetch_news()
+        print(json.dumps(articles, ensure_ascii=False, indent=2))
+        return
+
     mp3_filename = f"episode-{today}.mp3"
     mp3_path = AUDIO_DIR / mp3_filename
 
@@ -269,39 +299,47 @@ def main():
         print(f"Episode for {today} already exists. Skipping.")
         return
 
-    print("Fetching AI news...")
-    articles = fetch_news()
-    if not articles:
-        print("No articles found. Exiting.", file=sys.stderr)
-        sys.exit(1)
+    if args.script:
+        # Load script from external JSON (written by Claude agent)
+        print(f"Loading script from {args.script}...")
+        script, description = load_script_from_json(args.script)
+    else:
+        # Fallback: fetch news + template generation
+        print("Fetching AI news...")
+        articles = fetch_news()
+        if not articles:
+            print("No articles found. Exiting.", file=sys.stderr)
+            sys.exit(1)
 
-    print(f"Found {len(articles)} articles. Generating script...")
-    script = generate_script(articles)
+        print(f"Found {len(articles)} articles. Generating script...")
+        script = generate_script(articles)
+
+        topics = []
+        for article in articles:
+            clean = re.sub(r"\s*[-–—|]\s*[^-–—|]+$", "", article["title"])
+            topics.append(clean)
+        topic_list = "\n".join(f"- {t}" for t in topics)
+        description = (
+            f"{today}のAI関連最新ニュースをお届けします。\n\n"
+            f"【トピック】\n{topic_list}\n\n"
+            "【クレジット】\n"
+            "音声: Microsoft Edge TTS\n"
+            "ニュースソース: Google News\n"
+            "制作: Claude Code による自動生成\n\n"
+            "※この番組はAIによる自動生成です。内容の正確性は保証されません。"
+            "情報の利用は自己責任でお願いします。"
+        )
+
     total_chars = sum(len(text) for _, text in script)
     print(f"Script: {len(script)} segments, {total_chars} characters")
+
+    AUDIO_DIR.mkdir(parents=True, exist_ok=True)
 
     print("Generating audio...")
     asyncio.run(text_to_speech(script, mp3_path))
     mp3_size = mp3_path.stat().st_size
     duration = get_audio_duration(mp3_path)
     print(f"Audio generated: {mp3_filename} ({mp3_size / 1024 / 1024:.1f} MB, ~{duration // 60} min)")
-
-    # Build description with topic list
-    topics = []
-    for article in articles:
-        clean = re.sub(r"\s*[-–—|]\s*[^-–—|]+$", "", article["title"])
-        topics.append(clean)
-    topic_list = "\n".join(f"- {t}" for t in topics)
-    description = (
-        f"{today}のAI関連最新ニュースをお届けします。\n\n"
-        f"【トピック】\n{topic_list}\n\n"
-        "【クレジット】\n"
-        "音声: Microsoft Edge TTS\n"
-        "ニュースソース: Google News\n"
-        "制作: Claude Code による自動生成\n\n"
-        "※この番組はAIによる自動生成です。内容の正確性は保証されません。"
-        "情報の利用は自己責任でお願いします。"
-    )
 
     print("Updating feed...")
     update_feed(today, mp3_filename, mp3_size, duration, description)
