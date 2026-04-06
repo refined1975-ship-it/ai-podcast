@@ -104,7 +104,7 @@ async function cleanOldCache(currentUrls) {
 // Load episodes from feed
 fetch('feed.xml')
   .then(r => r.text())
-  .then(xml => {
+  .then(async xml => {
     const doc = new DOMParser().parseFromString(xml, 'text/xml');
     const items = doc.querySelectorAll('item');
     const container = document.getElementById('episodes');
