@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dair-v1';
+const CACHE_NAME = 'dair-v2';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => {
