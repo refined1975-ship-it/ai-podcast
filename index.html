@@ -43,9 +43,8 @@ h1 { font-size: 22px; color: #fff; }
 .va-del:active { background: #222; }
 .va-empty { text-align: center; color: #555; font-size: 13px; padding: 30px 0; }
 .va-playing { border-color: #ff6b35; }
-.va-cache { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #333; background: none; color: #666; font-size: 12px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.va-cache:active { background: #222; }
-.va-cache.cached { color: #34c759; border-color: #34c759; }
+.va-cache { font-size: 12px; color: transparent; flex-shrink: 0; }
+.va-cache.cached { color: #34c759; }
 .va-player { position: sticky; bottom: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; display: none; }
 .va-player audio { width: 100%; filter: invert(1); }
 .va-player-title { font-size: 12px; color: #aaa; margin-bottom: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -196,19 +195,14 @@ function loadVideoAudio() {
             <div class="va-title">${t.title}</div>
             <div class="va-meta">${meta}</div>
           </div>
-          <button class="va-cache">↓</button>
+          <span class="va-cache"></span>
         `;
-        // キャッシュ状態チェック
-        const cacheBtn = div.querySelector('.va-cache');
+        // 自動キャッシュ
+        const cacheIcon = div.querySelector('.va-cache');
         caches.open(CACHE_NAME).then(c => c.match(audioUrl)).then(r => {
-          if (r) { cacheBtn.textContent = '✓'; cacheBtn.classList.add('cached'); }
-        });
-        cacheBtn.addEventListener('click', () => {
-          if (cacheBtn.classList.contains('cached')) {
-            navigator.serviceWorker?.controller?.postMessage({ type: 'DELETE_CACHE', url: audioUrl });
-            cacheBtn.textContent = '↓'; cacheBtn.classList.remove('cached');
+          if (r) {
+            cacheIcon.textContent = '✓'; cacheIcon.classList.add('cached');
           } else {
-            cacheBtn.textContent = '…';
             navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: audioUrl });
           }
         });
