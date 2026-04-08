@@ -197,6 +197,10 @@ function renderVaTracks(tracks, wl) {
         navigator.mediaSession.metadata = new MediaMetadata({
           title: t.title, artist: chName || 'YouTube', album: 'YouTube音声'
         });
+        navigator.mediaSession.setActionHandler('play', () => audio.play());
+        navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+        navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); });
+        navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
       }
       // blobとしてメモリに読み込んでから再生（iOS lock screen対策）
       fetch(audioUrl).then(r => r.blob()).then(blob => {
@@ -449,7 +453,7 @@ fetch('feed.xml')
       div.innerHTML = `
         <h2>${title}</h2>
         <p class="meta">${date} | ${dur} <span class="ep-cache" data-url="${url}"></span></p>
-        <audio controls preload="none" src="${url}"></audio>
+        <audio controls preload="none"></audio>
         <details>
           <summary>詳細</summary>
           <div class="desc">${desc}</div>
@@ -471,9 +475,20 @@ fetch('feed.xml')
         });
       }
 
-      // MediaSession API for lock screen controls
+      // blob再生（iOSロック画面対策）+ MediaSession
       const audio = div.querySelector('audio');
-      audio.addEventListener('play', () => {
+      let blobUrl = null;
+      audio.addEventListener('play', (e) => {
+        if (!blobUrl) {
+          e.preventDefault();
+          audio.pause();
+          fetch(url).then(r => r.blob()).then(blob => {
+            blobUrl = URL.createObjectURL(blob);
+            audio.src = blobUrl;
+            audio.play();
+          });
+          return;
+        }
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: title,
