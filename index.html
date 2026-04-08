@@ -282,7 +282,13 @@ let watchlist = [];
 let chEditMode = false;
 
 function loadChannels() {
-  if (!MUSIC_SERVER) return;
+  if (!MUSIC_SERVER) {
+    const cached = localStorage.getItem('va_watchlist');
+    if (cached) { watchlist = JSON.parse(cached); renderChannels(); }
+    document.getElementById('ch-edit').style.display = 'none';
+    document.getElementById('ch-toggle').style.display = 'none';
+    return;
+  }
   fetch(MUSIC_SERVER + '/api/watchlist')
     .then(r => r.json())
     .then(wl => {
