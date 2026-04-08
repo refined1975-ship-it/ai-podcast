@@ -104,7 +104,10 @@ h1 { font-size: 22px; color: #fff; }
   <div class="ch-section">
     <div class="ch-header">
       <h3>登録チャンネル</h3>
-      <button class="ch-toggle" id="ch-toggle">検索</button>
+      <div style="display:flex;gap:6px">
+        <button class="ch-toggle" id="ch-edit">編集</button>
+        <button class="ch-toggle" id="ch-toggle">検索</button>
+      </div>
     </div>
     <div class="ch-search" id="ch-search">
       <input class="ch-input" id="ch-query" placeholder="チャンネル名で検索..." />
@@ -246,32 +249,50 @@ document.getElementById('va-check-btn').addEventListener('click', () => {
 // チャンネル管理
 let watchlist = [];
 
+let chEditMode = false;
+
 function loadChannels() {
   const list = document.getElementById('ch-list');
   fetch(MUSIC_SERVER + '/api/watchlist')
     .then(r => r.json())
     .then(wl => {
       watchlist = wl;
-      list.innerHTML = '';
-      wl.forEach(ch => {
-        const div = document.createElement('div');
-        div.className = 'ch-item';
-        div.innerHTML = `
-          <span class="ch-name">${ch.name}</span>
-          <button class="ch-unsub">解除</button>
-        `;
-        div.querySelector('.ch-unsub').addEventListener('click', () => {
-          fetch(MUSIC_SERVER + '/api/watchlist/delete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: ch.url })
-          }).then(() => { div.remove(); watchlist = watchlist.filter(w => w.url !== ch.url); });
-        });
-        list.appendChild(div);
-      });
+      renderChannels();
     })
     .catch(() => {});
 }
+
+function renderChannels() {
+  const list = document.getElementById('ch-list');
+  list.innerHTML = '';
+  watchlist.forEach(ch => {
+    const div = document.createElement('div');
+    div.className = 'ch-item';
+    if (chEditMode) {
+      div.innerHTML = `
+        <span class="ch-name">${ch.name}</span>
+        <button class="ch-unsub">解除</button>
+      `;
+      div.querySelector('.ch-unsub').addEventListener('click', () => {
+        if (!confirm('「' + ch.name + '」を解除しますか？')) return;
+        fetch(MUSIC_SERVER + '/api/watchlist/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: ch.url })
+        }).then(() => { watchlist = watchlist.filter(w => w.url !== ch.url); renderChannels(); });
+      });
+    } else {
+      div.innerHTML = `<span class="ch-name">${ch.name}</span>`;
+    }
+    list.appendChild(div);
+  });
+}
+
+document.getElementById('ch-edit').addEventListener('click', function() {
+  chEditMode = !chEditMode;
+  this.textContent = chEditMode ? '完了' : '編集';
+  renderChannels();
+});
 
 document.getElementById('ch-toggle').addEventListener('click', () => {
   const s = document.getElementById('ch-search');
