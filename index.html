@@ -146,21 +146,30 @@ function playUrl(url, title, artist) {
   playerBtn.textContent = '⏸';
   player.classList.add('active');
 
-  // iOS: silenceを同期再生してunlock
+  // music-player方式: silence unlock → blob再生
+  // Safariフォールバック: 直接URL再生
   audio.src = SILENCE;
   audio.play().catch(() => {});
 
-  // blob再生
   caches.open(CACHE_NAME)
     .then(c => c.match(url, {ignoreSearch: true}))
-    .then(r => r ? r.blob() : fetch(url).then(r => r.blob()))
+    .then(r => {
+      if (r) return r.blob();
+      return fetch(url).then(res => res.blob());
+    })
     .then(blob => {
-      audio._blobUrl = URL.createObjectURL(blob);
-      audio.src = audio._blobUrl;
+      if (blob && blob.size > 0) {
+        audio._blobUrl = URL.createObjectURL(blob);
+        audio.src = audio._blobUrl;
+      } else {
+        audio.src = url;
+      }
       return audio.play();
     })
     .catch(() => {
+      // blob/cache失敗 → 直接再生
       audio.src = url;
+      audio.load();
       audio.play().catch(() => {});
     });
 
