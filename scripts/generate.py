@@ -201,6 +201,13 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
     root = tree.getroot()
     channel = root.find("channel")
 
+    # Remove existing entry for same date (prevent duplicates)
+    guid_text = f"dair-{episode_date}"
+    for existing in channel.findall("item"):
+        g = existing.find("guid")
+        if g is not None and g.text == guid_text:
+            channel.remove(existing)
+
     # Build new item
     item = ET.SubElement(channel, "item")
 

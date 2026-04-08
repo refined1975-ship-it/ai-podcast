@@ -11,36 +11,34 @@
     <itunes:explicit>false</itunes:explicit>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-  <item><title>デイリーAIラジオ - 2026-04-05</title><description>2026-04-05のAI関連最新ニュースをお届けします。
+    <item>
+      <title>デイリーAIラジオ - 2026-04-08</title>
+      <description>2026-04-08のAI関連最新ニュースをお届けします。
 
 【トピック】
-- テンプル大学ジャパンキャンパス、2026年秋学期よりAI学科を新設 - u
-- AIエージェントの、その先へ
-- メルカリグループ AI活用基本ポリシー | 株式会社メルカリ
-- 「Physical AI on AWS 勉強会 #1」を開催しました
-- 雄安で"Artificial Intelligence+" Industry Ecosystem Integration Development Forumを開催
-- AI時代の「一人訴訟」増加…効率化の裏で問われる共感の価値 [韓国記者コラム]（KOREA WAVE）
-- 「長話に付き合ってくれる」AIが中高年の癒やしに 孤独の心に響く応答、涙
-- オープンAI、画像生成の Sora 打ち切りへ
-- 新しいBusiness Intelligenceへ：Ultra Deep Researchアシスタント「Sakana Marlin」βテスト開始
-- 生成AIチャットボットの回答から危険サイトへ誘導される事例を確認 | トレンドマイクロ (JP)
-- Overcoming LLM hallucinations in regulated industries: Artificial Genius’s deterministic models on Amazon Nova
-- Artificial Intelligence at JPMorgan Chase
-- Vibe Coding in Practice
-- Large language model | Definition, History, &amp; Facts
-- Artificial Intelligence, Machine Learning, Deep Learning, and Generative AI — Clearly Explained
-- A trillion dollars is a terrible thing to waste - Marcus on AI
-- Exploring LLMs with MLX and the Neural Accelerators in the M5 GPU
-- A human-centered automated machine learning agent with large language models for multimodal data management and analysis
-- New method could increase LLM training efficiency
-- Stanford AI Experts Predict What Will Happen in 2026
+- 採用AIの差別問題：11億件却下で訴訟に発展
+- 社員2人で2500億円を稼ぐAI企業の衝撃
+- AIに核のボタンを持たせる危険性「フラッシュウォー」
+- MicrosoftがCopilotを「娯楽目的」と警告
+- GoogleがAIベンチマークの致命的な欠陥を指摘
+- 安川電機の人型ロボットがオフィスへ
+- AI時代の医療と家庭医の役割
+- AppleのM5 GPU × MLXによるオンデバイスLLM
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-05.mp3" length="29399853" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-05</guid><pubDate>Sun, 05 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:14</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-07</title><description>2026-04-07のAI関連最新ニュースをお届けします。
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description>
+      <enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="14300205" type="audio/mpeg" />
+      <guid isPermaLink="false">dair-2026-04-08</guid>
+      <pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate>
+      <itunes:duration>00:29:47</itunes:duration>
+    </item>
+    <item>
+      <title>デイリーAIラジオ - 2026-04-07</title>
+      <description>2026-04-07のAI関連最新ニュースをお届けします。
 
 【トピック】
 - 論文査読で生成AIを使ってもよい？各出版社の考えは
@@ -59,102 +57,26 @@
 ニュースソース: Google News
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-07.mp3" length="13938669" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-07</guid><pubDate>Tue, 07 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:29:02</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-08</title><description>2026-04-08のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 「採用AIに差別された」誰が責任負う？ 11億件却下で訴訟も
-- 【AI駆使】社員わずか2人で2500億円稼ぐやつらが登場した
-- High school textbooks to teach various aspects of generative AI
-- 太陽誘電：AI社会を「内から」支える、世界初の高性能MLCC
-- AI技術の発達で診療はどうなる？最新研究から見るAI汎用化時代の医療、家庭医にしかできない役割とは（Wedge（ウェッジ））
-- MicrosoftはCopilotを「娯楽目的のもので、重要な助言では頼らないこと」と警告している
-- AI評価の「多数決」はもう限界？Googleが指摘するベンチマークの致命的な欠陥
-- AI技術の発達で診療はどうなる？最新研究から見るAI汎用化時代の医療、家庭医にしかできない役割とは
-- AIに核のボタンを持たせたら 「フラッシュウォー」が人間置き去り
-- 安川電機、人型ロボをオフィスへ フィジカルAIで「臨機応変」実現
-- Overcoming LLM hallucinations in regulated industries: Artificial Genius’s deterministic models on Amazon Nova
-- The Three Ages of Data Science: When to Use Traditional Machine Learning, Deep Learning, or a LLM (Explained with One Example)
-- A trillion dollars is a terrible thing to waste - Marcus on AI
-- A human-centered automated machine learning agent with large language models for multimodal data management and analysis
-- Exploring LLMs with MLX and the Neural Accelerators in the M5 GPU
-- Vibe Coding in Practice
-- Machine learning and generative AI: What are they good for in 2025?
-- Open-source AI tool beats giant LLMs in literature reviews — and gets citations right
-- Stanford AI Experts Predict What Will Happen in 2026
-- TurboQuant: Redefining AI efficiency with extreme compression
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description>
+      <enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-07.mp3" length="13938669" type="audio/mpeg" />
+      <guid isPermaLink="false">dair-2026-04-07</guid>
+      <pubDate>Tue, 07 Apr 2026 14:00:00 GMT</pubDate>
+      <itunes:duration>00:29:02</itunes:duration>
+    </item>
+    <item>
+      <title>デイリーAIラジオ - 2026-04-05</title>
+      <description>2026-04-05のAI関連最新ニュースをお届けします。
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="29299821" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-08</guid><pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:02</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-08</title><description>2026-04-08のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 採用AIの差別問題：11億件却下で訴訟に発展
-- 社員2人で2500億円を稼ぐAI企業の衝撃
-- AIに核のボタンを持たせる危険性「フラッシュウォー」
-- MicrosoftがCopilotを「娯楽目的」と警告
-- GoogleがAIベンチマークの致命的な欠陥を指摘
-- 安川電機の人型ロボットがオフィスへ
-- AI時代の医療と家庭医の役割
-- AppleのM5 GPU × MLXによるオンデバイスLLM
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="7584813" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-08</guid><pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:15:48</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-08</title><description>2026-04-08のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 採用AIの差別問題：11億件却下で訴訟に発展
-- 社員2人で2500億円を稼ぐAI企業の衝撃
-- AIに核のボタンを持たせる危険性「フラッシュウォー」
-- MicrosoftがCopilotを「娯楽目的」と警告
-- GoogleがAIベンチマークの致命的な欠陥を指摘
-- 安川電機の人型ロボットがオフィスへ
-- AI時代の医療と家庭医の役割
-- AppleのM5 GPU × MLXによるオンデバイスLLM
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="7584813" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-08</guid><pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:15:48</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-08</title><description>2026-04-08のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 採用AIの差別問題：11億件却下で訴訟に発展
-- 社員2人で2500億円を稼ぐAI企業の衝撃
-- AIに核のボタンを持たせる危険性「フラッシュウォー」
-- MicrosoftがCopilotを「娯楽目的」と警告
-- GoogleがAIベンチマークの致命的な欠陥を指摘
-- 安川電機の人型ロボットがオフィスへ
-- AI時代の医療と家庭医の役割
-- AppleのM5 GPU × MLXによるオンデバイスLLM
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="10432173" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-08</guid><pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:21:44</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-08</title><description>2026-04-08のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 採用AIの差別問題：11億件却下で訴訟に発展
-- 社員2人で2500億円を稼ぐAI企業の衝撃
-- AIに核のボタンを持たせる危険性「フラッシュウォー」
-- MicrosoftがCopilotを「娯楽目的」と警告
-- GoogleがAIベンチマークの致命的な欠陥を指摘
-- 安川電機の人型ロボットがオフィスへ
-- AI時代の医療と家庭医の役割
-- AppleのM5 GPU × MLXによるオンデバイスLLM
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="14300205" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-08</guid><pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:29:47</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description>
+      <enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-05.mp3" length="29399853" type="audio/mpeg" />
+      <guid isPermaLink="false">dair-2026-04-05</guid>
+      <pubDate>Sun, 05 Apr 2026 14:00:00 GMT</pubDate>
+      <itunes:duration>01:01:14</itunes:duration>
+    </item>
+  </channel>
 </rss>
