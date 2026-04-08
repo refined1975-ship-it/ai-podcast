@@ -1,5 +1,142 @@
-[Wed Apr  8 01:00:02 JST 2026] Starting local generate...
+[Thu Apr  9 01:00:03 JST 2026] Starting local generate...
 From https://github.com/refined1975-ship-it/ai-podcast
  * branch            main       -> FETCH_HEAD
 Already up to date.
-[Wed Apr  8 01:00:04 JST 2026] FAIL: No pending script found. Exiting.
+[Thu Apr  9 01:00:06 JST 2026] Script: 11846 characters
+[Thu Apr  9 01:00:06 JST 2026] Found pending script. Generating audio...
+Loading script from /Users/sokabejunichi/ai-podcast/scripts/pending_script.json...
+Script: 127 segments, 11846 characters
+Generating audio...
+  [female] 1/127 done
+  [male] 2/127 done
+  [female] 3/127 done
+  [female] 4/127 done
+  [male] 5/127 done
+  [female] 6/127 done
+  [male] 7/127 done
+  [female] 8/127 done
+  [male] 9/127 done
+  [female] 10/127 done
+  [male] 11/127 done
+  [female] 12/127 done
+  [male] 13/127 done
+  [female] 14/127 done
+  [male] 15/127 done
+  [male] 16/127 done
+  [female] 17/127 done
+  [female] 18/127 done
+  [male] 19/127 done
+  [female] 20/127 done
+  [male] 21/127 done
+  [female] 22/127 done
+  [male] 23/127 done
+  [female] 24/127 done
+  [male] 25/127 done
+  [female] 26/127 done
+  [male] 27/127 done
+  [female] 28/127 done
+  [male] 29/127 done
+  [female] 30/127 done
+  [male] 31/127 done
+  [female] 32/127 done
+  [female] 33/127 done
+  [male] 34/127 done
+  [female] 35/127 done
+  [male] 36/127 done
+  [female] 37/127 done
+  [male] 38/127 done
+  [female] 39/127 done
+  [male] 40/127 done
+  [female] 41/127 done
+  [male] 42/127 done
+  [female] 43/127 done
+  [male] 44/127 done
+  [female] 45/127 done
+  [male] 46/127 done
+  [female] 47/127 done
+  [female] 48/127 done
+  [male] 49/127 done
+  [female] 50/127 done
+  [male] 51/127 done
+  [female] 52/127 done
+  [male] 53/127 done
+  [female] 54/127 done
+  [male] 55/127 done
+  [female] 56/127 done
+  [male] 57/127 done
+  [female] 58/127 done
+  [male] 59/127 done
+  [female] 60/127 done
+  [female] 61/127 done
+  [male] 62/127 done
+  [female] 63/127 done
+  [male] 64/127 done
+  [female] 65/127 done
+  [male] 66/127 done
+  [female] 67/127 done
+  [male] 68/127 done
+  [female] 69/127 done
+  [male] 70/127 done
+  [female] 71/127 done
+  [male] 72/127 done
+  [female] 73/127 done
+  [male] 74/127 done
+  [female] 75/127 done
+  [male] 76/127 done
+  [female] 77/127 done
+  [male] 78/127 done
+  [female] 79/127 done
+  [male] 80/127 done
+  [female] 81/127 done
+  [male] 82/127 done
+  [female] 83/127 done
+  [male] 84/127 done
+  [female] 85/127 done
+  [male] 86/127 done
+  [female] 87/127 done
+  [male] 88/127 done
+  [female] 89/127 done
+  [male] 90/127 done
+  [female] 91/127 done
+  [male] 92/127 done
+  [female] 93/127 done
+  [male] 94/127 done
+  [female] 95/127 done
+  [male] 96/127 done
+  [female] 97/127 done
+  [male] 98/127 done
+  [female] 99/127 done
+  [male] 100/127 done
+  [female] 101/127 done
+  [male] 102/127 done
+  [female] 103/127 done
+  [male] 104/127 done
+  [female] 105/127 done
+  [male] 106/127 done
+  [female] 107/127 done
+  [male] 108/127 done
+  [female] 109/127 done
+  [male] 110/127 done
+  [female] 111/127 done
+  [male] 112/127 done
+  [male] 113/127 done
+  [female] 114/127 done
+  [male] 115/127 done
+  [female] 116/127 done
+  [male] 117/127 done
+  [female] 118/127 done
+  [male] 119/127 done
+  [female] 120/127 done
+  [male] 121/127 done
+  [female] 122/127 done
+  [male] 123/127 done
+  [female] 124/127 done
+  [male] 125/127 done
+  [female] 126/127 done
+  [male] 127/127 done
+Audio generated: episode-2026-04-09.mp3 (13.6 MB, ~29 min)
+Updating feed...
+Cleaning up old episodes...
+Done!
+[Thu Apr  9 01:01:24 JST 2026] MP3: 14300205 bytes
+[Thu Apr  9 01:01:24 JST 2026] Feed: OK (episode 2026-04-09 found)
