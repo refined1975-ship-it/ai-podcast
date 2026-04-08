@@ -43,6 +43,9 @@ h1 { font-size: 22px; color: #fff; }
 .va-del:active { background: #222; }
 .va-empty { text-align: center; color: #555; font-size: 13px; padding: 30px 0; }
 .va-playing { border-color: #ff6b35; }
+.va-cache { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #333; background: none; color: #666; font-size: 12px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.va-cache:active { background: #222; }
+.va-cache.cached { color: #34c759; border-color: #34c759; }
 .va-player { position: sticky; bottom: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; display: none; }
 .va-player audio { width: 100%; filter: invert(1); }
 .va-player-title { font-size: 12px; color: #aaa; margin-bottom: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -158,6 +161,8 @@ async function findServer() {
   }
 }
 
+const CACHE_NAME = 'dair-v3';
+
 // YouTube音声
 let vaCurrentEl = null;
 function loadVideoAudio() {
@@ -183,17 +188,34 @@ function loadVideoAudio() {
         const meta = [chName, dur].filter(Boolean).join(' | ');
         const div = document.createElement('div');
         div.className = 'va-track';
+        const audioUrl = MUSIC_SERVER + '/video-audio/' + encodeURIComponent(fname);
+        div.dataset.url = audioUrl;
         div.innerHTML = `
           <button class="va-play">▶</button>
           <div class="va-info">
             <div class="va-title">${t.title}</div>
             <div class="va-meta">${meta}</div>
           </div>
+          <button class="va-cache">↓</button>
         `;
+        // キャッシュ状態チェック
+        const cacheBtn = div.querySelector('.va-cache');
+        caches.open(CACHE_NAME).then(c => c.match(audioUrl)).then(r => {
+          if (r) { cacheBtn.textContent = '✓'; cacheBtn.classList.add('cached'); }
+        });
+        cacheBtn.addEventListener('click', () => {
+          if (cacheBtn.classList.contains('cached')) {
+            navigator.serviceWorker?.controller?.postMessage({ type: 'DELETE_CACHE', url: audioUrl });
+            cacheBtn.textContent = '↓'; cacheBtn.classList.remove('cached');
+          } else {
+            cacheBtn.textContent = '…';
+            navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: audioUrl });
+          }
+        });
         div.querySelector('.va-play').addEventListener('click', () => {
           const audio = document.getElementById('va-audio');
           const player = document.getElementById('va-player');
-          const url = MUSIC_SERVER + '/video-audio/' + encodeURIComponent(t.id.replace('video-audio/', ''));
+          const url = audioUrl;
           if (vaCurrentEl) vaCurrentEl.classList.remove('va-playing');
           div.classList.add('va-playing');
           vaCurrentEl = div;
@@ -384,11 +406,15 @@ if (navigator.standalone === false) {
 // Listen for cache completion messages from SW
 navigator.serviceWorker?.addEventListener('message', event => {
   if (event.data.type === 'CACHE_DONE') {
+    // ポッドキャスト
     const btn = document.querySelector(`[data-url="${event.data.url}"]`);
-    if (btn) {
-      btn.textContent = '✓ 保存済み';
-      btn.classList.add('cached');
-    }
+    if (btn) { btn.textContent = '✓ 保存済み'; btn.classList.add('cached'); }
+    // YouTube音声
+    document.querySelectorAll('.va-cache').forEach(cb => {
+      if (cb.closest('.va-track')?.dataset.url === event.data.url) {
+        cb.textContent = '✓'; cb.classList.add('cached');
+      }
+    });
   }
   if (event.data.type === 'CACHE_ERROR') {
     const btn = document.querySelector(`[data-url="${event.data.url}"]`);

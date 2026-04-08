@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dair-v2';
+const CACHE_NAME = 'dair-v3';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => {
@@ -10,8 +10,8 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // MP3: only serve from cache (downloaded manually), never auto-cache
-  if (event.request.url.endsWith('.mp3')) {
+  // MP3/M4A: only serve from cache (downloaded manually), never auto-cache
+  if (event.request.url.endsWith('.mp3') || event.request.url.includes('/video-audio/')) {
     event.respondWith(
       caches.match(event.request).then(cached => cached || fetch(event.request))
     );
