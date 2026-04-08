@@ -137,11 +137,26 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-    if (tab.dataset.tab === 'youtube') { loadVideoAudio(); loadChannels(); }
+    if (tab.dataset.tab === 'youtube') { findServer().then(() => { loadVideoAudio(); loadChannels(); }); }
   });
 });
 
-const MUSIC_SERVER = 'http://localhost:8888';
+// ローカルサーバー接続
+let MUSIC_SERVER = '';
+async function findServer() {
+  const candidates = [
+    'https://192.168.10.14:8443',
+    'https://localhost:8443',
+    'http://localhost:8888',
+  ];
+  for (const url of candidates) {
+    try {
+      await fetch(url + '/api/watchlist', {signal: AbortSignal.timeout(2000)});
+      MUSIC_SERVER = url;
+      return;
+    } catch {}
+  }
+}
 
 // YouTube音声
 let vaCurrentEl = null;
