@@ -292,9 +292,17 @@ if (navigator.standalone === false) {
 // Listen for cache completion messages from SW
 navigator.serviceWorker?.addEventListener('message', event => {
   if (event.data.type === 'CACHE_DONE') {
-    // ポッドキャスト
+    // ポッドキャスト: キャッシュ完了 → blob URLに切り替え
     const epCache = document.querySelector(`.ep-cache[data-url="${event.data.url}"]`);
-    if (epCache) { epCache.textContent = '✓ 保存済み'; epCache.style.color = '#34c759'; }
+    if (epCache) {
+      epCache.textContent = '✓ 保存済み'; epCache.style.color = '#34c759';
+      const epAudio = epCache.closest('.episode')?.querySelector('audio');
+      if (epAudio && !epAudio.currentTime) {
+        caches.open(CACHE_NAME).then(c => c.match(event.data.url))
+          .then(r => r ? r.blob() : null)
+          .then(blob => { if (blob) epAudio.src = URL.createObjectURL(blob); });
+      }
+    }
     // YouTube音声
     document.querySelectorAll('.va-cache').forEach(cb => {
       if (cb.closest('.va-track')?.dataset.vaUrl === event.data.url) {
@@ -479,39 +487,28 @@ fetch('feed.xml')
       `;
       container.appendChild(div);
 
-      // 自動キャッシュ
+      // 自動キャッシュ → blob URLをsrcにプリセット
       const cacheIcon = div.querySelector('.ep-cache');
+      const audio = div.querySelector('audio');
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(url);
       if (cached) {
         cacheIcon.textContent = '✓ 保存済み';
         cacheIcon.style.color = '#34c759';
+        // blobとしてsrcにセット（iOS画面オフ対策）
+        const blob = await cached.blob();
+        audio.src = URL.createObjectURL(blob);
       } else {
+        // まずURLをセット、キャッシュ完了後にblob切り替え
+        audio.src = url;
         navigator.serviceWorker?.controller?.postMessage({
           type: 'CACHE_MP3',
           url: url
         });
       }
 
-      // iOS: silenceでunlock + blob再生
-      const audio = div.querySelector('audio');
-      let loaded = false;
-      audio.addEventListener('play', (e) => {
-        if (!loaded) {
-          e.preventDefault();
-          audio.src = SILENCE;
-          audio.play().catch(() => {});
-          caches.open(CACHE_NAME)
-            .then(c => c.match(url))
-            .then(r => r ? r.blob() : fetch(url).then(r => r.blob()))
-            .then(blob => {
-              loaded = true;
-              audio._blobUrl = URL.createObjectURL(blob);
-              audio.src = audio._blobUrl;
-              audio.play();
-            });
-          return;
-        }
+      // MediaSession
+      audio.addEventListener('play', () => {
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: title,
