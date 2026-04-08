@@ -225,6 +225,15 @@ function loadVideoAudio() {
         });
         list.appendChild(div);
       });
+      // 自動連続再生
+      const vaAudio = document.getElementById('va-audio');
+      vaAudio.onended = () => {
+        if (!vaCurrentEl) return;
+        const next = vaCurrentEl.nextElementSibling;
+        if (next && next.classList.contains('va-track')) {
+          next.querySelector('.va-play').click();
+        }
+      };
     })
     .catch(() => {
       list.innerHTML = '<div class="va-empty">サーバーに接続できません（Wi-Fi接続時のみ）</div>';
