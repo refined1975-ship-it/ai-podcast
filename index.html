@@ -28,6 +28,24 @@ h1 { font-size: 22px; color: #fff; }
 .dl-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
 .dl-btn:active { background: #222; }
 .dl-btn.cached { color: #34c759; border-color: #34c759; }
+.tabs { display: flex; border-bottom: 1px solid #222; margin-bottom: 16px; }
+.tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; color: #666; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #fff; border-bottom-color: #ff6b35; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.va-track { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #222; border-radius: 10px; background: #111; margin-bottom: 8px; }
+.va-info { flex: 1; min-width: 0; }
+.va-title { font-size: 14px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.va-meta { font-size: 12px; color: #888; margin-top: 2px; }
+.va-play { width: 36px; height: 36px; border-radius: 50%; border: none; background: #ff6b35; color: #fff; font-size: 16px; cursor: pointer; flex-shrink: 0; }
+.va-play:active { background: #e55a2a; }
+.va-del { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #333; background: none; color: #666; font-size: 14px; cursor: pointer; flex-shrink: 0; }
+.va-del:active { background: #222; }
+.va-empty { text-align: center; color: #555; font-size: 13px; padding: 30px 0; }
+.va-playing { border-color: #ff6b35; }
+.va-player { position: sticky; bottom: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; display: none; }
+.va-player audio { width: 100%; filter: invert(1); }
+.va-player-title { font-size: 12px; color: #aaa; margin-bottom: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .disclaimer { margin-top: 24px; padding: 12px; background: #111; border-radius: 8px; font-size: 12px; color: #555; text-align: center; }
 .install-hint { margin-top: 16px; padding: 12px; background: #111; border-radius: 8px; font-size: 13px; color: #555; text-align: center; display: none; }
 .reload-btn { margin-top: 8px; padding: 6px 16px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
@@ -42,7 +60,22 @@ h1 { font-size: 22px; color: #fff; }
   <button class="reload-btn" onclick="location.reload()">↻ 更新</button>
 </header>
 
-<div id="episodes"></div>
+<div class="tabs">
+  <div class="tab active" data-tab="radio">ラジオ</div>
+  <div class="tab" data-tab="youtube">YouTube音声</div>
+</div>
+
+<div class="tab-content active" id="tab-radio">
+  <div id="episodes"></div>
+</div>
+
+<div class="tab-content" id="tab-youtube">
+  <div id="va-list"></div>
+  <div class="va-player" id="va-player">
+    <div class="va-player-title" id="va-player-title"></div>
+    <audio controls id="va-audio"></audio>
+  </div>
+</div>
 
 <div class="disclaimer">
   AI自動生成のため内容の正確性は保証されません
@@ -53,6 +86,82 @@ h1 { font-size: 22px; color: #fff; }
 </div>
 
 <script>
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'youtube') loadVideoAudio();
+  });
+});
+
+const MUSIC_SERVER = 'http://localhost:8888';
+
+// YouTube音声
+let vaCurrentEl = null;
+function loadVideoAudio() {
+  const list = document.getElementById('va-list');
+  fetch(MUSIC_SERVER + '/api/video-audio')
+    .then(r => r.json())
+    .then(tracks => {
+      list.innerHTML = '';
+      if (tracks.length === 0) {
+        list.innerHTML = '<div class="va-empty">YouTube音声はありません</div>';
+        return;
+      }
+      tracks.sort((a, b) => b.mtime - a.mtime);
+      tracks.forEach(t => {
+        const dur = t.duration ? Math.floor(t.duration / 60) + '分' : '';
+        const div = document.createElement('div');
+        div.className = 'va-track';
+        div.innerHTML = `
+          <button class="va-play">▶</button>
+          <div class="va-info">
+            <div class="va-title">${t.title}</div>
+            <div class="va-meta">${dur}</div>
+          </div>
+          <button class="va-del">✕</button>
+        `;
+        div.querySelector('.va-play').addEventListener('click', () => {
+          const audio = document.getElementById('va-audio');
+          const player = document.getElementById('va-player');
+          const url = MUSIC_SERVER + '/video-audio/' + encodeURIComponent(t.id.replace('video-audio/', ''));
+          if (vaCurrentEl) vaCurrentEl.classList.remove('va-playing');
+          div.classList.add('va-playing');
+          vaCurrentEl = div;
+          audio.src = url;
+          audio.play();
+          player.style.display = 'block';
+          document.getElementById('va-player-title').textContent = t.title;
+          if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title: t.title, artist: 'YouTube', album: 'YouTube音声'
+            });
+          }
+        });
+        div.querySelector('.va-del').addEventListener('click', () => {
+          if (!confirm('「' + t.title + '」を削除しますか？')) return;
+          fetch(MUSIC_SERVER + '/api/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: t.id })
+          }).then(() => {
+            div.remove();
+            if (list.children.length === 0) {
+              list.innerHTML = '<div class="va-empty">YouTube音声はありません</div>';
+            }
+          });
+        });
+        list.appendChild(div);
+      });
+    })
+    .catch(() => {
+      list.innerHTML = '<div class="va-empty">サーバーに接続できません（Wi-Fi接続時のみ）</div>';
+    });
+}
+
 // Service Worker
 let swReady;
 if ('serviceWorker' in navigator) {
