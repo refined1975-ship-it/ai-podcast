@@ -145,6 +145,7 @@ async function findServer() {
 }
 
 const CACHE_NAME = 'dair-v3';
+const SILENCE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
 
 // YouTube音声
 let vaCurrentEl = null;
@@ -202,13 +203,19 @@ function renderVaTracks(tracks, wl) {
         navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); });
         navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
       }
-      // blobとしてメモリに読み込んでから再生（iOS lock screen対策）
-      fetch(audioUrl).then(r => r.blob()).then(blob => {
-        if (audio._blobUrl) URL.revokeObjectURL(audio._blobUrl);
-        audio._blobUrl = URL.createObjectURL(blob);
-        audio.src = audio._blobUrl;
-        audio.play();
-      });
+      // iOS: silenceを同期再生してaudio要素をunlock
+      if (audio._blobUrl) URL.revokeObjectURL(audio._blobUrl);
+      audio.src = SILENCE;
+      audio.play().catch(() => {});
+      // blob再生
+      caches.open(CACHE_NAME)
+        .then(c => c.match(audioUrl))
+        .then(r => r ? r.blob() : fetch(audioUrl).then(r => r.blob()))
+        .then(blob => {
+          audio._blobUrl = URL.createObjectURL(blob);
+          audio.src = audio._blobUrl;
+          audio.play();
+        });
     });
     list.appendChild(div);
   });
@@ -475,18 +482,23 @@ fetch('feed.xml')
         });
       }
 
-      // blob再生（iOSロック画面対策）+ MediaSession
+      // iOS: silenceでunlock + blob再生
       const audio = div.querySelector('audio');
-      let blobUrl = null;
+      let loaded = false;
       audio.addEventListener('play', (e) => {
-        if (!blobUrl) {
+        if (!loaded) {
           e.preventDefault();
-          audio.pause();
-          fetch(url).then(r => r.blob()).then(blob => {
-            blobUrl = URL.createObjectURL(blob);
-            audio.src = blobUrl;
-            audio.play();
-          });
+          audio.src = SILENCE;
+          audio.play().catch(() => {});
+          caches.open(CACHE_NAME)
+            .then(c => c.match(url))
+            .then(r => r ? r.blob() : fetch(url).then(r => r.blob()))
+            .then(blob => {
+              loaded = true;
+              audio._blobUrl = URL.createObjectURL(blob);
+              audio.src = audio._blobUrl;
+              audio.play();
+            });
           return;
         }
         if ('mediaSession' in navigator) {
