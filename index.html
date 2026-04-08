@@ -12,38 +12,39 @@
 <title>デイリーAIラジオ</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, sans-serif; background: #0a0a0a; color: #eee; max-width: 700px; margin: 0 auto; padding: 20px; padding-top: env(safe-area-inset-top, 20px); }
+body { font-family: -apple-system, sans-serif; background: #0a0a0a; color: #eee; max-width: 700px; margin: 0 auto; padding: 20px; padding-top: env(safe-area-inset-top, 20px); padding-bottom: 120px; }
 header { text-align: center; padding: 20px 0; border-bottom: 1px solid #222; margin-bottom: 20px; }
 header img { width: 120px; height: 120px; border-radius: 16px; margin-bottom: 12px; }
 h1 { font-size: 22px; color: #fff; }
 .subtitle { color: #666; font-size: 14px; margin-top: 4px; }
-.episode { border: 1px solid #222; border-radius: 12px; padding: 16px; margin-bottom: 12px; background: #111; }
-.episode h2 { font-size: 16px; margin-bottom: 6px; color: #fff; }
-.episode .meta { color: #888; font-size: 13px; margin-bottom: 10px; }
-.episode audio { width: 100%; margin-bottom: 10px; filter: invert(1); }
-.episode details { font-size: 13px; color: #aaa; }
-.episode summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; color: #ccc; }
-.episode .desc { white-space: pre-wrap; font-family: inherit; margin-top: 6px; line-height: 1.6; font-size: 13px; }
 .tabs { display: flex; border-bottom: 1px solid #222; margin-bottom: 16px; }
 .tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; color: #666; cursor: pointer; border-bottom: 2px solid transparent; }
 .tab.active { color: #fff; border-bottom-color: #ff6b35; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.va-track { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #222; border-radius: 10px; background: #111; margin-bottom: 8px; }
-.va-info { flex: 1; min-width: 0; }
-.va-title { font-size: 14px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.va-meta { font-size: 12px; color: #888; margin-top: 2px; }
-.va-play { width: 36px; height: 36px; border-radius: 50%; border: none; background: #ff6b35; color: #fff; font-size: 16px; cursor: pointer; flex-shrink: 0; }
-.va-play:active { background: #e55a2a; }
-.va-del { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #333; background: none; color: #666; font-size: 14px; cursor: pointer; flex-shrink: 0; }
-.va-del:active { background: #222; }
+.track { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #222; border-radius: 10px; background: #111; margin-bottom: 8px; cursor: pointer; }
+.track:active { background: #1a1a1a; }
+.track.playing { border-color: #ff6b35; }
+.track-play { width: 36px; height: 36px; border-radius: 50%; border: none; background: #ff6b35; color: #fff; font-size: 16px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.track-play:active { background: #e55a2a; }
+.track-info { flex: 1; min-width: 0; }
+.track-title { font-size: 14px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track-meta { font-size: 12px; color: #888; margin-top: 2px; }
+.track-cache { font-size: 12px; color: transparent; flex-shrink: 0; }
+.track-cache.cached { color: #34c759; }
+.ep-details { font-size: 13px; color: #aaa; margin-top: -4px; margin-bottom: 8px; padding: 0 12px; }
+.ep-details summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; color: #ccc; }
+.ep-details .desc { white-space: pre-wrap; font-family: inherit; margin-top: 6px; line-height: 1.6; font-size: 13px; }
 .va-empty { text-align: center; color: #555; font-size: 13px; padding: 30px 0; }
-.va-playing { border-color: #ff6b35; }
-.va-cache { font-size: 12px; color: transparent; flex-shrink: 0; }
-.va-cache.cached { color: #34c759; }
-.va-player { position: sticky; bottom: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; display: none; }
-.va-player audio { width: 100%; filter: invert(1); }
-.va-player-title { font-size: 12px; color: #aaa; margin-bottom: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player { position: fixed; bottom: 0; left: 0; right: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 16px; display: none; z-index: 100; }
+.player.active { display: block; }
+.player-title { font-size: 12px; color: #aaa; margin-bottom: 6px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player-controls { display: flex; align-items: center; gap: 12px; }
+.player-btn { width: 36px; height: 36px; border-radius: 50%; border: none; background: #ff6b35; color: #fff; font-size: 18px; cursor: pointer; flex-shrink: 0; }
+.player-btn:active { background: #e55a2a; }
+.player-progress { flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative; cursor: pointer; }
+.player-progress-fill { height: 100%; background: #ff6b35; border-radius: 2px; width: 0%; }
+.player-time { font-size: 11px; color: #666; flex-shrink: 0; }
 .ch-section { margin-top: 20px; border-top: 1px solid #222; padding-top: 16px; }
 .ch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .ch-header h3 { font-size: 14px; color: #aaa; }
@@ -101,11 +102,20 @@ h1 { font-size: 22px; color: #fff; }
     </div>
     <div id="ch-list"></div>
   </div>
-  <div class="va-player" id="va-player">
-    <div class="va-player-title" id="va-player-title"></div>
-    <audio controls id="va-audio"></audio>
+</div>
+
+<!-- 共有プレーヤー（music-playerと同じ: audio要素1つ、controls無し） -->
+<div class="player" id="player">
+  <div class="player-title" id="playerTitle">-</div>
+  <div class="player-controls">
+    <button class="player-btn" id="playerBtn">▶</button>
+    <div class="player-progress" id="playerProgress">
+      <div class="player-progress-fill" id="playerFill"></div>
+    </div>
+    <span class="player-time" id="playerTime">0:00</span>
   </div>
 </div>
+<audio id="audio"></audio>
 
 <div class="disclaimer">
   AI自動生成のため内容の正確性は保証されません
@@ -116,6 +126,88 @@ h1 { font-size: 22px; color: #fff; }
 </div>
 
 <script>
+const CACHE_NAME = 'dair-v3';
+const SILENCE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
+const audio = document.getElementById('audio');
+const player = document.getElementById('player');
+const playerTitle = document.getElementById('playerTitle');
+const playerBtn = document.getElementById('playerBtn');
+const playerFill = document.getElementById('playerFill');
+const playerTime = document.getElementById('playerTime');
+let currentTrackEl = null;
+
+function fmt(s) { const m = Math.floor(s / 60); return m + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
+
+// 共有プレーヤー: music-playerと同じsilence unlock + blob再生
+function playUrl(url, title, artist) {
+  if (audio._blobUrl) { URL.revokeObjectURL(audio._blobUrl); audio._blobUrl = null; }
+
+  playerTitle.textContent = title;
+  playerBtn.textContent = '⏸';
+  player.classList.add('active');
+
+  // iOS: silenceを同期再生してunlock
+  audio.src = SILENCE;
+  audio.play().catch(() => {});
+
+  // blob再生
+  caches.open(CACHE_NAME)
+    .then(c => c.match(url, {ignoreSearch: true}))
+    .then(r => r ? r.blob() : fetch(url).then(r => r.blob()))
+    .then(blob => {
+      audio._blobUrl = URL.createObjectURL(blob);
+      audio.src = audio._blobUrl;
+      return audio.play();
+    })
+    .catch(() => {
+      audio.src = url;
+      audio.play().catch(() => {});
+    });
+
+  // MediaSession
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title,
+      artist: artist,
+      album: artist,
+      artwork: [
+        { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
+    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+    navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); });
+    navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
+  }
+}
+
+// プレーヤーUI
+playerBtn.addEventListener('click', () => {
+  if (audio.paused) { audio.play(); } else { audio.pause(); }
+});
+audio.addEventListener('play', () => { playerBtn.textContent = '⏸'; });
+audio.addEventListener('pause', () => { playerBtn.textContent = '▶'; });
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    playerFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    playerTime.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime,
+        });
+      } catch(e) {}
+    }
+  }
+});
+document.getElementById('playerProgress').addEventListener('click', (e) => {
+  if (audio.duration) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+  }
+});
+
 // Tabs
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -144,11 +236,7 @@ async function findServer() {
   }
 }
 
-const CACHE_NAME = 'dair-v3';
-const SILENCE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
-
 // YouTube音声
-let vaCurrentEl = null;
 function renderVaTracks(tracks, wl) {
   const list = document.getElementById('va-list');
   list.innerHTML = '';
@@ -159,26 +247,28 @@ function renderVaTracks(tracks, wl) {
   const chMap = {};
   wl.forEach(w => { if (w.current_file) chMap[w.current_file] = w.name; });
   tracks.sort((a, b) => b.mtime - a.mtime);
-  // MUSIC_SERVERがない（オフライン）場合、保存済みURLを使う
   const server = MUSIC_SERVER || localStorage.getItem('va_server') || '';
-  tracks.forEach(t => {
+  tracks.forEach((t, idx) => {
     const dur = t.duration ? Math.floor(t.duration / 60) + '分' : '';
     const fname = t.id.replace('video-audio/', '');
     const chName = chMap[fname] || '';
     const meta = [chName, dur].filter(Boolean).join(' | ');
     const div = document.createElement('div');
-    div.className = 'va-track';
+    div.className = 'track';
     const audioUrl = server + '/video-audio/' + encodeURIComponent(fname);
-    div.dataset.vaUrl = audioUrl;
+    div.dataset.url = audioUrl;
+    div.dataset.title = t.title;
+    div.dataset.artist = chName || 'YouTube';
+    div.dataset.type = 'va';
     div.innerHTML = `
-      <button class="va-play">▶</button>
-      <div class="va-info">
-        <div class="va-title">${t.title}</div>
-        <div class="va-meta">${meta}</div>
+      <div class="track-play">▶</div>
+      <div class="track-info">
+        <div class="track-title">${t.title}</div>
+        <div class="track-meta">${meta}</div>
       </div>
-      <span class="va-cache"></span>
+      <span class="track-cache"></span>
     `;
-    const cacheIcon = div.querySelector('.va-cache');
+    const cacheIcon = div.querySelector('.track-cache');
     caches.open(CACHE_NAME).then(c => c.match(audioUrl)).then(r => {
       if (r) {
         cacheIcon.textContent = '✓'; cacheIcon.classList.add('cached');
@@ -186,62 +276,25 @@ function renderVaTracks(tracks, wl) {
         navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: audioUrl });
       }
     });
-    div.querySelector('.va-play').addEventListener('click', () => {
-      const audio = document.getElementById('va-audio');
-      const player = document.getElementById('va-player');
-      if (vaCurrentEl) vaCurrentEl.classList.remove('va-playing');
-      div.classList.add('va-playing');
-      vaCurrentEl = div;
-      player.style.display = 'block';
-      document.getElementById('va-player-title').textContent = t.title;
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: t.title, artist: chName || 'YouTube', album: 'YouTube音声'
-        });
-        navigator.mediaSession.setActionHandler('play', () => audio.play());
-        navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-        navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); });
-        navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
-      }
-      // iOS: silenceを同期再生してaudio要素をunlock
-      if (audio._blobUrl) URL.revokeObjectURL(audio._blobUrl);
-      audio.src = SILENCE;
-      audio.play().catch(() => {});
-      // blob再生
-      caches.open(CACHE_NAME)
-        .then(c => c.match(audioUrl))
-        .then(r => r ? r.blob() : fetch(audioUrl).then(r => r.blob()))
-        .then(blob => {
-          audio._blobUrl = URL.createObjectURL(blob);
-          audio.src = audio._blobUrl;
-          audio.play();
-        });
+    div.addEventListener('click', () => {
+      if (currentTrackEl) currentTrackEl.classList.remove('playing');
+      div.classList.add('playing');
+      currentTrackEl = div;
+      playUrl(audioUrl, t.title, chName || 'YouTube');
     });
     list.appendChild(div);
   });
-  const vaAudio = document.getElementById('va-audio');
-  vaAudio.ontimeupdate = () => {
-    if (vaAudio.duration && 'mediaSession' in navigator && navigator.mediaSession.setPositionState) {
-      try {
-        navigator.mediaSession.setPositionState({
-          duration: vaAudio.duration,
-          playbackRate: vaAudio.playbackRate,
-          position: vaAudio.currentTime,
-        });
-      } catch(e) {}
-    }
-  };
-  vaAudio.onended = () => {
-    if (!vaCurrentEl) return;
-    const next = vaCurrentEl.nextElementSibling;
-    if (next && next.classList.contains('va-track')) {
-      next.querySelector('.va-play').click();
+  // 連続再生
+  audio.onended = () => {
+    if (!currentTrackEl) return;
+    const next = currentTrackEl.nextElementSibling;
+    if (next && next.classList.contains('track') && next.dataset.type === 'va') {
+      next.click();
     }
   };
 }
 
 function loadVideoAudio() {
-  // オフライン: localStorageから表示
   if (!MUSIC_SERVER) {
     const cached = localStorage.getItem('va_tracks');
     const cachedWl = localStorage.getItem('va_watchlist');
@@ -252,7 +305,6 @@ function loadVideoAudio() {
     }
     return;
   }
-  const list = document.getElementById('va-list');
   Promise.all([
     fetch(MUSIC_SERVER + '/api/video-audio').then(r => r.json()),
     fetch(MUSIC_SERVER + '/api/watchlist').then(r => r.json()).catch(() => [])
@@ -264,51 +316,38 @@ function loadVideoAudio() {
       renderVaTracks(tracks, wl);
     })
     .catch(() => {
-      // サーバー接続失敗→キャッシュから表示
       const cached = localStorage.getItem('va_tracks');
       const cachedWl = localStorage.getItem('va_watchlist');
       if (cached) {
         renderVaTracks(JSON.parse(cached), cachedWl ? JSON.parse(cachedWl) : []);
       } else {
-        list.innerHTML = '<div class="va-empty">Wi-Fi接続時にデータを取得してください</div>';
+        document.getElementById('va-list').innerHTML = '<div class="va-empty">Wi-Fi接続時にデータを取得してください</div>';
       }
     });
 }
 
-
 // Service Worker
-let swReady;
 if ('serviceWorker' in navigator) {
-  swReady = navigator.serviceWorker.register('sw.js').then(reg => {
-    return navigator.serviceWorker.ready;
-  });
+  navigator.serviceWorker.register('sw.js');
 }
-
-// Show install hint on iOS Safari (not in standalone mode)
 if (navigator.standalone === false) {
   document.getElementById('installHint').style.display = 'block';
 }
 
-// Listen for cache completion messages from SW
+// SW cache完了
 navigator.serviceWorker?.addEventListener('message', event => {
   if (event.data.type === 'CACHE_DONE') {
-    // ポッドキャスト: キャッシュ完了 → blob URLに切り替え
+    document.querySelectorAll(`.track-cache`).forEach(ci => {
+      const trackDiv = ci.closest('.track');
+      if (trackDiv && trackDiv.dataset.url === event.data.url) {
+        ci.textContent = '✓'; ci.classList.add('cached');
+      }
+    });
+    // ラジオのep-cache
     const epCache = document.querySelector(`.ep-cache[data-url="${event.data.url}"]`);
     if (epCache) {
       epCache.textContent = '✓ 保存済み'; epCache.style.color = '#34c759';
-      const epAudio = epCache.closest('.episode')?.querySelector('audio');
-      if (epAudio && !epAudio.currentTime) {
-        caches.open(CACHE_NAME).then(c => c.match(event.data.url))
-          .then(r => r ? r.blob() : null)
-          .then(blob => { if (blob) epAudio.src = URL.createObjectURL(blob); });
-      }
     }
-    // YouTube音声
-    document.querySelectorAll('.va-cache').forEach(cb => {
-      if (cb.closest('.va-track')?.dataset.vaUrl === event.data.url) {
-        cb.textContent = '✓'; cb.classList.add('cached');
-      }
-    });
   }
 });
 
@@ -326,10 +365,7 @@ function loadChannels() {
   }
   fetch(MUSIC_SERVER + '/api/watchlist')
     .then(r => r.json())
-    .then(wl => {
-      watchlist = wl;
-      renderChannels();
-    })
+    .then(wl => { watchlist = wl; renderChannels(); })
     .catch(() => {});
 }
 
@@ -340,15 +376,11 @@ function renderChannels() {
     const div = document.createElement('div');
     div.className = 'ch-item';
     if (chEditMode) {
-      div.innerHTML = `
-        <span class="ch-name">${ch.name}</span>
-        <button class="ch-unsub">解除</button>
-      `;
+      div.innerHTML = `<span class="ch-name">${ch.name}</span><button class="ch-unsub">解除</button>`;
       div.querySelector('.ch-unsub').addEventListener('click', () => {
         if (!confirm('「' + ch.name + '」を解除しますか？')) return;
         fetch(MUSIC_SERVER + '/api/watchlist/delete', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: ch.url })
         }).then(() => { watchlist = watchlist.filter(w => w.url !== ch.url); renderChannels(); });
       });
@@ -379,8 +411,7 @@ document.getElementById('ch-query').addEventListener('input', e => {
   searchTimer = setTimeout(() => {
     document.getElementById('ch-results').innerHTML = '<div class="va-empty">検索中...</div>';
     fetch(MUSIC_SERVER + '/api/yt-search-channels', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ q })
     })
     .then(r => r.json())
@@ -401,47 +432,28 @@ document.getElementById('ch-query').addEventListener('input', e => {
         `;
         if (!already) {
           div.querySelector('.ch-add').addEventListener('click', function() {
-            this.disabled = true;
-            this.textContent = '...';
+            this.disabled = true; this.textContent = '...';
             fetch(MUSIC_SERVER + '/api/watchlist/add', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ url: ch.url, name: ch.name, type: 'audio' })
             })
             .then(r => r.json())
             .then(res => {
               if (res.ok) {
-                this.textContent = '登録済';
-                this.className = 'ch-sub subscribed';
-                watchlist = res.watchlist;
-                loadChannels();
-              } else {
-                this.textContent = res.error || 'エラー';
-              }
+                this.textContent = '登録済'; this.className = 'ch-sub subscribed';
+                watchlist = res.watchlist; loadChannels();
+              } else { this.textContent = res.error || 'エラー'; }
             });
           });
         }
         results.appendChild(div);
       });
     })
-    .catch(() => {
-      document.getElementById('ch-results').innerHTML = '<div class="va-empty">検索失敗</div>';
-    });
+    .catch(() => { document.getElementById('ch-results').innerHTML = '<div class="va-empty">検索失敗</div>'; });
   }, 500);
 });
 
-// Clean up cached MP3s that are no longer in the feed
-async function cleanOldCache(currentUrls) {
-  const cache = await caches.open('dair-v1');
-  const keys = await cache.keys();
-  for (const req of keys) {
-    if (req.url.endsWith('.mp3') && !currentUrls.includes(req.url)) {
-      await cache.delete(req);
-    }
-  }
-}
-
-// Load episodes from feed
+// ラジオ（エピソード一覧）
 fetch('feed.xml')
   .then(r => r.text())
   .then(async xml => {
@@ -449,13 +461,6 @@ fetch('feed.xml')
     const items = doc.querySelectorAll('item');
     const container = document.getElementById('episodes');
 
-    // Collect all current MP3 URLs and clean old cache
-    const currentUrls = Array.from(items).map(item =>
-      item.querySelector('enclosure')?.getAttribute('url') || ''
-    ).filter(Boolean);
-    cleanOldCache(currentUrls);
-
-    // Sort items by pubDate descending (newest first)
     const sortedItems = Array.from(items).sort((a, b) => {
       const da = new Date(a.querySelector('pubDate')?.textContent || 0);
       const db = new Date(b.querySelector('pubDate')?.textContent || 0);
@@ -466,75 +471,52 @@ fetch('feed.xml')
       const title = item.querySelector('title')?.textContent || '';
       const desc = item.querySelector('description')?.textContent || '';
       const url = item.querySelector('enclosure')?.getAttribute('url') || '';
-      const pubDate = item.querySelector('pubDate')?.textContent || '';
       const durRaw = item.getElementsByTagNameNS('http://www.itunes.com/dtds/podcast-1.0.dtd', 'duration')[0]?.textContent || '';
+      const pubDate = item.querySelector('pubDate')?.textContent || '';
       const date = new Date(pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
-      // Convert HH:MM:SS to "XX分" format
       const durParts = durRaw.split(':').map(Number);
       const totalMin = durParts.length === 3 ? durParts[0] * 60 + durParts[1] : durParts[0] || 0;
       const dur = totalMin > 0 ? `${totalMin}分` : durRaw;
 
+      // トラック（タップで共有プレーヤーで再生）
       const div = document.createElement('div');
-      div.className = 'episode';
+      div.className = 'track';
+      div.dataset.url = url;
+      div.dataset.type = 'radio';
       div.innerHTML = `
-        <h2>${title}</h2>
-        <p class="meta">${date} | ${dur} <span class="ep-cache" data-url="${url}"></span></p>
-        <audio controls preload="none"></audio>
-        <details>
-          <summary>詳細</summary>
-          <div class="desc">${desc}</div>
-        </details>
+        <div class="track-play">▶</div>
+        <div class="track-info">
+          <div class="track-title">${title}</div>
+          <div class="track-meta">${date} | ${dur} <span class="ep-cache" data-url="${url}"></span></div>
+        </div>
       `;
       container.appendChild(div);
 
-      // 自動キャッシュ → blob URLをsrcにプリセット
+      // 詳細
+      if (desc) {
+        const details = document.createElement('details');
+        details.className = 'ep-details';
+        details.innerHTML = `<summary>詳細</summary><div class="desc">${desc}</div>`;
+        container.appendChild(details);
+      }
+
+      // 自動キャッシュ
       const cacheIcon = div.querySelector('.ep-cache');
-      const audio = div.querySelector('audio');
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(url);
       if (cached) {
         cacheIcon.textContent = '✓ 保存済み';
         cacheIcon.style.color = '#34c759';
-        // blobとしてsrcにセット（iOS画面オフ対策）
-        const blob = await cached.blob();
-        audio.src = URL.createObjectURL(blob);
       } else {
-        // まずURLをセット、キャッシュ完了後にblob切り替え
-        audio.src = url;
-        navigator.serviceWorker?.controller?.postMessage({
-          type: 'CACHE_MP3',
-          url: url
-        });
+        navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: url });
       }
 
-      // MediaSession
-      audio.addEventListener('play', () => {
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.metadata = new MediaMetadata({
-            title: title,
-            artist: 'デイリーAIラジオ',
-            album: 'デイリーAIラジオ',
-            artwork: [
-              { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-              { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
-            ]
-          });
-          navigator.mediaSession.setActionHandler('play', () => audio.play());
-          navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-          navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); });
-          navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
-        }
-      });
-      audio.addEventListener('timeupdate', () => {
-        if (audio.duration && 'mediaSession' in navigator && navigator.mediaSession.setPositionState) {
-          try {
-            navigator.mediaSession.setPositionState({
-              duration: audio.duration,
-              playbackRate: audio.playbackRate,
-              position: audio.currentTime,
-            });
-          } catch(e) {}
-        }
+      // タップで再生
+      div.addEventListener('click', () => {
+        if (currentTrackEl) currentTrackEl.classList.remove('playing');
+        div.classList.add('playing');
+        currentTrackEl = div;
+        playUrl(url, title, 'デイリーAIラジオ');
       });
     }
   });
