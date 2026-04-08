@@ -46,6 +46,14 @@ h1 { font-size: 22px; color: #fff; }
 .va-player { position: sticky; bottom: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; display: none; }
 .va-player audio { width: 100%; filter: invert(1); }
 .va-player-title { font-size: 12px; color: #aaa; margin-bottom: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.va-dl-bar { margin-bottom: 14px; }
+.va-clip-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #ff6b35; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
+.va-clip-btn:active { background: #e55a2a; }
+.va-clip-btn:disabled { background: #333; color: #666; cursor: default; }
+.va-dl-status { margin-top: 8px; font-size: 12px; color: #888; text-align: center; min-height: 16px; }
+.va-dl-status.ok { color: #34c759; }
+.va-dl-status.err { color: #ff3b30; }
+.va-dl-status.loading { color: #ff9500; }
 .ch-section { margin-top: 20px; border-top: 1px solid #222; padding-top: 16px; }
 .ch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .ch-header h3 { font-size: 14px; color: #aaa; }
@@ -88,6 +96,10 @@ h1 { font-size: 22px; color: #fff; }
 </div>
 
 <div class="tab-content" id="tab-youtube">
+  <div class="va-dl-bar">
+    <button class="va-clip-btn" id="va-check-btn">新着チェック</button>
+    <div class="va-dl-status" id="va-dl-status"></div>
+  </div>
   <div id="va-list"></div>
   <div class="ch-section">
     <div class="ch-header">
@@ -190,6 +202,46 @@ function loadVideoAudio() {
       list.innerHTML = '<div class="va-empty">サーバーに接続できません（Wi-Fi接続時のみ）</div>';
     });
 }
+
+// 新着チェック
+document.getElementById('va-check-btn').addEventListener('click', () => {
+  const btn = document.getElementById('va-check-btn');
+  const status = document.getElementById('va-dl-status');
+  btn.disabled = true;
+  btn.textContent = 'チェック中...';
+  status.textContent = '登録チャンネルを確認中...';
+  status.className = 'va-dl-status loading';
+  fetch(MUSIC_SERVER + '/api/watchlist/check', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  })
+  .then(r => r.json())
+  .then(data => {
+    btn.disabled = false;
+    btn.textContent = '新着チェック';
+    if (data.ok) {
+      if (data.new > 0) {
+        status.textContent = data.new + '件の新着をDL開始';
+        status.className = 'va-dl-status ok';
+        // DL完了を待ってリスト更新
+        setTimeout(() => loadVideoAudio(), 10000);
+      } else {
+        status.textContent = '新着なし';
+        status.className = 'va-dl-status';
+      }
+    } else {
+      status.textContent = data.error || 'エラー';
+      status.className = 'va-dl-status err';
+    }
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = '新着チェック';
+    status.textContent = 'サーバーに接続できません';
+    status.className = 'va-dl-status err';
+  });
+});
 
 // チャンネル管理
 let watchlist = [];
