@@ -220,6 +220,17 @@ function renderVaTracks(tracks, wl) {
     list.appendChild(div);
   });
   const vaAudio = document.getElementById('va-audio');
+  vaAudio.ontimeupdate = () => {
+    if (vaAudio.duration && 'mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: vaAudio.duration,
+          playbackRate: vaAudio.playbackRate,
+          position: vaAudio.currentTime,
+        });
+      } catch(e) {}
+    }
+  };
   vaAudio.onended = () => {
     if (!vaCurrentEl) return;
     const next = vaCurrentEl.nextElementSibling;
@@ -515,6 +526,17 @@ fetch('feed.xml')
           navigator.mediaSession.setActionHandler('pause', () => audio.pause());
           navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); });
           navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime += 30; });
+        }
+      });
+      audio.addEventListener('timeupdate', () => {
+        if (audio.duration && 'mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+          try {
+            navigator.mediaSession.setPositionState({
+              duration: audio.duration,
+              playbackRate: audio.playbackRate,
+              position: audio.currentTime,
+            });
+          } catch(e) {}
         }
       });
     }
