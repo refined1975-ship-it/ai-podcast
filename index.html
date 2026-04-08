@@ -407,7 +407,7 @@ if (navigator.standalone === false) {
 navigator.serviceWorker?.addEventListener('message', event => {
   if (event.data.type === 'CACHE_DONE') {
     // ポッドキャスト
-    const btn = document.querySelector(`[data-url="${event.data.url}"]`);
+    const btn = document.querySelector(`.dl-btn[data-url="${event.data.url}"]`);
     if (btn) { btn.textContent = '✓ 保存済み'; btn.classList.add('cached'); }
     // YouTube音声
     document.querySelectorAll('.va-cache').forEach(cb => {
