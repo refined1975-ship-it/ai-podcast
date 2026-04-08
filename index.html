@@ -230,8 +230,10 @@ function renderVaTracks(tracks, wl) {
 }
 
 function loadVideoAudio() {
-  // オフライン: localStorageから表示
+  // オフライン: localStorageから表示、サーバー専用UIは非表示
   if (!MUSIC_SERVER) {
+    document.querySelector('.va-dl-bar').style.display = 'none';
+    document.querySelector('.ch-section').style.display = 'none';
     const cached = localStorage.getItem('va_tracks');
     const cachedWl = localStorage.getItem('va_watchlist');
     if (cached) {
