@@ -24,10 +24,6 @@ h1 { font-size: 22px; color: #fff; }
 .episode details { font-size: 13px; color: #aaa; }
 .episode summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; color: #ccc; }
 .episode .desc { white-space: pre-wrap; font-family: inherit; margin-top: 6px; line-height: 1.6; font-size: 13px; }
-.ep-actions { display: flex; gap: 8px; margin-bottom: 10px; }
-.dl-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
-.dl-btn:active { background: #222; }
-.dl-btn.cached { color: #34c759; border-color: #34c759; }
 .tabs { display: flex; border-bottom: 1px solid #222; margin-bottom: 16px; }
 .tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; color: #666; cursor: pointer; border-bottom: 2px solid transparent; }
 .tab.active { color: #fff; border-bottom-color: #ff6b35; }
@@ -270,20 +266,14 @@ if (navigator.standalone === false) {
 navigator.serviceWorker?.addEventListener('message', event => {
   if (event.data.type === 'CACHE_DONE') {
     // ポッドキャスト
-    const btn = document.querySelector(`.dl-btn[data-url="${event.data.url}"]`);
-    if (btn) { btn.textContent = '✓ 保存済み'; btn.classList.add('cached'); }
+    const epCache = document.querySelector(`.ep-cache[data-url="${event.data.url}"]`);
+    if (epCache) { epCache.textContent = '✓ 保存済み'; epCache.style.color = '#34c759'; }
     // YouTube音声
     document.querySelectorAll('.va-cache').forEach(cb => {
       if (cb.closest('.va-track')?.dataset.vaUrl === event.data.url) {
         cb.textContent = '✓'; cb.classList.add('cached');
       }
     });
-  }
-  if (event.data.type === 'CACHE_ERROR') {
-    const btn = document.querySelector(`[data-url="${event.data.url}"]`);
-    if (btn) {
-      btn.textContent = '⬇ ダウンロード';
-    }
   }
 });
 
@@ -399,13 +389,6 @@ document.getElementById('ch-query').addEventListener('input', e => {
   }, 500);
 });
 
-// Check if a URL is already cached
-async function isCached(url) {
-  const cache = await caches.open('dair-v1');
-  const response = await cache.match(url);
-  return !!response;
-}
-
 // Clean up cached MP3s that are no longer in the feed
 async function cleanOldCache(currentUrls) {
   const cache = await caches.open('dair-v1');
@@ -450,19 +433,12 @@ fetch('feed.xml')
       const totalMin = durParts.length === 3 ? durParts[0] * 60 + durParts[1] : durParts[0] || 0;
       const dur = totalMin > 0 ? `${totalMin}分` : durRaw;
 
-      const cached = await isCached(url);
-
       const div = document.createElement('div');
       div.className = 'episode';
       div.innerHTML = `
         <h2>${title}</h2>
-        <p class="meta">${date} | ${dur}</p>
+        <p class="meta">${date} | ${dur} <span class="ep-cache" data-url="${url}"></span></p>
         <audio controls preload="none" src="${url}"></audio>
-        <div class="ep-actions">
-          <button class="dl-btn ${cached ? 'cached' : ''}" data-url="${url}">
-            ${cached ? '✓ 保存済み' : '⬇ ダウンロード'}
-          </button>
-        </div>
         <details>
           <summary>詳細</summary>
           <div class="desc">${desc}</div>
@@ -470,24 +446,19 @@ fetch('feed.xml')
       `;
       container.appendChild(div);
 
-      // Download / delete button
-      const btn = div.querySelector('.dl-btn');
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('cached')) {
-          navigator.serviceWorker?.controller?.postMessage({
-            type: 'DELETE_CACHE',
-            url: url
-          });
-          btn.textContent = '⬇ ダウンロード';
-          btn.classList.remove('cached');
-        } else {
-          btn.textContent = 'ダウンロード中...';
-          navigator.serviceWorker?.controller?.postMessage({
-            type: 'CACHE_MP3',
-            url: url
-          });
-        }
-      });
+      // 自動キャッシュ
+      const cacheIcon = div.querySelector('.ep-cache');
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(url);
+      if (cached) {
+        cacheIcon.textContent = '✓ 保存済み';
+        cacheIcon.style.color = '#34c759';
+      } else {
+        navigator.serviceWorker?.controller?.postMessage({
+          type: 'CACHE_MP3',
+          url: url
+        });
+      }
 
       // MediaSession API for lock screen controls
       const audio = div.querySelector('audio');
