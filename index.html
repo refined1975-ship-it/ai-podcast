@@ -164,79 +164,103 @@ const CACHE_NAME = 'dair-v3';
 
 // YouTube音声
 let vaCurrentEl = null;
+function renderVaTracks(tracks, wl) {
+  const list = document.getElementById('va-list');
+  list.innerHTML = '';
+  if (tracks.length === 0) {
+    list.innerHTML = '<div class="va-empty">YouTube音声はありません</div>';
+    return;
+  }
+  const chMap = {};
+  wl.forEach(w => { if (w.current_file) chMap[w.current_file] = w.name; });
+  tracks.sort((a, b) => b.mtime - a.mtime);
+  // MUSIC_SERVERがない（オフライン）場合、保存済みURLを使う
+  const server = MUSIC_SERVER || localStorage.getItem('va_server') || '';
+  tracks.forEach(t => {
+    const dur = t.duration ? Math.floor(t.duration / 60) + '分' : '';
+    const fname = t.id.replace('video-audio/', '');
+    const chName = chMap[fname] || '';
+    const meta = [chName, dur].filter(Boolean).join(' | ');
+    const div = document.createElement('div');
+    div.className = 'va-track';
+    const audioUrl = server + '/video-audio/' + encodeURIComponent(fname);
+    div.dataset.vaUrl = audioUrl;
+    div.innerHTML = `
+      <button class="va-play">▶</button>
+      <div class="va-info">
+        <div class="va-title">${t.title}</div>
+        <div class="va-meta">${meta}</div>
+      </div>
+      <span class="va-cache"></span>
+    `;
+    const cacheIcon = div.querySelector('.va-cache');
+    caches.open(CACHE_NAME).then(c => c.match(audioUrl)).then(r => {
+      if (r) {
+        cacheIcon.textContent = '✓'; cacheIcon.classList.add('cached');
+      } else if (MUSIC_SERVER) {
+        navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: audioUrl });
+      }
+    });
+    div.querySelector('.va-play').addEventListener('click', () => {
+      const audio = document.getElementById('va-audio');
+      const player = document.getElementById('va-player');
+      if (vaCurrentEl) vaCurrentEl.classList.remove('va-playing');
+      div.classList.add('va-playing');
+      vaCurrentEl = div;
+      audio.src = audioUrl;
+      audio.play();
+      player.style.display = 'block';
+      document.getElementById('va-player-title').textContent = t.title;
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: t.title, artist: chName || 'YouTube', album: 'YouTube音声'
+        });
+      }
+    });
+    list.appendChild(div);
+  });
+  const vaAudio = document.getElementById('va-audio');
+  vaAudio.onended = () => {
+    if (!vaCurrentEl) return;
+    const next = vaCurrentEl.nextElementSibling;
+    if (next && next.classList.contains('va-track')) {
+      next.querySelector('.va-play').click();
+    }
+  };
+}
+
 function loadVideoAudio() {
+  // オフライン: localStorageから表示
+  if (!MUSIC_SERVER) {
+    const cached = localStorage.getItem('va_tracks');
+    const cachedWl = localStorage.getItem('va_watchlist');
+    if (cached) {
+      renderVaTracks(JSON.parse(cached), cachedWl ? JSON.parse(cachedWl) : []);
+    } else {
+      document.getElementById('va-list').innerHTML = '<div class="va-empty">Wi-Fi接続時にデータを取得してください</div>';
+    }
+    return;
+  }
   const list = document.getElementById('va-list');
   Promise.all([
     fetch(MUSIC_SERVER + '/api/video-audio').then(r => r.json()),
     fetch(MUSIC_SERVER + '/api/watchlist').then(r => r.json()).catch(() => [])
   ])
     .then(([tracks, wl]) => {
-      list.innerHTML = '';
-      if (tracks.length === 0) {
-        list.innerHTML = '<div class="va-empty">YouTube音声はありません</div>';
-        return;
-      }
-      // ファイル名→チャンネル名のマップ
-      const chMap = {};
-      wl.forEach(w => { if (w.current_file) chMap[w.current_file] = w.name; });
-      tracks.sort((a, b) => b.mtime - a.mtime);
-      tracks.forEach(t => {
-        const dur = t.duration ? Math.floor(t.duration / 60) + '分' : '';
-        const fname = t.id.replace('video-audio/', '');
-        const chName = chMap[fname] || '';
-        const meta = [chName, dur].filter(Boolean).join(' | ');
-        const div = document.createElement('div');
-        div.className = 'va-track';
-        const audioUrl = MUSIC_SERVER + '/video-audio/' + encodeURIComponent(fname);
-        div.dataset.vaUrl = audioUrl;
-        div.innerHTML = `
-          <button class="va-play">▶</button>
-          <div class="va-info">
-            <div class="va-title">${t.title}</div>
-            <div class="va-meta">${meta}</div>
-          </div>
-          <span class="va-cache"></span>
-        `;
-        // 自動キャッシュ
-        const cacheIcon = div.querySelector('.va-cache');
-        caches.open(CACHE_NAME).then(c => c.match(audioUrl)).then(r => {
-          if (r) {
-            cacheIcon.textContent = '✓'; cacheIcon.classList.add('cached');
-          } else {
-            navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: audioUrl });
-          }
-        });
-        div.querySelector('.va-play').addEventListener('click', () => {
-          const audio = document.getElementById('va-audio');
-          const player = document.getElementById('va-player');
-          const url = audioUrl;
-          if (vaCurrentEl) vaCurrentEl.classList.remove('va-playing');
-          div.classList.add('va-playing');
-          vaCurrentEl = div;
-          audio.src = url;
-          audio.play();
-          player.style.display = 'block';
-          document.getElementById('va-player-title').textContent = t.title;
-          if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-              title: t.title, artist: 'YouTube', album: 'YouTube音声'
-            });
-          }
-        });
-        list.appendChild(div);
-      });
-      // 自動連続再生
-      const vaAudio = document.getElementById('va-audio');
-      vaAudio.onended = () => {
-        if (!vaCurrentEl) return;
-        const next = vaCurrentEl.nextElementSibling;
-        if (next && next.classList.contains('va-track')) {
-          next.querySelector('.va-play').click();
-        }
-      };
+      localStorage.setItem('va_tracks', JSON.stringify(tracks));
+      localStorage.setItem('va_watchlist', JSON.stringify(wl));
+      localStorage.setItem('va_server', MUSIC_SERVER);
+      renderVaTracks(tracks, wl);
     })
     .catch(() => {
-      list.innerHTML = '<div class="va-empty">サーバーに接続できません（Wi-Fi接続時のみ）</div>';
+      // サーバー接続失敗→キャッシュから表示
+      const cached = localStorage.getItem('va_tracks');
+      const cachedWl = localStorage.getItem('va_watchlist');
+      if (cached) {
+        renderVaTracks(JSON.parse(cached), cachedWl ? JSON.parse(cachedWl) : []);
+      } else {
+        list.innerHTML = '<div class="va-empty">Wi-Fi接続時にデータを取得してください</div>';
+      }
     });
 }
 
