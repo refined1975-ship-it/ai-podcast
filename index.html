@@ -46,6 +46,24 @@ h1 { font-size: 22px; color: #fff; }
 .va-player { position: sticky; bottom: 0; background: #0a0a0a; border-top: 1px solid #222; padding: 10px 0; display: none; }
 .va-player audio { width: 100%; filter: invert(1); }
 .va-player-title { font-size: 12px; color: #aaa; margin-bottom: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch-section { margin-top: 20px; border-top: 1px solid #222; padding-top: 16px; }
+.ch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.ch-header h3 { font-size: 14px; color: #aaa; }
+.ch-toggle { padding: 4px 10px; border: 1px solid #333; border-radius: 6px; background: none; color: #aaa; font-size: 12px; cursor: pointer; }
+.ch-toggle:active { background: #222; }
+.ch-search { display: none; margin-bottom: 12px; }
+.ch-search.open { display: block; }
+.ch-input { width: 100%; padding: 10px; border: 1px solid #333; border-radius: 8px; background: #111; color: #fff; font-size: 14px; outline: none; }
+.ch-input:focus { border-color: #ff6b35; }
+.ch-results { margin-top: 8px; }
+.ch-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border: 1px solid #222; border-radius: 8px; background: #111; margin-bottom: 6px; }
+.ch-name { font-size: 13px; color: #fff; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch-add { padding: 4px 12px; border: 1px solid #ff6b35; border-radius: 6px; background: none; color: #ff6b35; font-size: 12px; cursor: pointer; flex-shrink: 0; margin-left: 8px; }
+.ch-add:active { background: #ff6b35; color: #fff; }
+.ch-sub { padding: 4px 12px; border: 1px solid #333; border-radius: 6px; background: none; color: #aaa; font-size: 12px; cursor: pointer; flex-shrink: 0; margin-left: 8px; }
+.ch-sub.subscribed { color: #34c759; border-color: #34c759; }
+.ch-unsub { padding: 4px 12px; border: 1px solid #ff3b30; border-radius: 6px; background: none; color: #ff3b30; font-size: 12px; cursor: pointer; flex-shrink: 0; margin-left: 8px; }
+.ch-unsub:active { background: #ff3b30; color: #fff; }
 .disclaimer { margin-top: 24px; padding: 12px; background: #111; border-radius: 8px; font-size: 12px; color: #555; text-align: center; }
 .install-hint { margin-top: 16px; padding: 12px; background: #111; border-radius: 8px; font-size: 13px; color: #555; text-align: center; display: none; }
 .reload-btn { margin-top: 8px; padding: 6px 16px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
@@ -71,6 +89,17 @@ h1 { font-size: 22px; color: #fff; }
 
 <div class="tab-content" id="tab-youtube">
   <div id="va-list"></div>
+  <div class="ch-section">
+    <div class="ch-header">
+      <h3>登録チャンネル</h3>
+      <button class="ch-toggle" id="ch-toggle">検索</button>
+    </div>
+    <div class="ch-search" id="ch-search">
+      <input class="ch-input" id="ch-query" placeholder="チャンネル名で検索..." />
+      <div class="ch-results" id="ch-results"></div>
+    </div>
+    <div id="ch-list"></div>
+  </div>
   <div class="va-player" id="va-player">
     <div class="va-player-title" id="va-player-title"></div>
     <audio controls id="va-audio"></audio>
@@ -93,7 +122,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-    if (tab.dataset.tab === 'youtube') loadVideoAudio();
+    if (tab.dataset.tab === 'youtube') { loadVideoAudio(); loadChannels(); }
   });
 });
 
@@ -161,6 +190,101 @@ function loadVideoAudio() {
       list.innerHTML = '<div class="va-empty">サーバーに接続できません（Wi-Fi接続時のみ）</div>';
     });
 }
+
+// チャンネル管理
+let watchlist = [];
+
+function loadChannels() {
+  const list = document.getElementById('ch-list');
+  fetch(MUSIC_SERVER + '/api/watchlist')
+    .then(r => r.json())
+    .then(wl => {
+      watchlist = wl;
+      list.innerHTML = '';
+      wl.forEach(ch => {
+        const div = document.createElement('div');
+        div.className = 'ch-item';
+        div.innerHTML = `
+          <span class="ch-name">${ch.name}</span>
+          <button class="ch-unsub">解除</button>
+        `;
+        div.querySelector('.ch-unsub').addEventListener('click', () => {
+          fetch(MUSIC_SERVER + '/api/watchlist/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: ch.url })
+          }).then(() => { div.remove(); watchlist = watchlist.filter(w => w.url !== ch.url); });
+        });
+        list.appendChild(div);
+      });
+    })
+    .catch(() => {});
+}
+
+document.getElementById('ch-toggle').addEventListener('click', () => {
+  const s = document.getElementById('ch-search');
+  s.classList.toggle('open');
+  if (s.classList.contains('open')) document.getElementById('ch-query').focus();
+});
+
+let searchTimer = null;
+document.getElementById('ch-query').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  const q = e.target.value.trim();
+  if (!q) { document.getElementById('ch-results').innerHTML = ''; return; }
+  searchTimer = setTimeout(() => {
+    document.getElementById('ch-results').innerHTML = '<div class="va-empty">検索中...</div>';
+    fetch(MUSIC_SERVER + '/api/yt-search-channels', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q })
+    })
+    .then(r => r.json())
+    .then(data => {
+      const results = document.getElementById('ch-results');
+      results.innerHTML = '';
+      if (!data.results || data.results.length === 0) {
+        results.innerHTML = '<div class="va-empty">見つかりません</div>';
+        return;
+      }
+      data.results.forEach(ch => {
+        const already = watchlist.some(w => w.url === ch.url || w.url === ch.url + '/videos');
+        const div = document.createElement('div');
+        div.className = 'ch-item';
+        div.innerHTML = `
+          <span class="ch-name">${ch.name}</span>
+          <button class="${already ? 'ch-sub subscribed' : 'ch-add'}">${already ? '登録済' : '登録'}</button>
+        `;
+        if (!already) {
+          div.querySelector('.ch-add').addEventListener('click', function() {
+            this.disabled = true;
+            this.textContent = '...';
+            fetch(MUSIC_SERVER + '/api/watchlist/add', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url: ch.url, name: ch.name, type: 'audio' })
+            })
+            .then(r => r.json())
+            .then(res => {
+              if (res.ok) {
+                this.textContent = '登録済';
+                this.className = 'ch-sub subscribed';
+                watchlist = res.watchlist;
+                loadChannels();
+              } else {
+                this.textContent = res.error || 'エラー';
+              }
+            });
+          });
+        }
+        results.appendChild(div);
+      });
+    })
+    .catch(() => {
+      document.getElementById('ch-results').innerHTML = '<div class="va-empty">検索失敗</div>';
+    });
+  }, 500);
+});
 
 // Service Worker
 let swReady;
