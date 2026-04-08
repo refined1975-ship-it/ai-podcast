@@ -147,24 +147,32 @@ const MUSIC_SERVER = 'http://localhost:8888';
 let vaCurrentEl = null;
 function loadVideoAudio() {
   const list = document.getElementById('va-list');
-  fetch(MUSIC_SERVER + '/api/video-audio')
-    .then(r => r.json())
-    .then(tracks => {
+  Promise.all([
+    fetch(MUSIC_SERVER + '/api/video-audio').then(r => r.json()),
+    fetch(MUSIC_SERVER + '/api/watchlist').then(r => r.json()).catch(() => [])
+  ])
+    .then(([tracks, wl]) => {
       list.innerHTML = '';
       if (tracks.length === 0) {
         list.innerHTML = '<div class="va-empty">YouTube音声はありません</div>';
         return;
       }
+      // ファイル名→チャンネル名のマップ
+      const chMap = {};
+      wl.forEach(w => { if (w.current_file) chMap[w.current_file] = w.name; });
       tracks.sort((a, b) => b.mtime - a.mtime);
       tracks.forEach(t => {
         const dur = t.duration ? Math.floor(t.duration / 60) + '分' : '';
+        const fname = t.id.replace('video-audio/', '');
+        const chName = chMap[fname] || '';
+        const meta = [chName, dur].filter(Boolean).join(' | ');
         const div = document.createElement('div');
         div.className = 'va-track';
         div.innerHTML = `
           <button class="va-play">▶</button>
           <div class="va-info">
             <div class="va-title">${t.title}</div>
-            <div class="va-meta">${dur}</div>
+            <div class="va-meta">${meta}</div>
           </div>
           <button class="va-del">✕</button>
         `;
