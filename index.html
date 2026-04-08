@@ -174,7 +174,6 @@ function loadVideoAudio() {
             <div class="va-title">${t.title}</div>
             <div class="va-meta">${meta}</div>
           </div>
-          <button class="va-del">✕</button>
         `;
         div.querySelector('.va-play').addEventListener('click', () => {
           const audio = document.getElementById('va-audio');
@@ -192,19 +191,6 @@ function loadVideoAudio() {
               title: t.title, artist: 'YouTube', album: 'YouTube音声'
             });
           }
-        });
-        div.querySelector('.va-del').addEventListener('click', () => {
-          if (!confirm('「' + t.title + '」を削除しますか？')) return;
-          fetch(MUSIC_SERVER + '/api/delete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: t.id })
-          }).then(() => {
-            div.remove();
-            if (list.children.length === 0) {
-              list.innerHTML = '<div class="va-empty">YouTube音声はありません</div>';
-            }
-          });
         });
         list.appendChild(div);
       });
