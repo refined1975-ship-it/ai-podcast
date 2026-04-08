@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
   <channel>
     <title>デイリーAIラジオ</title>
@@ -59,5 +59,34 @@
 ニュースソース: Google News
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-07.mp3" length="13938669" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-07</guid><pubDate>Tue, 07 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:29:02</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-07.mp3" length="13938669" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-07</guid><pubDate>Tue, 07 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:29:02</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-08</title><description>2026-04-08のAI関連最新ニュースをお届けします。
+
+【トピック】
+- 「採用AIに差別された」誰が責任負う？ 11億件却下で訴訟も
+- 【AI駆使】社員わずか2人で2500億円稼ぐやつらが登場した
+- High school textbooks to teach various aspects of generative AI
+- 太陽誘電：AI社会を「内から」支える、世界初の高性能MLCC
+- AI技術の発達で診療はどうなる？最新研究から見るAI汎用化時代の医療、家庭医にしかできない役割とは（Wedge（ウェッジ））
+- MicrosoftはCopilotを「娯楽目的のもので、重要な助言では頼らないこと」と警告している
+- AI評価の「多数決」はもう限界？Googleが指摘するベンチマークの致命的な欠陥
+- AI技術の発達で診療はどうなる？最新研究から見るAI汎用化時代の医療、家庭医にしかできない役割とは
+- AIに核のボタンを持たせたら 「フラッシュウォー」が人間置き去り
+- 安川電機、人型ロボをオフィスへ フィジカルAIで「臨機応変」実現
+- Overcoming LLM hallucinations in regulated industries: Artificial Genius’s deterministic models on Amazon Nova
+- The Three Ages of Data Science: When to Use Traditional Machine Learning, Deep Learning, or a LLM (Explained with One Example)
+- A trillion dollars is a terrible thing to waste - Marcus on AI
+- A human-centered automated machine learning agent with large language models for multimodal data management and analysis
+- Exploring LLMs with MLX and the Neural Accelerators in the M5 GPU
+- Vibe Coding in Practice
+- Machine learning and generative AI: What are they good for in 2025?
+- Open-source AI tool beats giant LLMs in literature reviews — and gets citations right
+- Stanford AI Experts Predict What Will Happen in 2026
+- TurboQuant: Redefining AI efficiency with extreme compression
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="29299821" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-08</guid><pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:02</itunes:duration></item></channel>
 </rss>
