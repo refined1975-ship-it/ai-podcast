@@ -191,8 +191,6 @@ function renderVaTracks(tracks, wl) {
       if (vaCurrentEl) vaCurrentEl.classList.remove('va-playing');
       div.classList.add('va-playing');
       vaCurrentEl = div;
-      audio.src = audioUrl;
-      audio.play();
       player.style.display = 'block';
       document.getElementById('va-player-title').textContent = t.title;
       if ('mediaSession' in navigator) {
@@ -200,6 +198,13 @@ function renderVaTracks(tracks, wl) {
           title: t.title, artist: chName || 'YouTube', album: 'YouTube音声'
         });
       }
+      // blobとしてメモリに読み込んでから再生（iOS lock screen対策）
+      fetch(audioUrl).then(r => r.blob()).then(blob => {
+        if (audio._blobUrl) URL.revokeObjectURL(audio._blobUrl);
+        audio._blobUrl = URL.createObjectURL(blob);
+        audio.src = audio._blobUrl;
+        audio.play();
+      });
     });
     list.appendChild(div);
   });
