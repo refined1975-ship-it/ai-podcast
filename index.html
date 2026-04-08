@@ -189,7 +189,7 @@ function loadVideoAudio() {
         const div = document.createElement('div');
         div.className = 'va-track';
         const audioUrl = MUSIC_SERVER + '/video-audio/' + encodeURIComponent(fname);
-        div.dataset.url = audioUrl;
+        div.dataset.vaUrl = audioUrl;
         div.innerHTML = `
           <button class="va-play">▶</button>
           <div class="va-info">
@@ -411,7 +411,7 @@ navigator.serviceWorker?.addEventListener('message', event => {
     if (btn) { btn.textContent = '✓ 保存済み'; btn.classList.add('cached'); }
     // YouTube音声
     document.querySelectorAll('.va-cache').forEach(cb => {
-      if (cb.closest('.va-track')?.dataset.url === event.data.url) {
+      if (cb.closest('.va-track')?.dataset.vaUrl === event.data.url) {
         cb.textContent = '✓'; cb.classList.add('cached');
       }
     });
