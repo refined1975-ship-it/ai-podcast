@@ -39,7 +39,7 @@ h1 { font-size: 22px; color: #fff; }
 .player-controls { display: flex; align-items: center; gap: 12px; }
 .player-btn { width: 48px; height: 48px; border-radius: 50%; border: none; background: #ff6b35; color: #fff; font-size: 22px; cursor: pointer; flex-shrink: 0; }
 .player-btn:active { background: #e55a2a; }
-.player-progress { flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative; cursor: pointer; margin-bottom: 4px; padding: 12px 0; background-clip: content-box; }
+.player-progress { flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative; cursor: pointer; margin-bottom: 24px; padding: 12px 0; background-clip: content-box; }
 .player-progress-fill { height: 4px; margin-top: 12px; background: #ff6b35; border-radius: 2px; width: 0%; }
 .player-time { font-size: 12px; color: #666; flex-shrink: 0; }
 .ch-section { margin-top: 20px; border-top: 1px solid #222; padding-top: 16px; }
