@@ -3,7 +3,7 @@
   "short_name": "DAIR",
   "description": "AI関連の最新ニュースを毎日お届け",
   "start_url": "/ai-podcast/",
-  "display": "browser",
+  "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
   "icons": [
