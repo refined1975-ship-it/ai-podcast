@@ -40,7 +40,6 @@ function openPlayer(url, title, artist, desc) {
   playerDesc.textContent = desc || '';
   playerMiniTitle.textContent = title;
   player.classList.add('active');
-  playerMini.classList.remove('active');
   if (url !== currentUrl) {
     pendingUrl = url;
     pendingArtist = artist;
