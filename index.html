@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="DAIR">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -64,7 +62,6 @@ h1 { font-size: 22px; color: #fff; }
 .ch-unsub { padding: 4px 12px; border: 1px solid #ff3b30; border-radius: 6px; background: none; color: #ff3b30; font-size: 12px; cursor: pointer; flex-shrink: 0; margin-left: 8px; }
 .ch-unsub:active { background: #ff3b30; color: #fff; }
 .disclaimer { margin-top: 24px; padding: 12px; background: #111; border-radius: 8px; font-size: 12px; color: #555; text-align: center; }
-.install-hint { margin-top: 16px; padding: 12px; background: #111; border-radius: 8px; font-size: 13px; color: #555; text-align: center; display: none; }
 .reload-btn { margin-top: 8px; padding: 6px 16px; border: 1px solid #333; border-radius: 8px; background: #1a1a1a; font-size: 13px; color: #aaa; cursor: pointer; }
 .reload-btn:active { background: #222; }
 </style>
@@ -121,9 +118,6 @@ h1 { font-size: 22px; color: #fff; }
   AI自動生成のため内容の正確性は保証されません
 </div>
 
-<div class="install-hint" id="installHint">
-  Safari の共有ボタン → 「ホーム画面に追加」でアプリとして使えます
-</div>
 
 <script>
 const CACHE_NAME = 'dair-v3';
@@ -338,9 +332,6 @@ function loadVideoAudio() {
 // Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
-}
-if (navigator.standalone === false) {
-  document.getElementById('installHint').style.display = 'block';
 }
 
 // SW cache完了
