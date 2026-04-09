@@ -15,9 +15,9 @@
 <body>
 <header>
   <div style="display:flex;justify-content:space-between;align-items:center;">
-    <div>
+    <div style="display:flex;align-items:baseline;gap:10px;">
       <h1>CAST</h1>
-      <p class="subtitle">RADIO & AUDIO</p>
+      <span class="subtitle">RADIO & AUDIO</span>
     </div>
     <button class="reload-btn" onclick="location.reload()">↻</button>
   </div>
@@ -50,15 +50,24 @@
   </div>
 </div>
 
-<!-- 共有プレーヤー（audio要素1つ、controls無し） -->
+<!-- Mini bar (overlay閉じてても再生中なら表示) -->
+<div class="player-mini" id="playerMini">
+  <div class="player-mini-title" id="playerMiniTitle">-</div>
+  <button class="player-mini-btn" id="playerMiniBtn">⏸</button>
+</div>
+
+<!-- Floating player -->
 <div class="player" id="player">
-  <div class="player-title" id="playerTitle">-</div>
-  <div class="player-controls">
-    <button class="player-btn" id="playerBtn">▶</button>
+  <div class="player-card">
+    <div class="player-title" id="playerTitle">-</div>
+    <div class="player-desc" id="playerDesc"></div>
     <div class="player-progress" id="playerProgress">
       <div class="player-progress-fill" id="playerFill"></div>
     </div>
-    <span class="player-time" id="playerTime">0:00</span>
+    <div class="player-controls">
+      <span class="player-time" id="playerTime">0:00</span>
+      <button class="player-btn" id="playerBtn">▶</button>
+    </div>
   </div>
 </div>
 <audio id="audio"></audio>

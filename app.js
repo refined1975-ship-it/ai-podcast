@@ -19,17 +19,25 @@ function fmt(s) {
 const audio = document.getElementById('audio');
 const player = document.getElementById('player');
 const playerTitle = document.getElementById('playerTitle');
+const playerDesc = document.getElementById('playerDesc');
 const playerBtn = document.getElementById('playerBtn');
 const playerFill = document.getElementById('playerFill');
 const playerTime = document.getElementById('playerTime');
+const playerMini = document.getElementById('playerMini');
+const playerMiniTitle = document.getElementById('playerMiniTitle');
+const playerMiniBtn = document.getElementById('playerMiniBtn');
 let currentTrackEl = null;
 
-function playUrl(url, title, artist) {
+function playUrl(url, title, artist, desc) {
   if (audio._blobUrl) { URL.revokeObjectURL(audio._blobUrl); audio._blobUrl = null; }
 
   playerTitle.textContent = title;
+  playerDesc.textContent = desc || '';
+  playerMiniTitle.textContent = title;
   playerBtn.textContent = '⏸';
+  playerMiniBtn.textContent = '⏸';
   player.classList.add('active');
+  playerMini.classList.remove('active');
 
   // silence unlock → blob再生
   audio.src = SILENCE;
@@ -73,11 +81,29 @@ function playUrl(url, title, artist) {
   }
 }
 
+// Overlay close (tap backdrop)
+player.addEventListener('click', (e) => {
+  if (e.target === player) {
+    player.classList.remove('active');
+    if (!audio.paused || audio.currentTime > 0) playerMini.classList.add('active');
+  }
+});
+
+// Mini bar → reopen overlay
+playerMini.addEventListener('click', () => {
+  playerMini.classList.remove('active');
+  player.classList.add('active');
+});
+
 playerBtn.addEventListener('click', () => {
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
-audio.addEventListener('play', () => { playerBtn.textContent = '⏸'; });
-audio.addEventListener('pause', () => { playerBtn.textContent = '▶'; });
+playerMiniBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (audio.paused) { audio.play(); } else { audio.pause(); }
+});
+audio.addEventListener('play', () => { playerBtn.textContent = '⏸'; playerMiniBtn.textContent = '⏸'; });
+audio.addEventListener('pause', () => { playerBtn.textContent = '▶'; playerMiniBtn.textContent = '▶'; });
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     playerFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
@@ -408,19 +434,6 @@ fetch('feed.xml')
         + '</div>';
       container.appendChild(div);
 
-      if (desc) {
-        const details = document.createElement('details');
-        details.className = 'ep-details';
-        const summary = document.createElement('summary');
-        summary.textContent = '詳細';
-        const descDiv = document.createElement('div');
-        descDiv.className = 'desc';
-        descDiv.textContent = desc;
-        details.appendChild(summary);
-        details.appendChild(descDiv);
-        container.appendChild(details);
-      }
-
       // キャッシュチェック（ループ外で開いたcacheを再利用）
       const cacheIcon = div.querySelector('.ep-cache');
       const cached = await cache.match(url);
@@ -435,7 +448,7 @@ fetch('feed.xml')
         if (currentTrackEl) currentTrackEl.classList.remove('playing');
         div.classList.add('playing');
         currentTrackEl = div;
-        playUrl(url, title, 'デイリーAIラジオ');
+        playUrl(url, title, 'CAST', desc);
       });
     }
   });
