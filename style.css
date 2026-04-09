@@ -26,7 +26,7 @@ h1 { font-size: 22px; color: #fff; }
 .player-mini-btn { width: 48px; height: 48px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; margin: 4px 0; }
 .player-mini-btn svg { width: 40px; height: 40px; fill: #fff; }
 .player-mini-progress { width: 100%; height: 3px; background: #333; border-radius: 2px; padding: 10px 0; background-clip: content-box; }
-.player-mini-fill { height: 3px; margin-top: 10px; background: #ff6b35; border-radius: 2px; width: 0%; }
+.player-mini-fill { height: 3px; margin-top: 10px; background: #fff; border-radius: 2px; width: 0%; }
 .player-mini-time { font-size: 12px; color: #555; }
 .player { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
 .player.active { display: flex; }
@@ -38,7 +38,7 @@ h1 { font-size: 22px; color: #fff; }
 .player-ctrl { width: 64px; height: 64px; border-radius: 50%; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
 .player-ctrl svg { width: 56px; height: 56px; fill: #fff; }
 .player-progress { flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative; cursor: pointer; margin-bottom: 24px; padding: 12px 0; background-clip: content-box; }
-.player-progress-fill { height: 4px; margin-top: 12px; background: #ff6b35; border-radius: 2px; width: 0%; }
+.player-progress-fill { height: 4px; margin-top: 12px; background: #fff; border-radius: 2px; width: 0%; }
 .player-time { font-size: 12px; color: #666; flex-shrink: 0; }
 .ch-section { margin-top: 20px; border-top: 1px solid #222; padding-top: 16px; }
 .ch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
