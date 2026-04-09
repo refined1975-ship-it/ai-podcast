@@ -50,30 +50,14 @@
   </div>
 </div>
 
-<!-- Mini bar (overlay閉じてても再生中なら表示) -->
-<div class="player-mini" id="playerMini">
-  <div class="player-mini-info">
-    <div class="player-mini-title" id="playerMiniTitle">-</div>
-    <div class="player-mini-time" id="playerMiniTime">0:00</div>
-  </div>
-  <div class="player-mini-progress" id="playerMiniProgress">
-    <div class="player-mini-fill" id="playerMiniFill"></div>
-  </div>
-  <button class="player-mini-btn" id="playerMiniBtn">⏸</button>
-</div>
-
-<!-- Floating player -->
 <div class="player" id="player">
-  <div class="player-card">
-    <div class="player-title" id="playerTitle">-</div>
-    <div class="player-desc" id="playerDesc"></div>
+  <div class="player-title" id="playerTitle">-</div>
+  <div class="player-row">
+    <button class="player-btn" id="playerBtn">▶</button>
     <div class="player-progress" id="playerProgress">
       <div class="player-progress-fill" id="playerFill"></div>
     </div>
-    <div class="player-controls">
-      <span class="player-time" id="playerTime">0:00</span>
-      <button class="player-btn" id="playerBtn">▶</button>
-    </div>
+    <span class="player-time" id="playerTime">0:00</span>
   </div>
 </div>
 <audio id="audio"></audio>
