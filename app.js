@@ -123,18 +123,18 @@ audio.addEventListener('timeupdate', () => {
     }
   }
 });
-document.getElementById('playerProgress').addEventListener('click', (e) => {
-  if (audio.duration) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-  }
-});
-document.getElementById('playerMiniProgress').addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (audio.duration) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-  }
+function seekFromEvent(bar, e) {
+  if (!audio.duration) return;
+  const rect = bar.getBoundingClientRect();
+  const x = (e.touches ? e.touches[0].clientX : e.clientX);
+  audio.currentTime = Math.max(0, Math.min(1, (x - rect.left) / rect.width)) * audio.duration;
+}
+
+['playerProgress', 'playerMiniProgress'].forEach(id => {
+  const bar = document.getElementById(id);
+  bar.addEventListener('click', (e) => { e.stopPropagation(); seekFromEvent(bar, e); });
+  bar.addEventListener('touchstart', (e) => { e.stopPropagation(); seekFromEvent(bar, e); }, {passive: true});
+  bar.addEventListener('touchmove', (e) => { e.stopPropagation(); e.preventDefault(); seekFromEvent(bar, e); }, {passive: false});
 });
 
 // ===================== Tabs =====================
