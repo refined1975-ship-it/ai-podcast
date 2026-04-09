@@ -111,18 +111,6 @@ playerMini.addEventListener('click', () => {
 playerBtn.addEventListener('click', () => {
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
-document.getElementById('btnStop').addEventListener('click', () => {
-  audio.pause();
-  audio.currentTime = 0;
-  currentUrl = null;
-  if (currentTrackEl) { currentTrackEl.classList.remove('playing'); currentTrackEl = null; }
-  player.classList.remove('active');
-  playerMini.classList.remove('active');
-});
-document.getElementById('btnReplay').addEventListener('click', () => {
-  audio.currentTime = 0;
-  audio.play().catch(() => {});
-});
 playerMiniBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   if (audio.paused) { audio.play(); } else { audio.pause(); }
