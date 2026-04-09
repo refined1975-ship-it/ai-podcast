@@ -26,6 +26,8 @@ const playerTime = document.getElementById('playerTime');
 const playerMini = document.getElementById('playerMini');
 const playerMiniTitle = document.getElementById('playerMiniTitle');
 const playerMiniBtn = document.getElementById('playerMiniBtn');
+const playerMiniTime = document.getElementById('playerMiniTime');
+const playerMiniFill = document.getElementById('playerMiniFill');
 let currentTrackEl = null;
 
 function playUrl(url, title, artist, desc) {
@@ -106,8 +108,12 @@ audio.addEventListener('play', () => { playerBtn.textContent = '⏸'; playerMini
 audio.addEventListener('pause', () => { playerBtn.textContent = '▶'; playerMiniBtn.textContent = '▶'; });
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
-    playerFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-    playerTime.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+    const pct = (audio.currentTime / audio.duration * 100) + '%';
+    playerFill.style.width = pct;
+    playerMiniFill.style.width = pct;
+    const timeStr = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+    playerTime.textContent = timeStr;
+    playerMiniTime.textContent = timeStr;
     if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
       try {
         navigator.mediaSession.setPositionState({
@@ -118,6 +124,13 @@ audio.addEventListener('timeupdate', () => {
   }
 });
 document.getElementById('playerProgress').addEventListener('click', (e) => {
+  if (audio.duration) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+  }
+});
+document.getElementById('playerMiniProgress').addEventListener('click', (e) => {
+  e.stopPropagation();
   if (audio.duration) {
     const rect = e.currentTarget.getBoundingClientRect();
     audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
@@ -197,7 +210,7 @@ function renderVaTracks(tracks, wl) {
       if (currentTrackEl) currentTrackEl.classList.remove('playing');
       div.classList.add('playing');
       currentTrackEl = div;
-      playUrl(audioUrl, t.title, chName || 'YouTube');
+      playUrl(audioUrl, t.title, chName || 'YouTube', t.description || '');
     });
     list.appendChild(div);
     trackEls.push({ el: div, url: audioUrl });
