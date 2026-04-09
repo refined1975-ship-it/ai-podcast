@@ -45,7 +45,7 @@ function openPlayer(url, title, artist, desc) {
     pendingUrl = url;
     pendingArtist = artist;
     playerBtn.innerHTML = ICON_PLAY;
-    playerMiniBtn.textContent = '▶';
+    playerMiniBtn.innerHTML = ICON_PLAY;
   }
 }
 
@@ -123,8 +123,8 @@ playerMiniBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
-audio.addEventListener('play', () => { playerBtn.innerHTML = ICON_PAUSE; playerMiniBtn.textContent = '⏸'; });
-audio.addEventListener('pause', () => { playerBtn.innerHTML = ICON_PLAY; playerMiniBtn.textContent = '▶'; });
+audio.addEventListener('play', () => { playerBtn.innerHTML = ICON_PAUSE; playerMiniBtn.innerHTML = ICON_PAUSE; });
+audio.addEventListener('pause', () => { playerBtn.innerHTML = ICON_PLAY; playerMiniBtn.innerHTML = ICON_PLAY; });
 const playerDuration = document.getElementById('playerDuration');
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
