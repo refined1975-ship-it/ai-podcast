@@ -211,7 +211,8 @@ function renderVaTracks(tracks, wl) {
     const dur = t.duration ? Math.floor(t.duration / 60) + '分' : '';
     const fname = t.id.replace('video-audio/', '');
     const chName = chMap[fname] || '';
-    const meta = [chName, dur].filter(Boolean).join(' | ');
+    const date = t.mtime ? new Date(t.mtime * 1000).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' }) : '';
+    const meta = [chName, date, dur].filter(Boolean).join(' | ');
     const div = document.createElement('div');
     div.className = 'track';
     const audioUrl = server + '/video-audio/' + encodeURIComponent(fname);
