@@ -247,7 +247,7 @@ navigator.serviceWorker?.addEventListener('message', event => {
     });
     const epCache = document.querySelector('.ep-cache[data-url="' + CSS.escape(event.data.url) + '"]');
     if (epCache) {
-      epCache.textContent = '✓ 保存済み'; epCache.style.color = '#34c759';
+      epCache.textContent = '✓'; epCache.style.color = '#34c759';
     }
   }
 });
@@ -425,7 +425,7 @@ fetch('feed.xml')
       const cacheIcon = div.querySelector('.ep-cache');
       const cached = await cache.match(url);
       if (cached) {
-        cacheIcon.textContent = '✓ 保存済み';
+        cacheIcon.textContent = '✓';
         cacheIcon.style.color = '#34c759';
       } else {
         navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: url });
