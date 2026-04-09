@@ -28,6 +28,8 @@ const playerMiniTitle = document.getElementById('playerMiniTitle');
 const playerMiniBtn = document.getElementById('playerMiniBtn');
 const playerMiniTime = document.getElementById('playerMiniTime');
 const playerMiniFill = document.getElementById('playerMiniFill');
+const ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 let currentTrackEl = null;
 let currentUrl = null;
 
@@ -45,7 +47,7 @@ function playUrl(url, title, artist, desc) {
   playerTitle.textContent = title;
   playerDesc.textContent = desc || '';
   playerMiniTitle.textContent = title;
-  playerBtn.textContent = '⏸';
+  playerBtn.innerHTML = ICON_PAUSE;
   playerMiniBtn.textContent = '⏸';
   player.classList.add('active');
   playerMini.classList.remove('active');
@@ -113,8 +115,8 @@ playerMiniBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
-audio.addEventListener('play', () => { playerBtn.textContent = '⏸'; playerMiniBtn.textContent = '⏸'; });
-audio.addEventListener('pause', () => { playerBtn.textContent = '▶'; playerMiniBtn.textContent = '▶'; });
+audio.addEventListener('play', () => { playerBtn.innerHTML = ICON_PAUSE; playerMiniBtn.textContent = '⏸'; });
+audio.addEventListener('pause', () => { playerBtn.innerHTML = ICON_PLAY; playerMiniBtn.textContent = '▶'; });
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     const pct = (audio.currentTime / audio.duration * 100) + '%';
