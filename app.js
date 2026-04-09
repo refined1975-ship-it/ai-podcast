@@ -32,25 +32,27 @@ const ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
 const ICON_PAUSE = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 let currentTrackEl = null;
 let currentUrl = null;
+let pendingUrl = null;
+let pendingArtist = null;
 
-function playUrl(url, title, artist, desc) {
-  if (url === currentUrl) {
-    audio.currentTime = 0;
-    audio.play().catch(() => {});
-    player.classList.add('active');
-    playerMini.classList.remove('active');
-    return;
-  }
-  currentUrl = url;
-  if (audio._blobUrl) { URL.revokeObjectURL(audio._blobUrl); audio._blobUrl = null; }
-
+function openPlayer(url, title, artist, desc) {
   playerTitle.textContent = title;
   playerDesc.textContent = desc || '';
   playerMiniTitle.textContent = title;
-  playerBtn.innerHTML = ICON_PAUSE;
-  playerMiniBtn.textContent = '⏸';
   player.classList.add('active');
   playerMini.classList.remove('active');
+  if (url !== currentUrl) {
+    pendingUrl = url;
+    pendingArtist = artist;
+    playerBtn.innerHTML = ICON_PLAY;
+    playerMiniBtn.textContent = '▶';
+  }
+}
+
+function startPlayback(url, artist) {
+  currentUrl = url;
+  pendingUrl = null;
+  if (audio._blobUrl) { URL.revokeObjectURL(audio._blobUrl); audio._blobUrl = null; }
 
   // silence unlock → blob再生
   audio.src = SILENCE;
@@ -79,7 +81,7 @@ function playUrl(url, title, artist, desc) {
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: title,
+      title: playerTitle.textContent,
       artist: artist,
       album: artist,
       artwork: [
@@ -109,7 +111,13 @@ playerMini.addEventListener('click', () => {
 });
 
 playerBtn.addEventListener('click', () => {
-  if (audio.paused) { audio.play(); } else { audio.pause(); }
+  if (pendingUrl) {
+    startPlayback(pendingUrl, pendingArtist);
+  } else if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
 });
 playerMiniBtn.addEventListener('click', (e) => {
   e.stopPropagation();
@@ -221,7 +229,7 @@ function renderVaTracks(tracks, wl) {
       if (currentTrackEl) currentTrackEl.classList.remove('playing');
       div.classList.add('playing');
       currentTrackEl = div;
-      playUrl(audioUrl, t.title, chName || 'YouTube', t.description || '');
+      openPlayer(audioUrl, t.title, chName || 'YouTube', t.description || '');
     });
     list.appendChild(div);
     trackEls.push({ el: div, url: audioUrl });
@@ -471,7 +479,7 @@ fetch('feed.xml')
         if (currentTrackEl) currentTrackEl.classList.remove('playing');
         div.classList.add('playing');
         currentTrackEl = div;
-        playUrl(url, title, 'CAST', desc);
+        openPlayer(url, title, 'CAST', desc);
       });
     }
   });
