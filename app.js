@@ -303,10 +303,6 @@ navigator.serviceWorker?.addEventListener('message', event => {
         ci.textContent = '✓'; ci.classList.add('cached');
       }
     });
-    const epCache = document.querySelector('.ep-cache[data-url="' + CSS.escape(event.data.url) + '"]');
-    if (epCache) {
-      epCache.textContent = '✓'; epCache.style.color = '#34c759';
-    }
   }
 });
 
@@ -461,16 +457,17 @@ fetch('feed.xml')
       div.dataset.type = 'radio';
       div.innerHTML = '<div class="track-info">'
         + '<div class="track-title">' + esc(title) + '</div>'
-        + '<div class="track-meta">' + esc(date) + ' | ' + esc(dur) + ' <span class="ep-cache" data-url="' + esc(url) + '"></span></div>'
-        + '</div>';
+        + '<div class="track-meta">' + esc(date) + ' | ' + esc(dur) + '</div>'
+        + '</div>'
+        + '<span class="track-cache" data-url="' + esc(url) + '"></span>';
       container.appendChild(div);
 
       // キャッシュチェック（ループ外で開いたcacheを再利用）
-      const cacheIcon = div.querySelector('.ep-cache');
+      const cacheIcon = div.querySelector('.track-cache');
       const cached = await cache.match(url);
       if (cached) {
         cacheIcon.textContent = '✓';
-        cacheIcon.style.color = '#34c759';
+        cacheIcon.classList.add('cached');
       } else {
         navigator.serviceWorker?.controller?.postMessage({ type: 'CACHE_MP3', url: url });
       }
