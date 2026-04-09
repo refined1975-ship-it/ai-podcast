@@ -29,8 +29,17 @@ const playerMiniBtn = document.getElementById('playerMiniBtn');
 const playerMiniTime = document.getElementById('playerMiniTime');
 const playerMiniFill = document.getElementById('playerMiniFill');
 let currentTrackEl = null;
+let currentUrl = null;
 
 function playUrl(url, title, artist, desc) {
+  if (url === currentUrl) {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+    player.classList.add('active');
+    playerMini.classList.remove('active');
+    return;
+  }
+  currentUrl = url;
   if (audio._blobUrl) { URL.revokeObjectURL(audio._blobUrl); audio._blobUrl = null; }
 
   playerTitle.textContent = title;
