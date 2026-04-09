@@ -4,8 +4,8 @@ header { padding: 20px 0; border-bottom: 1px solid #222; margin-bottom: 20px; }
 h1 { font-size: 22px; color: #fff; }
 .subtitle { color: #555; font-size: 13px; letter-spacing: 0.05em; }
 .tabs { display: flex; border-bottom: 1px solid #222; margin-bottom: 16px; }
-.tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; color: #666; cursor: pointer; border-bottom: 2px solid transparent; }
-.tab.active { color: #fff; border-bottom-color: #fff; }
+.tab { flex: 1; text-align: center; padding: 12px; font-size: 14px; color: #555; cursor: pointer; border-bottom: 3px solid transparent; transition: color 0.2s, border-color 0.2s; }
+.tab.active { color: #fff; border-bottom-color: #fff; font-weight: 600; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 .track { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #222; border-radius: 10px; background: #111; margin-bottom: 8px; cursor: pointer; }
