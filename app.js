@@ -111,20 +111,33 @@ playerMini.addEventListener('click', () => {
 playerBtn.addEventListener('click', () => {
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
+document.getElementById('btnStop').addEventListener('click', () => {
+  audio.pause();
+  audio.currentTime = 0;
+  currentUrl = null;
+  if (currentTrackEl) { currentTrackEl.classList.remove('playing'); currentTrackEl = null; }
+  player.classList.remove('active');
+  playerMini.classList.remove('active');
+});
+document.getElementById('btnReplay').addEventListener('click', () => {
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+});
 playerMiniBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
 audio.addEventListener('play', () => { playerBtn.innerHTML = ICON_PAUSE; playerMiniBtn.textContent = '⏸'; });
 audio.addEventListener('pause', () => { playerBtn.innerHTML = ICON_PLAY; playerMiniBtn.textContent = '▶'; });
+const playerDuration = document.getElementById('playerDuration');
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     const pct = (audio.currentTime / audio.duration * 100) + '%';
     playerFill.style.width = pct;
     playerMiniFill.style.width = pct;
-    const timeStr = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
-    playerTime.textContent = timeStr;
-    playerMiniTime.textContent = timeStr;
+    playerTime.textContent = fmt(audio.currentTime);
+    playerDuration.textContent = fmt(audio.duration);
+    playerMiniTime.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
     if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
       try {
         navigator.mediaSession.setPositionState({
@@ -211,8 +224,7 @@ function renderVaTracks(tracks, wl) {
     div.dataset.title = t.title;
     div.dataset.artist = chName || 'YouTube';
     div.dataset.type = 'va';
-    div.innerHTML = '<div class="track-play">▶</div>'
-      + '<div class="track-info">'
+    div.innerHTML = '<div class="track-info">'
       + '<div class="track-title">' + esc(t.title) + '</div>'
       + '<div class="track-meta">' + esc(meta) + '</div>'
       + '</div>'
@@ -451,8 +463,7 @@ fetch('feed.xml')
       div.className = 'track';
       div.dataset.url = url;
       div.dataset.type = 'radio';
-      div.innerHTML = '<div class="track-play">▶</div>'
-        + '<div class="track-info">'
+      div.innerHTML = '<div class="track-info">'
         + '<div class="track-title">' + esc(title) + '</div>'
         + '<div class="track-meta">' + esc(date) + ' | ' + esc(dur) + ' <span class="ep-cache" data-url="' + esc(url) + '"></span></div>'
         + '</div>';

@@ -11,8 +11,6 @@ h1 { font-size: 22px; color: #fff; }
 .track { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #222; border-radius: 10px; background: #111; margin-bottom: 8px; cursor: pointer; }
 .track:active { background: #1a1a1a; }
 .track.playing { border-color: #ff6b35; }
-.track-play { width: 36px; height: 36px; border-radius: 50%; border: none; background: #ff6b35; color: #fff; font-size: 16px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.track-play:active { background: #e55a2a; }
 .track-info { flex: 1; min-width: 0; }
 .track-title { font-size: 14px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-meta { font-size: 12px; color: #888; margin-top: 2px; }
@@ -36,9 +34,11 @@ h1 { font-size: 22px; color: #fff; }
 .player-title { font-size: 17px; font-weight: 600; color: #fff; text-align: center; margin-bottom: 16px; }
 .player-desc { font-size: 13px; color: #999; line-height: 1.7; white-space: pre-wrap; overflow-y: auto; flex: 1; min-height: 0; margin-bottom: 20px; max-height: 40vh; }
 .player-desc:empty { display: none; }
-.player-controls { display: flex; align-items: center; justify-content: center; gap: 12px; }
-.player-btn { width: 64px; height: 64px; border-radius: 50%; border: none; background: none; color: #fff; font-size: 0; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.player-btn svg { width: 64px; height: 64px; fill: #fff; }
+.player-controls { display: flex; align-items: center; justify-content: center; gap: 24px; }
+.player-ctrl { width: 44px; height: 44px; border-radius: 50%; border: none; background: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+.player-ctrl svg { width: 32px; height: 32px; fill: #888; }
+.player-ctrl.play { width: 64px; height: 64px; }
+.player-ctrl.play svg { width: 56px; height: 56px; fill: #fff; }
 .player-progress { flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative; cursor: pointer; margin-bottom: 24px; padding: 12px 0; background-clip: content-box; }
 .player-progress-fill { height: 4px; margin-top: 12px; background: #ff6b35; border-radius: 2px; width: 0%; }
 .player-time { font-size: 12px; color: #666; flex-shrink: 0; }
