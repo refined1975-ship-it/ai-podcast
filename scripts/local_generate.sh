@@ -24,6 +24,15 @@ if [ ! -f "$PENDING" ]; then
     exit 0
 fi
 
+# 台本の日付チェック
+SCRIPT_DATE=$(python3 -c "import json; d=json.load(open('$PENDING')); print(d.get('date',''))")
+if [ -n "$SCRIPT_DATE" ] && [ "$SCRIPT_DATE" != "$TODAY" ]; then
+    echo "[$(date)] FAIL: Script date ($SCRIPT_DATE) does not match today ($TODAY). Removing stale script."
+    rm -f "$PENDING"
+    git add -A && git diff --cached --quiet || git commit -m "Remove stale script ($SCRIPT_DATE)" && git push origin main
+    exit 0
+fi
+
 # 台本チェック
 CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(x['text']) for x in d['script']))")
 echo "[$(date)] Script: ${CHARS} characters"
