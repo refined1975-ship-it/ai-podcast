@@ -95,5 +95,20 @@
 ニュースソース: Google News
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-09.mp3" length="14300205" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-09</guid><pubDate>Thu, 09 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:29:47</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-09.mp3" length="14300205" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-09</guid><pubDate>Thu, 09 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:29:47</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-10</title><description>2026-04-10のAI関連最新ニュースをお届けします。
+
+【トピック】
+- SELFDOUBT: LLMが自分の不確実性を測る新手法
+- ハルシネーション検出の弱教師あり蒸留
+- RAGEN-2: AIエージェントの推論崩壊
+- ロボットAI(VLA)がサブミリ精度を獲得
+- ProofSketcher: LLM+証明チェッカーで数学推論の信頼性向上
+- Blind Refusal: AIの過剰拒否問題
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-10.mp3" length="8990061" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-10</guid><pubDate>Fri, 10 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:18:43</itunes:duration></item></channel>
 </rss>
