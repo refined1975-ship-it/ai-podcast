@@ -4,7 +4,7 @@
 
 set -e
 
-REPO_DIR="$HOME/ai-podcast"
+REPO_DIR="$HOME/claude/cast"
 PENDING="$REPO_DIR/scripts/pending_script.json"
 LOG="$REPO_DIR/scripts/generate.log"
 TODAY=$(date +%Y-%m-%d)
