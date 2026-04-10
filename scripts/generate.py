@@ -39,6 +39,8 @@ NEWS_FEEDS = [
     "https://news.google.com/rss/search?q=AI+LLM+machine+learning&hl=en&gl=US&ceid=US:en",
     "https://techcrunch.com/category/artificial-intelligence/feed/",
     "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+    "https://rss.arxiv.org/rss/cs.AI",
+    "https://rss.arxiv.org/rss/cs.LG",
 ]
 
 
