@@ -43,6 +43,14 @@ fi
 
 echo "[$(date)] Found pending script. Generating audio..."
 
+# Claude台本かテンプレートかチェック（dateフィールドがあればClaude生成）
+HAS_DATE=$(python3 -c "import json; d=json.load(open('$PENDING')); print('yes' if d.get('date') else 'no')")
+if [ "$HAS_DATE" = "no" ]; then
+    echo "[$(date)] SKIP: Template script (not Claude-generated). Removing."
+    rm -f "$PENDING"
+    exit 0
+fi
+
 # 音声生成
 python3 scripts/generate.py --script "$PENDING"
 
