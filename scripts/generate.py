@@ -37,27 +37,41 @@ MAX_EPISODE_AGE_DAYS = 7
 NEWS_FEEDS = [
     "https://news.google.com/rss/search?q=artificial+intelligence&hl=ja&gl=JP&ceid=JP:ja",
     "https://news.google.com/rss/search?q=AI+LLM+machine+learning&hl=en&gl=US&ceid=US:en",
+    "https://techcrunch.com/category/artificial-intelligence/feed/",
+    "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
 ]
 
 
 def fetch_news() -> list[dict]:
     """Fetch AI news from RSS feeds."""
     articles = []
+    seen_titles = set()
     for feed_url in NEWS_FEEDS:
         try:
-            resp = requests.get(feed_url, timeout=15)
+            resp = requests.get(feed_url, timeout=15, headers={"User-Agent": "DailyAIRadio/1.0"})
             resp.raise_for_status()
             soup = BeautifulSoup(resp.content, "xml")
-            for item in soup.find_all("item")[:10]:
+            # RSS <item> or Atom <entry>
+            items = soup.find_all("item")[:10] or soup.find_all("entry")[:10]
+            for item in items:
                 title = item.find("title")
-                pub_date = item.find("pubDate")
+                if not title:
+                    continue
+                title_text = title.text.strip()
+                if title_text in seen_titles:
+                    continue
+                seen_titles.add(title_text)
+                pub_date = item.find("pubDate") or item.find("published") or item.find("updated")
                 link = item.find("link")
-                if title:
-                    articles.append({
-                        "title": title.text.strip(),
-                        "link": link.text.strip() if link else "",
-                        "pub_date": pub_date.text.strip() if pub_date else "",
-                    })
+                link_text = ""
+                if link:
+                    link_text = link.get("href") or link.text or ""
+                    link_text = link_text.strip()
+                articles.append({
+                    "title": title_text,
+                    "link": link_text,
+                    "pub_date": pub_date.text.strip() if pub_date else "",
+                })
         except Exception as e:
             print(f"Warning: Failed to fetch {feed_url}: {e}", file=sys.stderr)
     return articles
