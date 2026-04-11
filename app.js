@@ -425,7 +425,7 @@ document.getElementById('ch-query').addEventListener('input', e => {
 
 // ===================== Radio Episodes =====================
 
-fetch('feed.xml')
+fetch('feed.xml?v=' + Date.now())
   .then(r => r.text())
   .then(async xml => {
     const doc = new DOMParser().parseFromString(xml, 'text/xml');
