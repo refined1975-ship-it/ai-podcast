@@ -43,6 +43,26 @@ NEWS_FEEDS = [
     "https://rss.arxiv.org/rss/cs.LG",
 ]
 
+# URL → display name (deduplicated by name)
+_SOURCE_NAMES = {
+    "news.google.com": "Google News",
+    "techcrunch.com": "TechCrunch",
+    "theverge.com": "The Verge",
+    "arxiv.org": "arXiv",
+}
+
+
+def get_source_names() -> str:
+    """Return comma-separated source names derived from NEWS_FEEDS."""
+    from urllib.parse import urlparse
+    seen = []
+    for url in NEWS_FEEDS:
+        host = urlparse(url).hostname or ""
+        for domain, name in _SOURCE_NAMES.items():
+            if domain in host and name not in seen:
+                seen.append(name)
+    return ", ".join(seen) if seen else "各種ニュースソース"
+
 
 def fetch_news() -> list[dict]:
     """Fetch AI news from RSS feeds."""
@@ -325,7 +345,21 @@ def main():
     if args.script:
         # Load script from external JSON (written by Claude agent)
         print(f"Loading script from {args.script}...")
-        script, description = load_script_from_json(args.script)
+        script, raw_desc = load_script_from_json(args.script)
+        # Strip any existing credit block and rebuild it from code
+        # to prevent stale/incomplete source attribution
+        desc_body = re.split(r"\n*【クレジット】.*", raw_desc, flags=re.DOTALL)[0].rstrip()
+        if not desc_body:
+            desc_body = f"{today}のAI関連最新ニュースをお届けします。"
+        description = (
+            f"{desc_body}\n\n"
+            "【クレジット】\n"
+            "音声: Microsoft Edge TTS\n"
+            f"ニュースソース: {get_source_names()}\n"
+            "制作: Claude Code による自動生成\n\n"
+            "※この番組はAIによる自動生成です。内容の正確性は保証されません。"
+            "情報の利用は自己責任でお願いします。"
+        )
     else:
         # Fallback: fetch news + template generation
         print("Fetching AI news...")
@@ -347,7 +381,7 @@ def main():
             f"【トピック】\n{topic_list}\n\n"
             "【クレジット】\n"
             "音声: Microsoft Edge TTS\n"
-            "ニュースソース: Google News\n"
+            f"ニュースソース: {get_source_names()}\n"
             "制作: Claude Code による自動生成\n\n"
             "※この番組はAIによる自動生成です。内容の正確性は保証されません。"
             "情報の利用は自己責任でお願いします。"
