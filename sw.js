@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cast-v5';
+const CACHE_NAME = 'cast-v6';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => {
