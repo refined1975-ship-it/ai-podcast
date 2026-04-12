@@ -84,8 +84,8 @@ function startPlayback(url, artist) {
       artist: artist,
       album: artist,
       artwork: [
-        { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-        { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+        { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' }
       ]
     });
     navigator.mediaSession.setActionHandler('play', () => audio.play());
