@@ -36,33 +36,6 @@
       <pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate>
       <itunes:duration>00:29:47</itunes:duration>
     </item>
-    <item>
-      <title>デイリーAIラジオ - 2026-04-07</title>
-      <description>2026-04-07のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 論文査読で生成AIを使ってもよい？各出版社の考えは
-- AI技術の発達で診療はどうなる？家庭医にしかできない役割とは
-- AIチャットボットを使って医師の診察なしで処方箋の再発行が可能に
-- 三井不動産、本部長の人格をAIで再現して壁打ち
-- MicrosoftはCopilotを「娯楽目的のもの」と警告
-- SBIインベストメント、半導体設計向けAI「Cognichip」に出資
-- テンプル大学ジャパンキャンパス、AI学科を新設
-- サンリオ、ヤッホーが独自KPIを定める理由
-- KiroにMiniMax M2.5とGLM-5が追加
-- Vibe Codingの実践的な活用法
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description>
-      <enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-07.mp3" length="13938669" type="audio/mpeg" />
-      <guid isPermaLink="false">dair-2026-04-07</guid>
-      <pubDate>Tue, 07 Apr 2026 14:00:00 GMT</pubDate>
-      <itunes:duration>00:29:02</itunes:duration>
-    </item>
     <item><title>デイリーAIラジオ - 2026-04-09</title><description>2026-04-08のAI関連最新ニュースをお届けします。
 
 【トピック】
@@ -125,5 +98,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-13.mp3" length="29218989" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-13</guid><pubDate>Mon, 13 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-13.mp3" length="29218989" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-13</guid><pubDate>Mon, 13 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-14</title><description>Stanford AIインデックスが示すインサイダーと一般市民の認識格差、OpenAI内部メモに見る競争戦略、長期推論を強化するSPPO論文、エージェント記憶の新設計、ZuckerbergのAIクローン、Altman連続攻撃の社会的意味、VercelのIPO準備を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-14.mp3" length="30431469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-14</guid><pubDate>Tue, 14 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:23</itunes:duration></item></channel>
 </rss>

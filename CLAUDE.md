@@ -1,3 +1,8 @@
+## 変更後チェック
+- cast-daily.sh を変更したら: `bash -n ~/.local/bin/cast-daily.sh` で構文チェック
+- claude -p の呼び出しを変更したら: 手動で1回走らせて osascript 通知が来ることを確認
+- LaunchAgent を変更したら: `launchctl bootout gui/$(id -u)/com.local.cast-daily && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.local.cast-daily.plist && launchctl list com.local.cast-daily` で exit 0 を確認
+
 ## CAST — AIニュースポッドキャスト
 - GitHub Pages配信 (refined1975-ship-it/ai-podcast)
 - 毎日 7:00 JST LaunchAgent (`~/.local/bin/cast-daily.sh`) → `claude -p` でスクリプト生成+TTS+push
