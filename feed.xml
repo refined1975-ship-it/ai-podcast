@@ -11,31 +11,6 @@
     <itunes:explicit>false</itunes:explicit>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>デイリーAIラジオ - 2026-04-08</title>
-      <description>2026-04-08のAI関連最新ニュースをお届けします。
-
-【トピック】
-- 採用AIの差別問題：11億件却下で訴訟に発展
-- 社員2人で2500億円を稼ぐAI企業の衝撃
-- AIに核のボタンを持たせる危険性「フラッシュウォー」
-- MicrosoftがCopilotを「娯楽目的」と警告
-- GoogleがAIベンチマークの致命的な欠陥を指摘
-- 安川電機の人型ロボットがオフィスへ
-- AI時代の医療と家庭医の役割
-- AppleのM5 GPU × MLXによるオンデバイスLLM
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description>
-      <enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-08.mp3" length="14300205" type="audio/mpeg" />
-      <guid isPermaLink="false">dair-2026-04-08</guid>
-      <pubDate>Wed, 08 Apr 2026 14:00:00 GMT</pubDate>
-      <itunes:duration>00:29:47</itunes:duration>
-    </item>
     <item><title>デイリーAIラジオ - 2026-04-09</title><description>2026-04-08のAI関連最新ニュースをお届けします。
 
 【トピック】
@@ -105,5 +80,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-14.mp3" length="30431469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-14</guid><pubDate>Tue, 14 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:23</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-14.mp3" length="30431469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-14</guid><pubDate>Tue, 14 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:23</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-15</title><description>Science Corp初の人間へのBCI植え込み準備、GoogleのSynthID透かし技術の逆工学疑惑、LABBench2によるAI生物学研究評価、Deliberative Alignmentによる推論モデルの安全性向上、LLMにおける人間型作業記憶干渉現象の発見、拡散モデルとアテンションの理論的統一、OpenAIによるパーソナルファイナンスAI企業Hiro買収を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-15.mp3" length="29370477" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-15</guid><pubDate>Wed, 15 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:11</itunes:duration></item></channel>
 </rss>
