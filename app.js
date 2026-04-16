@@ -14,6 +14,33 @@ function fmt(s) {
   return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
 }
 
+// ===================== Position Persistence =====================
+
+function getSavedPosition(url) {
+  try {
+    const positions = JSON.parse(localStorage.getItem('cast_positions') || '{}');
+    return positions[url] || 0;
+  } catch { return 0; }
+}
+
+function savePosition(url, time) {
+  try {
+    const positions = JSON.parse(localStorage.getItem('cast_positions') || '{}');
+    positions[url] = time;
+    const keys = Object.keys(positions);
+    if (keys.length > 30) delete positions[keys[0]];
+    localStorage.setItem('cast_positions', JSON.stringify(positions));
+  } catch {}
+}
+
+function clearPosition(url) {
+  try {
+    const positions = JSON.parse(localStorage.getItem('cast_positions') || '{}');
+    delete positions[url];
+    localStorage.setItem('cast_positions', JSON.stringify(positions));
+  } catch {}
+}
+
 // ===================== Player =====================
 
 const audio = document.getElementById('audio');
@@ -52,6 +79,16 @@ function startPlayback(url, artist) {
   currentUrl = url;
   pendingUrl = null;
   if (audio._blobUrl) { URL.revokeObjectURL(audio._blobUrl); audio._blobUrl = null; }
+
+  // Restore saved position after load
+  const _savedPos = getSavedPosition(url);
+  if (_savedPos > 5) {
+    audio.addEventListener('loadedmetadata', function _onMeta() {
+      if (_savedPos < audio.duration - 5) {
+        audio.currentTime = _savedPos;
+      }
+    }, { once: true });
+  }
 
   // silence unlock → blob再生
   audio.src = SILENCE;
@@ -123,7 +160,11 @@ playerMiniBtn.addEventListener('click', (e) => {
   if (audio.paused) { audio.play(); } else { audio.pause(); }
 });
 audio.addEventListener('play', () => { playerBtn.innerHTML = ICON_PAUSE; playerMiniBtn.innerHTML = ICON_PAUSE; });
-audio.addEventListener('pause', () => { playerBtn.innerHTML = ICON_PLAY; playerMiniBtn.innerHTML = ICON_PLAY; });
+audio.addEventListener('pause', () => {
+  playerBtn.innerHTML = ICON_PLAY;
+  playerMiniBtn.innerHTML = ICON_PLAY;
+  if (currentUrl && audio.currentTime > 5) savePosition(currentUrl, audio.currentTime);
+});
 const playerDuration = document.getElementById('playerDuration');
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
@@ -141,6 +182,16 @@ audio.addEventListener('timeupdate', () => {
       } catch(e) {}
     }
   }
+  // Throttled position save
+  if (!audio._saveTimer && audio.currentTime > 5) {
+    audio._saveTimer = setTimeout(() => {
+      if (currentUrl) savePosition(currentUrl, audio.currentTime);
+      audio._saveTimer = null;
+    }, 5000);
+  }
+});
+audio.addEventListener('ended', () => {
+  if (currentUrl) clearPosition(currentUrl);
 });
 function seekFromEvent(bar, e) {
   if (!audio.duration) return;
