@@ -180,9 +180,20 @@ async def text_to_speech(script: list[tuple[str, str]], output_path: Path) -> No
         voice = VOICE_FEMALE if speaker == "female" else VOICE_MALE
         temp_path = output_path.parent / f"_chunk_{idx:03d}.mp3"
         temp_files.append(temp_path)
-        communicate = edge_tts.Communicate(text, voice, rate=RATE)
-        await communicate.save(str(temp_path))
+        for attempt in range(5):
+            try:
+                communicate = edge_tts.Communicate(text, voice, rate=RATE)
+                await communicate.save(str(temp_path))
+                break
+            except Exception as e:
+                if attempt < 4:
+                    wait = 10 * (attempt + 1)
+                    print(f"  [{speaker}] {idx + 1}/{total} retry {attempt + 1}/5 after {wait}s ({e})")
+                    await asyncio.sleep(wait)
+                else:
+                    raise
         print(f"  [{speaker}] {idx + 1}/{total} done")
+        await asyncio.sleep(0.3)
 
     # Concatenate with ffmpeg
     list_file = output_path.parent / "_concat_list.txt"

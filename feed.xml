@@ -24,23 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ -2026-04-11</title><description>2026-04-11のAI関連最新ニュースをお届けします。
-
-【トピック】
-- SELFDOUBT: AIの回答に対する自信度を測定する新手法
-- ハルシネーション検出を小型モデルに蒸留する弱教師あり学習
-- RAGEN-2: AIエージェントの強化学習における推論崩壊
-- Blind Refusal: 不当なルールにも盲目的に従うAIの問題
-- ロボット用VLAがサブミリメートル精度を達成
-- Anthropic、AI専用チップの自社設計を検討
-- Google AI概要が1時間に数千万件のエラーを生成
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-11.mp3" length="29216877" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-11</guid><pubDate>Sat, 11 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item><item><title>AI蒸留ラジオ -2026-04-12</title><description>Claude Mythos封印の真相、AnthropicのAIチップ自社設計検討、日本国産AI連合設立、宇宙データセンター急増、OpenClaw開発者アクセス禁止事件、神とAI受容の研究、Gen ZとAIの愛憎関係
+    <item><title>AI蒸留ラジオ -2026-04-12</title><description>Claude Mythos封印の真相、AnthropicのAIチップ自社設計検討、日本国産AI連合設立、宇宙データセンター急増、OpenClaw開発者アクセス禁止事件、神とAI受容の研究、Gen ZとAIの愛憎関係
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -82,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-17.mp3" length="28799469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-17</guid><pubDate>Fri, 17 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:59</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-17.mp3" length="28799469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-17</guid><pubDate>Fri, 17 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:59</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-18</title><description>Tokenmaxxingがもたらすコーディング生産性の逆説、Cursorの$50B評価額が示すAIコーディング市場の過熱、MoEアーキテクチャに関する対照的な二論文（ルーティング不問説と休眠エキスパート覚醒）、心拍リズムでLLMに自律思考をスケジューリングする新アーキテクチャ提案、GPUの限界とNPU台頭の技術的背景、World IDとTinderの連携が示すデジタルアイデンティティの岐路、OpenAIのCPOとSoraリードの同日退任が意味するもの
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-18.mp3" length="29635821" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-18</guid><pubDate>Sat, 18 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:44</itunes:duration></item></channel>
 </rss>
