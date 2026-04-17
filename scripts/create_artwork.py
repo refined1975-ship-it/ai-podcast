@@ -31,14 +31,14 @@ SVG_CONTENT = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 3000"
   </g>
 
   <!-- Title text -->
-  <text x="1500" y="580" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="700" font-size="200" letter-spacing="20" fill="#fff">DAILY AI RADIO</text>
+  <text x="1500" y="580" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="700" font-size="200" letter-spacing="20" fill="#fff">DISTILL RADIO</text>
 
   <!-- Thin line under title -->
   <line x1="1200" y1="640" x2="1800" y2="640" stroke="#fff" stroke-width="3"/>
 
   <!-- Bottom text -->
   <line x1="1200" y1="2300" x2="1800" y2="2300" stroke="#fff" stroke-width="3"/>
-  <text x="1500" y="2400" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif" font-weight="500" font-size="160" fill="#fff">デイリーAIラジオ</text>
+  <text x="1500" y="2400" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif" font-weight="500" font-size="160" fill="#fff">蒸留ラジオ AI</text>
   <text x="1500" y="2520" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="300" font-size="80" letter-spacing="16" fill="#888">POWERED BY AI</text>
 </svg>'''
 

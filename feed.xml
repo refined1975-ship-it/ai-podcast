@@ -1,17 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
   <channel>
-    <title>デイリーAIラジオ</title>
+    <title>蒸留ラジオ AI</title>
     <link>https://refined1975-ship-it.github.io/ai-podcast/</link>
     <language>ja</language>
-    <description>AI関連の最新ニュースを毎日お届けする自動生成ポッドキャスト</description>
-    <itunes:author>デイリーAIラジオ</itunes:author>
-    <itunes:summary>AI関連の最新ニュースを毎日お届けする自動生成ポッドキャスト</itunes:summary>
+    <description>ノイズを廃した高濃度AIニュースを毎日1時間。論文・技術動向・業界展望を蒸留してお届け</description>
+    <itunes:author>蒸留ラジオ</itunes:author>
+    <itunes:summary>ノイズを廃した高濃度AIニュースを毎日1時間。論文・技術動向・業界展望を蒸留してお届け</itunes:summary>
+    <itunes:owner>
+      <itunes:name>蒸留ラジオ</itunes:name>
+      <itunes:email>refined1975@gmail.com</itunes:email>
+    </itunes:owner>
     <itunes:category text="Technology" />
     <itunes:explicit>false</itunes:explicit>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>デイリーAIラジオ - 2026-04-11</title><description>2026-04-11のAI関連最新ニュースをお届けします。
+    <item><title>蒸留ラジオ AI -2026-04-11</title><description>2026-04-11のAI関連最新ニュースをお届けします。
 
 【トピック】
 - SELFDOUBT: AIの回答に対する自信度を測定する新手法
@@ -27,42 +31,42 @@
 ニュースソース: Google News
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-11.mp3" length="29216877" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-11</guid><pubDate>Sat, 11 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-12</title><description>Claude Mythos封印の真相、AnthropicのAIチップ自社設計検討、日本国産AI連合設立、宇宙データセンター急増、OpenClaw開発者アクセス禁止事件、神とAI受容の研究、Gen ZとAIの愛憎関係
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-11.mp3" length="29216877" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-11</guid><pubDate>Sat, 11 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item><item><title>蒸留ラジオ AI -2026-04-12</title><description>Claude Mythos封印の真相、AnthropicのAIチップ自社設計検討、日本国産AI連合設立、宇宙データセンター急増、OpenClaw開発者アクセス禁止事件、神とAI受容の研究、Gen ZとAIの愛憎関係
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-12.mp3" length="29344173" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-12</guid><pubDate>Sun, 12 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:08</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-13</title><description>トランプ政権のAnthropicのMythosモデル銀行試験利用促進疑惑、MetaのMuse Sparkによるエージェント時代参入、NVIDIAのGemma 4ローカルエージェント最適化、AIコーディング三社戦争、規制業界の決定論的ハルシネーション対策、OpenAIへのストーキング訴訟、インドのAI植民地主義対抗戦略
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-12.mp3" length="29344173" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-12</guid><pubDate>Sun, 12 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:08</itunes:duration></item><item><title>蒸留ラジオ AI -2026-04-13</title><description>トランプ政権のAnthropicのMythosモデル銀行試験利用促進疑惑、MetaのMuse Sparkによるエージェント時代参入、NVIDIAのGemma 4ローカルエージェント最適化、AIコーディング三社戦争、規制業界の決定論的ハルシネーション対策、OpenAIへのストーキング訴訟、インドのAI植民地主義対抗戦略
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-13.mp3" length="29218989" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-13</guid><pubDate>Mon, 13 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-14</title><description>Stanford AIインデックスが示すインサイダーと一般市民の認識格差、OpenAI内部メモに見る競争戦略、長期推論を強化するSPPO論文、エージェント記憶の新設計、ZuckerbergのAIクローン、Altman連続攻撃の社会的意味、VercelのIPO準備を深掘り。
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-13.mp3" length="29218989" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-13</guid><pubDate>Mon, 13 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:52</itunes:duration></item><item><title>蒸留ラジオ AI -2026-04-14</title><description>Stanford AIインデックスが示すインサイダーと一般市民の認識格差、OpenAI内部メモに見る競争戦略、長期推論を強化するSPPO論文、エージェント記憶の新設計、ZuckerbergのAIクローン、Altman連続攻撃の社会的意味、VercelのIPO準備を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-14.mp3" length="30431469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-14</guid><pubDate>Tue, 14 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:23</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-15</title><description>Science Corp初の人間へのBCI植え込み準備、GoogleのSynthID透かし技術の逆工学疑惑、LABBench2によるAI生物学研究評価、Deliberative Alignmentによる推論モデルの安全性向上、LLMにおける人間型作業記憶干渉現象の発見、拡散モデルとアテンションの理論的統一、OpenAIによるパーソナルファイナンスAI企業Hiro買収を深掘り。
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-14.mp3" length="30431469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-14</guid><pubDate>Tue, 14 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:23</itunes:duration></item><item><title>蒸留ラジオ AI -2026-04-15</title><description>Science Corp初の人間へのBCI植え込み準備、GoogleのSynthID透かし技術の逆工学疑惑、LABBench2によるAI生物学研究評価、Deliberative Alignmentによる推論モデルの安全性向上、LLMにおける人間型作業記憶干渉現象の発見、拡散モデルとアテンションの理論的統一、OpenAIによるパーソナルファイナンスAI企業Hiro買収を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-15.mp3" length="29370477" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-15</guid><pubDate>Wed, 15 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:11</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-16</title><description>エージェントAIが長期タスクで崩壊するメカニズム（Long-Horizon Task Mirage論文）、LLMの「アイデンティティ」が活性化空間に幾何学的アトラクターとして存在する証拠、マルチトークン予測がTransformerに計画能力をもたらす仕組み、AIが「いつ忘れるか」を設計するMemory Governance Primitive論文、AdobeのFirefly会話型AI編集が示すクリエイティブワークの構造変化、LinkedInデータが示すAIと採用減少の実態、GrokのディープフェイクによるApp Store危機とプラットフォーム安全性の構造的問題を掘り下げる。
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-15.mp3" length="29370477" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-15</guid><pubDate>Wed, 15 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:11</itunes:duration></item><item><title>蒸留ラジオ AI -2026-04-16</title><description>エージェントAIが長期タスクで崩壊するメカニズム（Long-Horizon Task Mirage論文）、LLMの「アイデンティティ」が活性化空間に幾何学的アトラクターとして存在する証拠、マルチトークン予測がTransformerに計画能力をもたらす仕組み、AIが「いつ忘れるか」を設計するMemory Governance Primitive論文、AdobeのFirefly会話型AI編集が示すクリエイティブワークの構造変化、LinkedInデータが示すAIと採用減少の実態、GrokのディープフェイクによるApp Store危機とプラットフォーム安全性の構造的問題を掘り下げる。
 
 【クレジット】
 音声: Microsoft Edge TTS
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-16.mp3" length="29314605" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-16</guid><pubDate>Thu, 16 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:04</itunes:duration></item><item><title>デイリーAIラジオ - 2026-04-17</title><description>Physical Intelligence π0.5のゼロショット汎化、LLMのカオス的数値不安定性、大規模推論モデルの不確実性定量化、Anthropic Claude Opus 4.7（サイバーセキュリティ特化）、OpenAI CodexのMac対応とClaude Codeへの挑戦、Google GeminiのパーソナルAI（写真統合）とAI Mode並列ブラウジング、AI小売トラフィック393%増の実態と透明性問題
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-16.mp3" length="29314605" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-16</guid><pubDate>Thu, 16 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:04</itunes:duration></item><item><title>蒸留ラジオ AI -2026-04-17</title><description>Physical Intelligence π0.5のゼロショット汎化、LLMのカオス的数値不安定性、大規模推論モデルの不確実性定量化、Anthropic Claude Opus 4.7（サイバーセキュリティ特化）、OpenAI CodexのMac対応とClaude Codeへの挑戦、Google GeminiのパーソナルAI（写真統合）とAI Mode並列ブラウジング、AI小売トラフィック393%増の実態と透明性問題
 
 【クレジット】
 音声: Microsoft Edge TTS
