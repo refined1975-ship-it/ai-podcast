@@ -237,6 +237,12 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
     root = tree.getroot()
     channel = root.find("channel")
 
+    # Ensure itunes:type is set (recommended by Apple)
+    itunes_ns = "http://www.itunes.com/dtds/podcast-1.0.dtd"
+    if channel.find(f"{{{itunes_ns}}}type") is None:
+        itunes_type = ET.SubElement(channel, f"{{{itunes_ns}}}type")
+        itunes_type.text = "episodic"
+
     # Remove existing entry for same date (prevent duplicates)
     guid_text = f"dair-{episode_date}"
     for existing in channel.findall("item"):
