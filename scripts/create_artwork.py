@@ -12,8 +12,12 @@ JPG_PATH = REPO_ROOT / "artwork.jpg"
 SVG_CONTENT = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 3000">
   <rect width="3000" height="3000" fill="#0a0a0a"/>
 
+  <!-- 60 min badge (top) -->
+  <rect x="750" y="280" width="1500" height="280" rx="140" fill="#fff"/>
+  <text x="1500" y="468" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="800" font-size="180" letter-spacing="8" fill="#0a0a0a">60 MIN DAILY</text>
+
   <!-- Sound waveform bars - center group -->
-  <g transform="translate(1500, 1500)">
+  <g transform="translate(1500, 1380) scale(1.3)">
     <rect x="-520" y="-80" width="40" height="160" rx="20" fill="#fff"/>
     <rect x="-440" y="-140" width="40" height="280" rx="20" fill="#fff"/>
     <rect x="-360" y="-220" width="40" height="440" rx="20" fill="#fff"/>
@@ -30,20 +34,8 @@ SVG_CONTENT = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 3000"
     <rect x="480" y="-80" width="40" height="160" rx="20" fill="#fff"/>
   </g>
 
-  <!-- Title text -->
-  <text x="1500" y="580" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="700" font-size="200" letter-spacing="20" fill="#fff">DISTILL RADIO</text>
-
-  <!-- Thin line under title -->
-  <line x1="1200" y1="640" x2="1800" y2="640" stroke="#fff" stroke-width="3"/>
-
-  <!-- 60 min badge -->
-  <rect x="1050" y="2080" width="900" height="160" rx="80" fill="#fff"/>
-  <text x="1500" y="2192" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="800" font-size="100" letter-spacing="4" fill="#0a0a0a">60 MIN DAILY</text>
-
-  <!-- Bottom text -->
-  <line x1="1200" y1="2300" x2="1800" y2="2300" stroke="#fff" stroke-width="3"/>
-  <text x="1500" y="2410" text-anchor="middle" font-family="'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif" font-weight="800" font-size="180" fill="#fff">AI蒸留ラジオ</text>
-  <text x="1500" y="2530" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="300" font-size="80" letter-spacing="16" fill="#888">POWERED BY AI</text>
+  <!-- Title -->
+  <text x="1500" y="2650" text-anchor="middle" font-family="'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif" font-weight="800" font-size="360" fill="#fff">AI蒸留ラジオ</text>
 </svg>'''
 
 
