@@ -4,9 +4,17 @@
     <title>AI蒸留ラジオ</title>
     <link>https://refined1975-ship-it.github.io/ai-podcast/</link>
     <language>ja</language>
-    <description>ノイズを廃した高濃度AIニュースを毎日1時間。論文・技術動向・業界展望を蒸留してお届け</description>
+    <description>ノイズを廃した高濃度AIニュースを毎日1時間。論文・技術動向・業界展望を蒸留してお届け。
+
+台本生成: Claude (Anthropic) / 音声: Microsoft Edge TTS / 制作・編集: 自動化パイプライン
+
+※この番組は企画・構成から音声まで全工程をAIで自動生成しています。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description>
     <itunes:author>蒸留ラジオ</itunes:author>
-    <itunes:summary>ノイズを廃した高濃度AIニュースを毎日1時間。論文・技術動向・業界展望を蒸留してお届け</itunes:summary>
+    <itunes:summary>ノイズを廃した高濃度AIニュースを毎日1時間。論文・技術動向・業界展望を蒸留してお届け。
+
+台本生成: Claude (Anthropic) / 音声: Microsoft Edge TTS / 制作・編集: 自動化パイプライン
+
+※この番組は企画・構成から音声まで全工程をAIで自動生成しています。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</itunes:summary>
     <itunes:owner>
       <itunes:name>蒸留ラジオ</itunes:name>
       <itunes:email>refined1975@gmail.com</itunes:email>
