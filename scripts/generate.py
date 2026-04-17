@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""蒸留ラジオ AI - Podcast Generator
+"""AI蒸留ラジオ - Podcast Generator
 
 Fetches AI news from RSS feeds, generates a Japanese script,
 converts to speech using Edge TTS, and updates the podcast RSS feed.
@@ -111,7 +111,7 @@ def generate_script(articles: list[dict]) -> list[tuple[str, str]]:
     script = []
 
     # Opening
-    script.append(("female", f"こんばんは。{today}の蒸留ラジオAIへようこそ。今日も注目のAIニュースをお届けします。"))
+    script.append(("female", f"こんばんは。{today}のAI蒸留ラジオへようこそ。今日も注目のAIニュースをお届けします。"))
     script.append(("male", "よろしくお願いします。今日もいくつか面白いニュースが入ってきていますね。早速見ていきましょう。"))
 
     for i, article in enumerate(articles, 1):
@@ -145,7 +145,7 @@ def generate_script(articles: list[dict]) -> list[tuple[str, str]]:
         script.append(("female", "なるほど、引き続き注目していきたいですね。"))
 
     # Closing
-    script.append(("female", "以上が本日の蒸留ラジオAIでした。お聴きいただきありがとうございました。"))
+    script.append(("female", "以上が本日のAI蒸留ラジオでした。お聴きいただきありがとうございました。"))
     script.append(("male", "また明日のエピソードでお会いしましょう。おやすみなさい。"))
 
     # Check total length and pad if needed
@@ -248,7 +248,7 @@ def update_feed(episode_date: str, mp3_filename: str, mp3_size: int, duration_se
     item = ET.SubElement(channel, "item")
 
     title = ET.SubElement(item, "title")
-    title.text = f"蒸留ラジオ AI - {episode_date}"
+    title.text = f"AI蒸留ラジオ - {episode_date}"
 
     description = ET.SubElement(item, "description")
     description.text = episode_description or f"{episode_date}のAI関連最新ニュースをお届けします。"

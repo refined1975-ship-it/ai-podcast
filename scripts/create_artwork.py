@@ -36,10 +36,14 @@ SVG_CONTENT = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 3000"
   <!-- Thin line under title -->
   <line x1="1200" y1="640" x2="1800" y2="640" stroke="#fff" stroke-width="3"/>
 
+  <!-- 60 min badge -->
+  <rect x="1050" y="2080" width="900" height="160" rx="80" fill="#fff"/>
+  <text x="1500" y="2192" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="800" font-size="100" letter-spacing="4" fill="#0a0a0a">60 MIN DAILY</text>
+
   <!-- Bottom text -->
   <line x1="1200" y1="2300" x2="1800" y2="2300" stroke="#fff" stroke-width="3"/>
-  <text x="1500" y="2400" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif" font-weight="500" font-size="160" fill="#fff">蒸留ラジオ AI</text>
-  <text x="1500" y="2520" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="300" font-size="80" letter-spacing="16" fill="#888">POWERED BY AI</text>
+  <text x="1500" y="2410" text-anchor="middle" font-family="'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif" font-weight="800" font-size="180" fill="#fff">AI蒸留ラジオ</text>
+  <text x="1500" y="2530" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-weight="300" font-size="80" letter-spacing="16" fill="#888">POWERED BY AI</text>
 </svg>'''
 
 
