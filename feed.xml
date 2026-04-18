@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ -2026-04-12</title><description>Claude Mythos封印の真相、AnthropicのAIチップ自社設計検討、日本国産AI連合設立、宇宙データセンター急増、OpenClaw開発者アクセス禁止事件、神とAI受容の研究、Gen ZとAIの愛憎関係
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-12.mp3" length="29344173" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-12</guid><pubDate>Sun, 12 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:08</itunes:duration></item><item><title>AI蒸留ラジオ -2026-04-13</title><description>トランプ政権のAnthropicのMythosモデル銀行試験利用促進疑惑、MetaのMuse Sparkによるエージェント時代参入、NVIDIAのGemma 4ローカルエージェント最適化、AIコーディング三社戦争、規制業界の決定論的ハルシネーション対策、OpenAIへのストーキング訴訟、インドのAI植民地主義対抗戦略
+    <item><title>AI蒸留ラジオ -2026-04-13</title><description>トランプ政権のAnthropicのMythosモデル銀行試験利用促進疑惑、MetaのMuse Sparkによるエージェント時代参入、NVIDIAのGemma 4ローカルエージェント最適化、AIコーディング三社戦争、規制業界の決定論的ハルシネーション対策、OpenAIへのストーキング訴訟、インドのAI植民地主義対抗戦略
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -73,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-18.mp3" length="29635821" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-18</guid><pubDate>Sat, 18 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:44</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-18.mp3" length="29635821" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-18</guid><pubDate>Sat, 18 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:44</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-19</title><description>RAMショック長期化・Teslaロボタクシー全米展開・Cerebras IPO・AnthropicのClaude DesignとTrump政権接近・RLVRの報酬ゲーミング問題・RLは本当にエージェント能力を拡張するか・物理基板で推論1万倍省エネ・トランスフォーマーの早期コミット現象
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-19.mp3" length="29576109" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-19</guid><pubDate>Sun, 19 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:37</itunes:duration></item></channel>
 </rss>
