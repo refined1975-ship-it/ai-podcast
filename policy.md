@@ -2,12 +2,21 @@
 
 ## Topic Selection (Select 5-8 topics)
 
-Priorities:
+### Step 1: Cluster before selecting
+Multiple sources often report the same event under different headlines.
+Before selecting topics, mentally group all articles by the underlying event.
+Each cluster = one unique story. Select at most ONE article per cluster.
+
+### Step 2: Apply priorities
 1. Research papers and novel approaches (highest)
 2. "What changes because of this" over "what happened"
 3. Product news only if technically interesting
 4. Skip: press releases, events, opinion without data
-5. Deduplicate across sources
+
+### Step 3: Verify no duplicates
+After selecting your 5-8 topics, confirm each covers a distinct event.
+If two selected topics describe the same underlying story, drop one.
+A topic may appear ONLY ONCE in the entire script — never reference the same event in different segments.
 
 ## Sources
 

@@ -64,6 +64,70 @@ def get_source_names() -> str:
     return ", ".join(seen) if seen else "各種ニュースソース"
 
 
+_DEDUP_STOPWORDS = {
+    "this", "that", "with", "from", "have", "will", "more", "also", "into",
+    "than", "they", "their", "what", "about", "which", "says", "said", "using",
+    "after", "first", "could", "other", "would", "there", "been", "being",
+}
+
+
+def _extract_entities(title: str) -> frozenset[str]:
+    """Extract named entities: capitalized words, product names, version tags (e.g. GPT-4, o3)."""
+    # CamelCase / ALL-CAPS words (company/product names)
+    caps = set(re.findall(r'\b[A-Z][a-zA-Z]{1,}\b|\b[A-Z]{2,}\b', title))
+    # Product version patterns: GPT-5, o3, v4, 3.5 etc.
+    versions = set(re.findall(r'\b(?:[A-Za-z]+[-/]?\d+\.?\d*|\d+\.\d+)\b', title))
+    # CJK named-entity-like chunks (3+ chars, not generic words)
+    cjk = set(re.findall(r'[\u4e00-\u9fa5\u30a0-\u30ff\u3040-\u309f]{3,}', title))
+    # Remove overly generic capitalized words
+    generic = {"AI", "The", "New", "How", "Why", "What", "Best", "Top", "Is", "Are", "For"}
+    return frozenset((caps | versions | cjk) - generic)
+
+
+def _title_keywords(title: str) -> frozenset[str]:
+    """Extract meaningful keywords from a title for similarity comparison."""
+    entities = _extract_entities(title)
+    en_words = {w for w in re.findall(r'[a-zA-Z]{5,}', title.lower()) if w not in _DEDUP_STOPWORDS}
+    return frozenset(entities | en_words)
+
+
+def _is_duplicate(a: dict, b: dict) -> bool:
+    """Return True if two articles are likely about the same story."""
+    title_a, title_b = a["title"], b["title"]
+
+    # Rule 1: 2+ shared named entities → same story
+    ent_a = _extract_entities(title_a)
+    ent_b = _extract_entities(title_b)
+    if len(ent_a & ent_b) >= 2:
+        return True
+
+    # Rule 2: keyword Jaccard ≥ 0.30
+    kw_a = _title_keywords(title_a)
+    kw_b = _title_keywords(title_b)
+    union = len(kw_a | kw_b)
+    if union and len(kw_a & kw_b) / union >= 0.30:
+        return True
+
+    return False
+
+
+def deduplicate_articles(articles: list[dict]) -> list[dict]:
+    """Remove semantically duplicate articles (same story, different sources).
+
+    Keeps the first (highest-priority) article for each story cluster.
+    """
+    kept: list[dict] = []
+    removed = 0
+    for article in articles:
+        if any(_is_duplicate(article, seen) for seen in kept):
+            removed += 1
+        else:
+            kept.append(article)
+    if removed:
+        print(f"[dedup] {removed} duplicate article(s) removed, {len(kept)} unique remain", file=sys.stderr)
+    return kept
+
+
 def fetch_news() -> list[dict]:
     """Fetch AI news from RSS feeds."""
     articles = []
@@ -96,7 +160,7 @@ def fetch_news() -> list[dict]:
                 })
         except Exception as e:
             print(f"Warning: Failed to fetch {feed_url}: {e}", file=sys.stderr)
-    return articles
+    return deduplicate_articles(articles)
 
 
 def generate_script(articles: list[dict]) -> list[tuple[str, str]]:
