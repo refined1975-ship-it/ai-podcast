@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ -2026-04-14</title><description>Stanford AIインデックスが示すインサイダーと一般市民の認識格差、OpenAI内部メモに見る競争戦略、長期推論を強化するSPPO論文、エージェント記憶の新設計、ZuckerbergのAIクローン、Altman連続攻撃の社会的意味、VercelのIPO準備を深掘り。
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-14.mp3" length="30431469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-14</guid><pubDate>Tue, 14 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:23</itunes:duration></item><item><title>AI蒸留ラジオ -2026-04-15</title><description>Science Corp初の人間へのBCI植え込み準備、GoogleのSynthID透かし技術の逆工学疑惑、LABBench2によるAI生物学研究評価、Deliberative Alignmentによる推論モデルの安全性向上、LLMにおける人間型作業記憶干渉現象の発見、拡散モデルとアテンションの理論的統一、OpenAIによるパーソナルファイナンスAI企業Hiro買収を深掘り。
+    <item><title>AI蒸留ラジオ -2026-04-15</title><description>Science Corp初の人間へのBCI植え込み準備、GoogleのSynthID透かし技術の逆工学疑惑、LABBench2によるAI生物学研究評価、Deliberative Alignmentによる推論モデルの安全性向上、LLMにおける人間型作業記憶干渉現象の発見、拡散モデルとアテンションの理論的統一、OpenAIによるパーソナルファイナンスAI企業Hiro買収を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -73,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-20.mp3" length="29200941" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-20</guid><pubDate>Mon, 20 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:50</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-20.mp3" length="29200941" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-20</guid><pubDate>Mon, 20 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:50</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-21</title><description>Transformerの推論を位相転移で丸裸にするスペクトル幾何学論文、KVキャッシュのFP16系統誤差問題、MCTSによるエージェントスキル二層最適化、NSA諜報活動にAnthropicのMythos採用、カナダAI登録制度が隠すもの、ファストフードのAI化最前線、日本新聞協会とGoogle AI検索の権利闘争
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-21.mp3" length="30355437" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-21</guid><pubDate>Tue, 21 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:14</itunes:duration></item></channel>
 </rss>
