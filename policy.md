@@ -43,3 +43,10 @@ AI蒸留ラジオ — high-density AI news, no filler, no fluff
 - Real analysis, not scripted Q&A
 - NO standalone filler phrases
 - Opening: date + topic preview, Closing: takeaways + goodnight
+
+## Cross-topic isolation (critical)
+
+Each topic section is self-contained. Once a topic ends, its news content is closed.
+- NEVER copy or paraphrase sentences from a previous topic into a new topic section
+- NEVER use the same specific phrase, quote, or description to refer to two different news items
+- If you want to draw a connection between topics, express it abstractly — do not re-state the earlier topic's wording
