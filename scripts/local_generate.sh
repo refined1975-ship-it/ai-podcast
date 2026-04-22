@@ -25,7 +25,7 @@ if [ ! -f "$PENDING" ]; then
 fi
 
 # 台本の日付チェック
-SCRIPT_DATE=$(python3 -c "import json; d=json.load(open('$PENDING')); print(d.get('date',''))")
+SCRIPT_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; d=json.load(open(os.environ['GUARD_FILE'])); print(d.get('date',''))")
 if [ -n "$SCRIPT_DATE" ] && [ "$SCRIPT_DATE" != "$TODAY" ]; then
     echo "[$(date)] FAIL: Script date ($SCRIPT_DATE) does not match today ($TODAY). Removing stale script."
     rm -f "$PENDING"
@@ -34,7 +34,7 @@ if [ -n "$SCRIPT_DATE" ] && [ "$SCRIPT_DATE" != "$TODAY" ]; then
 fi
 
 # 台本チェック
-CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(x['text']) for x in d['script']))")
+CHARS=$(GUARD_FILE="$PENDING" python3 -c "import json,os; d=json.load(open(os.environ['GUARD_FILE'])); print(sum(len(x['text']) for x in d['script']))")
 echo "[$(date)] Script: ${CHARS} characters"
 if [ "$CHARS" -lt 1000 ]; then
     echo "[$(date)] FAIL: Script too short (${CHARS} chars). Aborting."
@@ -44,7 +44,7 @@ fi
 echo "[$(date)] Found pending script. Generating audio..."
 
 # Claude台本かテンプレートかチェック（dateフィールドがあればClaude生成）
-HAS_DATE=$(python3 -c "import json; d=json.load(open('$PENDING')); print('yes' if d.get('date') else 'no')")
+HAS_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; d=json.load(open(os.environ['GUARD_FILE'])); print('yes' if d.get('date') else 'no')")
 if [ "$HAS_DATE" = "no" ]; then
     echo "[$(date)] SKIP: Template script (not Claude-generated). Removing."
     rm -f "$PENDING"
@@ -74,7 +74,10 @@ if ! grep -q "dair-${TODAY}" "$REPO_DIR/feed.xml"; then
 fi
 echo "[$(date)] Feed: OK (episode ${TODAY} found)"
 
-# 使用済み台本を削除
+# 台本をアーカイブ保存してから削除
+SCRIPTS_ARCHIVE="$REPO_DIR/audio/scripts"
+mkdir -p "$SCRIPTS_ARCHIVE"
+cp "$PENDING" "$SCRIPTS_ARCHIVE/script-${TODAY}.json"
 rm -f "$PENDING"
 
 # commit & push
