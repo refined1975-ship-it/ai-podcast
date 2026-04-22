@@ -20,6 +20,7 @@ tasks:
 - ffmpeg -write_xing 0 削除禁止: ID3ヘッダ不具合対策
 - audioタグ1要素のみ: iOS Safariバックグラウンド再生が壊れる
 - bin/daily.shにexec >> LOG 2>&1を入れるな: stdinが/dev/nullになりclaudeに台本が渡らない
+- claude -p は台本生成専用（fetch-only → pending_script.json まで）。TTS・git・deployをプロンプトに含めるな: 司令塔はdaily.sh、claudeセッション内の副作用を制御不能にしない
 
 ## 負債
 - RemoteTrigger(trig_01DXPBow1Mw9mQqYK2rgoTZR)はdisabled: ローカルLaunchAgentで運用中

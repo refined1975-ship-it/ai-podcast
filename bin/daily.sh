@@ -1,6 +1,9 @@
 #!/bin/bash
 # CAST daily AI radio generation
 # LaunchAgent: com.local.cast-daily (JST 7:00)
+#
+# 司令塔は本スクリプト。claude -p の責務は「pending_script.json 生成のみ」。
+# TTS / git / push は本スクリプトが直接制御する。
 
 set -euo pipefail
 source "$HOME/claude/ops/config.sh"
@@ -28,6 +31,7 @@ cd "$HOME/claude/apps/cast"
 git pull origin main --no-edit >> "$LOG" 2>&1
 
 TODAY=${CAST_DATE:-$(TZ=Asia/Tokyo date +%Y-%m-%d)}
+PENDING="$HOME/claude/apps/cast/scripts/pending_script.json"
 
 # Skip if already generated
 if [ -f "audio/episodes/episode-${TODAY}.mp3" ] && grep -q "dair-${TODAY}" feed.xml 2>/dev/null; then
@@ -36,15 +40,21 @@ if [ -f "audio/episodes/episode-${TODAY}.mp3" ] && grep -q "dair-${TODAY}" feed.
   exit 0
 fi
 
+# Stale pending_script.json (前回の残骸) を除去
+rm -f "$PENDING"
+
 # Load policy
 CAST_POLICY=$(cat "$HOME/claude/apps/cast/policy.md")
 
-# Build prompt file
+# Build prompt file (claude -p に渡すのは「台本生成だけ」)
 PROMPT_FILE=$(mktemp)
 
 cat > "$PROMPT_FILE" <<PROMPT_END
 You are the producer of 'AI蒸留ラジオ'. Working directory is ~/claude/apps/cast.
-Target date for this episode: ${TODAY} (use this date in the script JSON and commit message, not today's actual date).
+Target date for this episode: ${TODAY} (use this date in the script JSON, not today's actual date).
+
+Your ONLY job: produce \`scripts/pending_script.json\`. Do NOT run TTS, git, or deploy.
+The orchestrator (bin/daily.sh) will handle audio generation, commit, and push after you finish.
 
 ## Step 1: Setup
 \`\`\`bash
@@ -71,7 +81,7 @@ Write to \`scripts/pending_script.json\`:
 }
 \`\`\`
 
-## Step 3.5: Validate script (encoding + duplicate topics + repeated phrases)
+## Step 4: Validate script (encoding + duplicate topics + repeated phrases)
 \`\`\`bash
 python3 -c "
 import json, sys, re
@@ -167,20 +177,7 @@ print(f'Script OK: encoding OK, {len(sections)} sections, no repeated content')
 If encoding fails: rewrite the corrupted parts.
 If exit 2: locate the repeated phrases/topics across sections, rewrite those sections to eliminate repetition, then re-run this check.
 
-## Step 4: Generate audio
-\`\`\`bash
-python3 scripts/generate.py --script scripts/pending_script.json
-\`\`\`
-Wait for completion.
-
-## Step 5: Commit and push
-\`\`\`bash
-git add -A
-git commit -m "Add episode for ${TODAY}"
-git push origin main
-\`\`\`
-
-If any step fails, report the error clearly.
+When validation passes, STOP. Do not run TTS, git add, commit, or push. The orchestrator takes over.
 PROMPT_END
 
 # Inject recent episode topics to prevent duplication
@@ -198,7 +195,7 @@ for item in tree.findall('.//item'):
         first = (d.text or '').split('\n')[0].strip()
         if first: topics = [first]
     if topics: print(f\"{m.group()}: {', '.join(topics)}\")
-" 2>/dev/null || echo "[WARN] pstate failed" >&2)
+" 2>/dev/null || echo "")
 
 if [ -n "$RECENT_TOPICS" ]; then
   cat >> "$PROMPT_FILE" <<DEDUP_END
@@ -211,13 +208,80 @@ Only revisit a topic if there is a genuinely NEW development (not the same story
 DEDUP_END
 fi
 
-log "Running claude -p..."
+log "Running claude -p (script generation only)..."
 EXIT_CODE=0
 claude -p --model sonnet --permission-mode bypassPermissions < "$PROMPT_FILE" >> "$LOG" 2>&1 || EXIT_CODE=$?
 
-log "=== END (exit: $EXIT_CODE) ==="
-pstate finish cast-daily "$EXIT_CODE" || echo "[WARN] pstate failed" >&2
-
 if [ $EXIT_CODE -ne 0 ]; then
-  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (exit $EXIT_CODE)" 2>/dev/null || true
+  log "claude -p failed (exit $EXIT_CODE)"
+  pstate finish cast-daily "$EXIT_CODE" || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (claude exit $EXIT_CODE)" 2>/dev/null || true
+  exit $EXIT_CODE
 fi
+
+# pending_script.json が生成されたか確認
+if [ ! -f "$PENDING" ]; then
+  log "ERROR: pending_script.json not found after claude -p"
+  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本未生成)" 2>/dev/null || true
+  exit 1
+fi
+
+# 台本日付が TODAY と一致するか確認（バックフィル含む）
+SCRIPT_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; print(json.load(open(os.environ['GUARD_FILE'])).get('date',''))" 2>/dev/null || echo "")
+if [ -z "$SCRIPT_DATE" ] || [ "$SCRIPT_DATE" != "$TODAY" ]; then
+  log "ERROR: script date mismatch (got '$SCRIPT_DATE', expected '$TODAY')"
+  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本日付不一致)" 2>/dev/null || true
+  exit 1
+fi
+
+log "Generating audio (TTS + feed.xml)..."
+TTS_EXIT=0
+python3 scripts/generate.py --script "$PENDING" >> "$LOG" 2>&1 || TTS_EXIT=$?
+
+if [ $TTS_EXIT -ne 0 ]; then
+  log "TTS failed (exit $TTS_EXIT)"
+  pstate finish cast-daily "$TTS_EXIT" || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (TTS exit $TTS_EXIT)" 2>/dev/null || true
+  exit $TTS_EXIT
+fi
+
+# 生成物確認
+MP3="$HOME/claude/apps/cast/audio/episodes/episode-${TODAY}.mp3"
+if [ ! -f "$MP3" ]; then
+  log "ERROR: MP3 not created at $MP3"
+  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (MP3未生成)" 2>/dev/null || true
+  exit 1
+fi
+if ! grep -q "dair-${TODAY}" feed.xml 2>/dev/null; then
+  log "ERROR: feed.xml does not contain episode dair-${TODAY}"
+  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (feed未更新)" 2>/dev/null || true
+  exit 1
+fi
+
+# 台本をアーカイブして削除
+SCRIPTS_ARCHIVE="$HOME/claude/apps/cast/audio/scripts"
+mkdir -p "$SCRIPTS_ARCHIVE"
+cp "$PENDING" "$SCRIPTS_ARCHIVE/script-${TODAY}.json"
+rm -f "$PENDING"
+
+log "Committing and pushing..."
+GIT_EXIT=0
+{
+  git add -A && \
+  git commit -m "Add episode for ${TODAY}" && \
+  git push origin main
+} >> "$LOG" 2>&1 || GIT_EXIT=$?
+
+if [ $GIT_EXIT -ne 0 ]; then
+  log "git operation failed (exit $GIT_EXIT)"
+  pstate finish cast-daily "$GIT_EXIT" || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (git exit $GIT_EXIT)" 2>/dev/null || true
+  exit $GIT_EXIT
+fi
+
+log "=== END (exit: 0) ==="
+pstate finish cast-daily 0 || echo "[WARN] pstate failed" >&2
