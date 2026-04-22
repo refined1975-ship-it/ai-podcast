@@ -27,7 +27,7 @@ cd "$HOME/claude/apps/cast"
 # Ensure latest code
 git pull origin main --no-edit >> "$LOG" 2>&1
 
-TODAY=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+TODAY=${CAST_DATE:-$(TZ=Asia/Tokyo date +%Y-%m-%d)}
 
 # Skip if already generated
 if [ -f "audio/episodes/episode-${TODAY}.mp3" ] && grep -q "dair-${TODAY}" feed.xml 2>/dev/null; then
@@ -44,6 +44,7 @@ PROMPT_FILE=$(mktemp)
 
 cat > "$PROMPT_FILE" <<PROMPT_END
 You are the producer of 'AI蒸留ラジオ'. Working directory is ~/claude/apps/cast.
+Target date for this episode: ${TODAY} (use this date in the script JSON and commit message, not today's actual date).
 
 ## Step 1: Setup
 \`\`\`bash
@@ -175,7 +176,7 @@ Wait for completion.
 ## Step 5: Commit and push
 \`\`\`bash
 git add -A
-git commit -m "Add episode for \$(TZ=Asia/Tokyo date +%Y-%m-%d)"
+git commit -m "Add episode for ${TODAY}"
 git push origin main
 \`\`\`
 
