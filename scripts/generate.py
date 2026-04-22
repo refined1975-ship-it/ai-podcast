@@ -416,6 +416,16 @@ def main():
         print(json.dumps(articles, ensure_ascii=False, indent=2))
         return
 
+    # If script JSON provides a date, use it (enables backfill for missed episodes)
+    if args.script:
+        try:
+            with open(args.script) as f:
+                _meta = json.load(f)
+            if _meta.get("date"):
+                today = _meta["date"]
+        except Exception:
+            pass
+
     mp3_filename = f"episode-{today}.mp3"
     mp3_path = AUDIO_DIR / mp3_filename
 
