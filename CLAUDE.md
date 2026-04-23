@@ -24,6 +24,3 @@ tasks:
   理由: claudeセッション内の失敗はdaily.shから検知不能。ステップが増えるほど沈黙する障害点が増える。
   2026-04に「claude: command not found」で2日間サイレント失敗した実例あり。
   統合したくなったら: 先にこのCLAUDE.mdの制約を消す理由を書いてからにすること
-
-## 負債
-- RemoteTrigger(trig_01DXPBow1Mw9mQqYK2rgoTZR)はdisabled: ローカルLaunchAgentで運用中
