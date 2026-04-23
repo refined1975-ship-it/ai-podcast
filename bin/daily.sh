@@ -1,6 +1,6 @@
 #!/bin/bash
 # CAST daily AI radio generation
-# LaunchAgent: com.local.cast-daily (JST 7:00)
+# LaunchAgent: com.vault.cast-daily (JST 7:00)
 #
 # 司令塔は本スクリプト。claude -p の責務は「pending_script.json 生成のみ」。
 # TTS / git / push は本スクリプトが直接制御する。
