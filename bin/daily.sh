@@ -236,6 +236,21 @@ if [ -z "$SCRIPT_DATE" ] || [ "$SCRIPT_DATE" != "$TODAY" ]; then
   exit 1
 fi
 
+# 台本文字数チェック（短すぎる台本を弾く）
+SCRIPT_CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(s.get('text','')) for s in d.get('script',[])))" 2>/dev/null) || {
+  log "ERROR: failed to count script chars"
+  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (文字数計測エラー)" 2>/dev/null || true
+  exit 1
+}
+if [ "${SCRIPT_CHARS:-0}" -lt 20000 ]; then
+  log "ERROR: script too short (${SCRIPT_CHARS:-0} chars, minimum 20000)"
+  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本短すぎ ${SCRIPT_CHARS:-0}文字)" 2>/dev/null || true
+  exit 1
+fi
+log "Script length OK: $SCRIPT_CHARS chars"
+
 log "Generating audio (TTS + feed.xml)..."
 TTS_EXIT=0
 python3 scripts/generate.py --script "$PENDING" >> "$LOG" 2>&1 || TTS_EXIT=$?
