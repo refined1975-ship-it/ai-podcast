@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-20</title><description>LLM推論はCoTの表面に宿らないという衝撃的な発見、エージェント蒸留で不安全行動が潜伏転送されるリスク、ハルシネーションをアトラクター動力学で理解する新モデル、NVIDIAの量子最適化AIモデルIsing、CanvaとAnthropicの大型協業、LINEヤフーのAgent iで日本のAIエージェント元年、KVキャッシュ圧縮でシャノン限界を突破する新手法を深掘り。
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-20.mp3" length="29200941" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-20</guid><pubDate>Mon, 20 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:50</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-21</title><description>Transformerの推論を位相転移で丸裸にするスペクトル幾何学論文、KVキャッシュのFP16系統誤差問題、MCTSによるエージェントスキル二層最適化、NSA諜報活動にAnthropicのMythos採用、カナダAI登録制度が隠すもの、ファストフードのAI化最前線、日本新聞協会とGoogle AI検索の権利闘争
+    <item><title>AI蒸留ラジオ - 2026-04-21</title><description>Transformerの推論を位相転移で丸裸にするスペクトル幾何学論文、KVキャッシュのFP16系統誤差問題、MCTSによるエージェントスキル二層最適化、NSA諜報活動にAnthropicのMythos採用、カナダAI登録制度が隠すもの、ファストフードのAI化最前線、日本新聞協会とGoogle AI検索の権利闘争
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -66,5 +59,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-26.mp3" length="28391085" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-26</guid><pubDate>Sun, 26 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:08</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-26.mp3" length="28391085" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-26</guid><pubDate>Sun, 26 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:08</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-27</title><description>2026年4月27日号: MITが発表したLLM訓練効率を最大40%向上させる動的バッチ手法の革新性、規制がドライバーとなって急成長する「AIアシュアランス」新市場の構造、日本政府AIホワイトペーパー2.0が描く「AIで動く国」への構造転換とエージェント対応行政サービスの野心、大学教育現場で顕在化したAI丸投げによる理解度低下問題と課題設計の抜本的見直しの必要性、生成AIネーティブなWave Terminalが体現する次世代開発環境の設計思想と透明性の両立、データサイエンスにおける伝統的機械学習・深層学習・LLMの使い分け基準と流行に流されない技術選択の重要性、権威ある写真コンテストが下した「写真とは何か」の判断とAI時代の創作メディア定義問題、自動化への社会的反発が突きつける人間中心設計への原点回帰と労働外部化の構造を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-27.mp3" length="36433773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-27</guid><pubDate>Mon, 27 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:15:54</itunes:duration></item></channel>
 </rss>

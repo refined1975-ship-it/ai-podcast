@@ -1,12 +1,3 @@
----
-pj: cast
-desc: AI関連ニュース → 台本生成 → Edge TTS → MP3 → GitHub Pages配信
-status: error
-git: true
-entry: bin/daily.sh
-debt: 0
-focus: ""
----
 # CAST
 AI関連ニュース → claude -p 台本生成 → Edge TTS → MP3 → GitHub Pages配信。LaunchAgent(7:00)→bin/daily.sh。
 
@@ -33,3 +24,4 @@ tasks:
   理由: claudeセッション内の失敗はdaily.shから検知不能。ステップが増えるほど沈黙する障害点が増える。
   2026-04に「claude: command not found」で2日間サイレント失敗した実例あり。
   統合したくなったら: 先にこのCLAUDE.mdの制約を消す理由を書いてからにすること
+- claude -p リトライは daily.sh 内で完結させる: 外部cronやLaunchAgent再起動で代替すると「失敗を検知してから」ではなく「時刻が来たら」の再実行になり、同日エピソード重複チェック（already exists）に依存した静かなスキップが増える
