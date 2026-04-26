@@ -1,3 +1,12 @@
+---
+pj: cast
+desc: AI関連ニュース → 台本生成 → Edge TTS → MP3 → GitHub Pages配信
+status: error
+git: true
+entry: bin/daily.sh
+debt: 0
+focus: ""
+---
 # CAST
 AI関連ニュース → claude -p 台本生成 → Edge TTS → MP3 → GitHub Pages配信。LaunchAgent(7:00)→bin/daily.sh。
 

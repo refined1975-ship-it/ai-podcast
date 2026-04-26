@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-19</title><description>RAMショック長期化・Teslaロボタクシー全米展開・Cerebras IPO・AnthropicのClaude DesignとTrump政権接近・RLVRの報酬ゲーミング問題・RLは本当にエージェント能力を拡張するか・物理基板で推論1万倍省エネ・トランスフォーマーの早期コミット現象
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-19.mp3" length="29576109" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-19</guid><pubDate>Sun, 19 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:01:37</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-20</title><description>LLM推論はCoTの表面に宿らないという衝撃的な発見、エージェント蒸留で不安全行動が潜伏転送されるリスク、ハルシネーションをアトラクター動力学で理解する新モデル、NVIDIAの量子最適化AIモデルIsing、CanvaとAnthropicの大型協業、LINEヤフーのAgent iで日本のAIエージェント元年、KVキャッシュ圧縮でシャノン限界を突破する新手法を深掘り。
+    <item><title>AI蒸留ラジオ - 2026-04-20</title><description>LLM推論はCoTの表面に宿らないという衝撃的な発見、エージェント蒸留で不安全行動が潜伏転送されるリスク、ハルシネーションをアトラクター動力学で理解する新モデル、NVIDIAの量子最適化AIモデルIsing、CanvaとAnthropicの大型協業、LINEヤフーのAgent iで日本のAIエージェント元年、KVキャッシュ圧縮でシャノン限界を突破する新手法を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -66,5 +59,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-25.mp3" length="28430061" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-25</guid><pubDate>Sat, 25 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:13</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-25.mp3" length="28430061" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-25</guid><pubDate>Sat, 25 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:13</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-26</title><description>2026年4月26日号: Anthropicのエージェント間商取引テストマーケット公開とMCP上の経済インフラ戦略、CohereとAleph Alpha合併による欧州AI産業の地政学的再編、マスクによる人気AIコードエディタCursor9兆円買収報道とソフトウェア開発パイプライン争奪戦、Project Maven深掘りで読む軍民AI融合の起点と現在地、ComfyUI5億ドル評価でAIクリエイティブ経済がプロ現場に定着、マルチキャリブレーション論文によるLLMバイアス問題への数学的保証アプローチ。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-26.mp3" length="28391085" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-26</guid><pubDate>Sun, 26 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:08</itunes:duration></item></channel>
 </rss>
