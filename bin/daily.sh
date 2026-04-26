@@ -213,7 +213,7 @@ MAX_RETRIES=3
 EXIT_CODE=1
 for attempt in $(seq 1 $MAX_RETRIES); do
   rm -f "$PENDING"
-  if claude -p --model "$CLAUDE_MODEL_SONNET" --permission-mode bypassPermissions < "$PROMPT_FILE" >> "$LOG" 2>&1; then
+  if CLAUDE_PIPELINE_MODE=1 claude -p --model "$CLAUDE_MODEL_SONNET" --permission-mode bypassPermissions < "$PROMPT_FILE" >> "$LOG" 2>&1; then
     EXIT_CODE=0; break
   else
     EXIT_CODE=$?
@@ -231,15 +231,16 @@ if [ $EXIT_CODE -ne 0 ]; then
   bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (claude exit $EXIT_CODE)" 2>/dev/null || true
   exit $EXIT_CODE
 fi
-pstate step cast-daily gen done || true
 
 # pending_script.json が生成されたか確認
 if [ ! -f "$PENDING" ]; then
   log "ERROR: pending_script.json not found after claude -p"
+  pstate step cast-daily gen failed 1 || true
   pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
   bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本未生成)" 2>/dev/null || true
   exit 1
 fi
+pstate step cast-daily gen done || true
 
 # 台本日付が TODAY と一致するか確認（バックフィル含む）
 SCRIPT_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; print(json.load(open(os.environ['GUARD_FILE'])).get('date',''))" 2>/dev/null || echo "")
