@@ -8,13 +8,13 @@
 set -euo pipefail
 source "$HOME/claude/ops/config.sh"
 
-LOG="$HOME/claude/logs/launchd/cast-daily.log"
+LOG="$LAUNCHD_LOGS/com.vault.cast-daily.log"
 mkdir -p "$(dirname "$LOG")"
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" >> "$LOG"; }
 
-export PATH="$HOME/claude/ops/bin/util:$HOME/claude/ops/bin:$PATH"
-SEND="$HOME/claude/apps/mascot/send-sock.sh"
+export PATH="$OPS/bin/util:$OPS/bin:$PATH"
+SEND="$MASCOT_SEND"
 
 log "=== START ==="
 pstate start cast-daily || echo "[WARN] pstate failed" >&2
@@ -25,13 +25,13 @@ touch "$STATUS_FILE"
 trap 'rm -f "$STATUS_FILE" "${PROMPT_FILE:-}"' EXIT
 
 export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:/usr/local/bin:$PATH"
-cd "$HOME/claude/apps/cast"
+cd "$APPS/cast"
 
 # Ensure latest code
 git pull origin main --no-edit >> "$LOG" 2>&1
 
 TODAY=${CAST_DATE:-$(TZ=Asia/Tokyo date +%Y-%m-%d)}
-PENDING="$HOME/claude/apps/cast/scripts/pending_script.json"
+PENDING="$APPS/cast/scripts/pending_script.json"
 
 # Skip if already generated
 if [ -f "audio/episodes/episode-${TODAY}.mp3" ] && grep -q "dair-${TODAY}" feed.xml 2>/dev/null; then
@@ -44,7 +44,7 @@ fi
 rm -f "$PENDING"
 
 # Load policy
-CAST_POLICY=$(cat "$HOME/claude/apps/cast/policy.md")
+CAST_POLICY=$(cat "$APPS/cast/policy.md")
 
 # Build prompt file (claude -p に渡すのは「台本生成だけ」)
 PROMPT_FILE=$(mktemp)
@@ -209,15 +209,29 @@ DEDUP_END
 fi
 
 log "Running claude -p (script generation only)..."
-EXIT_CODE=0
-claude -p --model sonnet --permission-mode bypassPermissions < "$PROMPT_FILE" >> "$LOG" 2>&1 || EXIT_CODE=$?
+MAX_RETRIES=3
+EXIT_CODE=1
+for attempt in $(seq 1 $MAX_RETRIES); do
+  rm -f "$PENDING"
+  if claude -p --model "$CLAUDE_MODEL_SONNET" --permission-mode bypassPermissions < "$PROMPT_FILE" >> "$LOG" 2>&1; then
+    EXIT_CODE=0; break
+  else
+    EXIT_CODE=$?
+    [ $attempt -lt $MAX_RETRIES ] && {
+      log "claude -p attempt $attempt/$MAX_RETRIES failed (exit $EXIT_CODE), retrying in 30s..."
+      sleep 30
+    }
+  fi
+done
 
 if [ $EXIT_CODE -ne 0 ]; then
-  log "claude -p failed (exit $EXIT_CODE)"
+  log "claude -p failed after $MAX_RETRIES attempts (exit $EXIT_CODE)"
+  pstate step cast-daily gen failed "$EXIT_CODE" || true
   pstate finish cast-daily "$EXIT_CODE" || echo "[WARN] pstate failed" >&2
   bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (claude exit $EXIT_CODE)" 2>/dev/null || true
   exit $EXIT_CODE
 fi
+pstate step cast-daily gen done || true
 
 # pending_script.json が生成されたか確認
 if [ ! -f "$PENDING" ]; then
@@ -250,6 +264,7 @@ if [ "${SCRIPT_CHARS:-0}" -lt 20000 ]; then
   exit 1
 fi
 log "Script length OK: $SCRIPT_CHARS chars"
+pstate step cast-daily validate done || true
 
 log "Generating audio (TTS + feed.xml)..."
 TTS_EXIT=0
@@ -263,7 +278,7 @@ if [ $TTS_EXIT -ne 0 ]; then
 fi
 
 # 生成物確認
-MP3="$HOME/claude/apps/cast/audio/episodes/episode-${TODAY}.mp3"
+MP3="$APPS/cast/audio/episodes/episode-${TODAY}.mp3"
 if [ ! -f "$MP3" ]; then
   log "ERROR: MP3 not created at $MP3"
   pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
@@ -278,7 +293,7 @@ if ! grep -q "dair-${TODAY}" feed.xml 2>/dev/null; then
 fi
 
 # 台本をアーカイブして削除
-SCRIPTS_ARCHIVE="$HOME/claude/apps/cast/audio/scripts"
+SCRIPTS_ARCHIVE="$APPS/cast/audio/scripts"
 mkdir -p "$SCRIPTS_ARCHIVE"
 cp "$PENDING" "$SCRIPTS_ARCHIVE/script-${TODAY}.json"
 rm -f "$PENDING"
@@ -293,10 +308,38 @@ GIT_EXIT=0
 
 if [ $GIT_EXIT -ne 0 ]; then
   log "git operation failed (exit $GIT_EXIT)"
+  pstate step cast-daily publish failed "$GIT_EXIT" || true
   pstate finish cast-daily "$GIT_EXIT" || echo "[WARN] pstate failed" >&2
   bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (git exit $GIT_EXIT)" 2>/dev/null || true
   exit $GIT_EXIT
 fi
+pstate step cast-daily publish done || true
 
-log "=== END (exit: 0) ==="
-pstate finish cast-daily 0 || echo "[WARN] pstate failed" >&2
+# Verify: GitHub Pages から MP3 が HTTP 200 で取れるか確認（最大5分待機）
+CAST_URL="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-${TODAY}.mp3"
+log "Verifying deploy at $CAST_URL..."
+pstate step cast-daily verify running || true
+HTTP_CODE="0"
+VERIFY_OK=false
+for _vi in 1 2 3 4 5; do
+  HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}" --max-time 15 "$CAST_URL" 2>/dev/null || echo "0")
+  if [ "$HTTP_CODE" = "200" ]; then
+    VERIFY_OK=true
+    log "Verify OK: HTTP 200 (attempt $_vi)"
+    break
+  fi
+  log "Verify attempt $_vi: HTTP $HTTP_CODE"
+  [ "$_vi" -lt 5 ] && sleep 60
+done
+
+log "=== END ==="
+if [ "$VERIFY_OK" = "true" ]; then
+  pstate step cast-daily verify done || true
+  pstate verify cast-daily || echo "[WARN] pstate failed" >&2
+  bash "$SEND" tsumugi "face:happy\nsay:CAST 完了！配信OK" 2>/dev/null || true
+else
+  log "WARNING: deploy verify failed (HTTP $HTTP_CODE). Episode may appear soon."
+  pstate step cast-daily verify failed || true
+  pstate finish cast-daily 0 || echo "[WARN] pstate failed" >&2
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 配信確認待ち" 2>/dev/null || true
+fi
