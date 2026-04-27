@@ -1,6 +1,9 @@
 # CAST
 AI関連ニュース → claude -p 台本生成 → Edge TTS → MP3 → GitHub Pages配信。LaunchAgent(7:00)→bin/daily.sh。
 
+## 目的
+AIの最前線を毎日インプットしたいが、長文記事を読む集中力が続かない。作業中・移動中に聴いて消化するためにポッドキャスト形式にした。「読む」ではなく「聴いて流す」ことで情報摂取のコストを下げる。
+
 ## ナビ
 entry: bin/daily.sh
 ok: [bin/, scripts/, app.js, style.css, index.html]

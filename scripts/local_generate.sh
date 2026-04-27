@@ -4,7 +4,7 @@
 
 set -e
 
-REPO_DIR="$HOME/claude/cast"
+REPO_DIR="$HOME/claude/cast"  # noqa-hardcode: リモート機向け独立スクリプト（config.sh 利用不可）
 PENDING="$REPO_DIR/scripts/pending_script.json"
 LOG="$REPO_DIR/scripts/generate.log"
 TODAY=$(date +%Y-%m-%d)

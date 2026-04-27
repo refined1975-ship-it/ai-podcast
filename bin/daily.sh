@@ -50,7 +50,7 @@ CAST_POLICY=$(cat "$APPS/cast/policy.md")
 PROMPT_FILE=$(mktemp)
 
 cat > "$PROMPT_FILE" <<PROMPT_END
-You are the producer of 'AI蒸留ラジオ'. Working directory is ~/claude/apps/cast.
+You are the producer of 'AI蒸留ラジオ'. Working directory is ${APPS}/cast.
 Target date for this episode: ${TODAY} (use this date in the script JSON, not today's actual date).
 
 Your ONLY job: produce \`scripts/pending_script.json\`. Do NOT run TTS, git, or deploy.
