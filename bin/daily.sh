@@ -13,6 +13,15 @@ mkdir -p "$(dirname "$LOG")"
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" >> "$LOG"; }
 
+# macOS: GNU timeout not available; portable fallback
+command -v timeout &>/dev/null || timeout() {
+  local secs="$1"; shift
+  "$@" &
+  local _pid=$!
+  ( sleep "$secs" && kill "$_pid" 2>/dev/null ) &
+  wait "$_pid"
+}
+
 export PATH="$OPS/bin/util:$OPS/bin:$PATH"
 SEND="$MASCOT_SEND"
 
@@ -27,11 +36,15 @@ trap 'rm -f "$STATUS_FILE" "${PROMPT_FILE:-}"' EXIT
 export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:/usr/local/bin:$PATH"
 cd "$APPS/cast"
 
-# Ensure latest code
-git pull origin main --no-edit >> "$LOG" 2>&1
-
 TODAY=${CAST_DATE:-$(TZ=Asia/Tokyo date +%Y-%m-%d)}
 PENDING="$APPS/cast/scripts/pending_script.json"
+
+# Cleanup: stale pending_script.json + old pstate running flag (before any logic)
+rm -f "$PENDING"
+pstate reset cast-daily 2>/dev/null || true
+
+# Ensure latest code
+git pull origin main --no-edit >> "$LOG" 2>&1
 
 # Skip if already generated
 if [ -f "audio/episodes/episode-${TODAY}.mp3" ] && grep -q "dair-${TODAY}" feed.xml 2>/dev/null; then
@@ -39,9 +52,6 @@ if [ -f "audio/episodes/episode-${TODAY}.mp3" ] && grep -q "dair-${TODAY}" feed.
   pstate skip cast-daily "already generated today" || echo "[WARN] pstate failed" >&2
   exit 0
 fi
-
-# Stale pending_script.json (前回の残骸) を除去
-rm -f "$PENDING"
 
 # Load policy
 CAST_POLICY=$(cat "$APPS/cast/policy.md")
@@ -171,11 +181,17 @@ if errors:
     print('ERROR: Fix all repeated content before proceeding.', file=sys.stderr)
     sys.exit(2)
 
-print(f'Script OK: encoding OK, {len(sections)} sections, no repeated content')
+total_chars = sum(len(item.get('text', '')) for item in script)
+if total_chars < 25000:
+    print(f'ERROR: script too short ({total_chars} chars, minimum 25000). Each exchange must be substantive — expand every utterance significantly.', file=sys.stderr)
+    sys.exit(3)
+
+print(f'Script OK: encoding OK, {len(sections)} sections, no repeated content, {total_chars} chars')
 "
 \`\`\`
 If encoding fails: rewrite the corrupted parts.
 If exit 2: locate the repeated phrases/topics across sections, rewrite those sections to eliminate repetition, then re-run this check.
+If exit 3: the script is too short. Go back and expand EVERY utterance — both female and male lines should be substantive paragraphs, not one-liners. Target 25,000–35,000 chars total. Then re-run this check.
 
 When validation passes, STOP. Do not run TTS, git add, commit, or push. The orchestrator takes over.
 PROMPT_END
@@ -208,63 +224,65 @@ Only revisit a topic if there is a genuinely NEW development (not the same story
 DEDUP_END
 fi
 
-log "Running claude -p (script generation only)..."
-MAX_RETRIES=3
-EXIT_CODE=1
-for attempt in $(seq 1 $MAX_RETRIES); do
-  rm -f "$PENDING"
-  if CLAUDE_PIPELINE_MODE=1 claude -p --model "$CLAUDE_MODEL_SONNET" --permission-mode bypassPermissions < "$PROMPT_FILE" >> "$LOG" 2>&1; then
-    EXIT_CODE=0; break
-  else
-    EXIT_CODE=$?
-    [ $attempt -lt $MAX_RETRIES ] && {
-      log "claude -p attempt $attempt/$MAX_RETRIES failed (exit $EXIT_CODE), retrying in 30s..."
-      sleep 30
-    }
-  fi
-done
+STOCK="$APPS/cast/scripts/stock_script.json"
 
-if [ $EXIT_CODE -ne 0 ]; then
-  log "claude -p failed after $MAX_RETRIES attempts (exit $EXIT_CODE)"
-  pstate step cast-daily gen failed "$EXIT_CODE" || true
-  pstate finish cast-daily "$EXIT_CODE" || echo "[WARN] pstate failed" >&2
-  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (claude exit $EXIT_CODE)" 2>/dev/null || true
-  exit $EXIT_CODE
+# 台本生成を1回試みる。失敗/短すぎ → stock 昇格 → stock なし → 1回リトライ
+try_generate() {
+  rm -f "$PENDING"
+  if ! timeout 1500 bash -c "CLAUDE_PIPELINE_MODE=1 claude -p --model \"$CLAUDE_MODEL_SONNET\" --permission-mode bypassPermissions < \"$PROMPT_FILE\"" >> "$LOG" 2>&1; then
+    return 1
+  fi
+  if [ ! -f "$PENDING" ]; then return 1; fi
+  SCRIPT_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; print(json.load(open(os.environ['GUARD_FILE'])).get('date',''))" 2>/dev/null || echo "")
+  if [ -z "$SCRIPT_DATE" ] || [ "$SCRIPT_DATE" != "$TODAY" ]; then return 1; fi
+  SCRIPT_CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(s.get('text','')) for s in d.get('script',[])))" 2>/dev/null || echo "0")
+  if [ "${SCRIPT_CHARS:-0}" -lt 20000 ]; then return 1; fi
+  return 0
+}
+
+log "Running claude -p (script generation only)..."
+GEN_OK=false
+SCRIPT_CHARS=0
+USED_STOCK=false
+
+if try_generate; then
+  GEN_OK=true
+  log "Script OK: ${SCRIPT_CHARS} chars"
+else
+  log "Script generation failed or too short (${SCRIPT_CHARS:-0} chars)"
+  if [ -f "$STOCK" ]; then
+    log "Promoting stock script (date → $TODAY)..."
+    python3 -c "
+import json
+with open('$STOCK') as f:
+    d = json.load(f)
+d['date'] = '$TODAY'
+with open('$PENDING', 'w') as f:
+    json.dump(d, f, ensure_ascii=False, indent=2)
+" >> "$LOG" 2>&1
+    SCRIPT_CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(s.get('text','')) for s in d.get('script',[])))" 2>/dev/null || echo "0")
+    log "Stock promoted: ${SCRIPT_CHARS} chars"
+    GEN_OK=true
+    USED_STOCK=true
+  else
+    log "No stock. Retrying in 30s..."
+    sleep 30
+    if try_generate; then
+      GEN_OK=true
+      log "Retry succeeded: ${SCRIPT_CHARS} chars"
+    fi
+  fi
 fi
 
-# pending_script.json が生成されたか確認
-if [ ! -f "$PENDING" ]; then
-  log "ERROR: pending_script.json not found after claude -p"
+if [ "$GEN_OK" != "true" ]; then
+  log "Script generation failed (no stock, retry failed, last: ${SCRIPT_CHARS:-0} chars)"
   pstate step cast-daily gen failed 1 || true
   pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
-  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本未生成)" 2>/dev/null || true
+  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本生成・stock なし)" 2>/dev/null || true
   exit 1
 fi
+
 pstate step cast-daily gen done || true
-
-# 台本日付が TODAY と一致するか確認（バックフィル含む）
-SCRIPT_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; print(json.load(open(os.environ['GUARD_FILE'])).get('date',''))" 2>/dev/null || echo "")
-if [ -z "$SCRIPT_DATE" ] || [ "$SCRIPT_DATE" != "$TODAY" ]; then
-  log "ERROR: script date mismatch (got '$SCRIPT_DATE', expected '$TODAY')"
-  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
-  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本日付不一致)" 2>/dev/null || true
-  exit 1
-fi
-
-# 台本文字数チェック（短すぎる台本を弾く）
-SCRIPT_CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(s.get('text','')) for s in d.get('script',[])))" 2>/dev/null) || {
-  log "ERROR: failed to count script chars"
-  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
-  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (文字数計測エラー)" 2>/dev/null || true
-  exit 1
-}
-if [ "${SCRIPT_CHARS:-0}" -lt 20000 ]; then
-  log "ERROR: script too short (${SCRIPT_CHARS:-0} chars, minimum 20000)"
-  pstate finish cast-daily 1 || echo "[WARN] pstate failed" >&2
-  bash "$SEND" zundamon "face:surprised\nsay:CAST 失敗 (台本短すぎ ${SCRIPT_CHARS:-0}文字)" 2>/dev/null || true
-  exit 1
-fi
-log "Script length OK: $SCRIPT_CHARS chars"
 pstate step cast-daily validate done || true
 
 log "Generating audio (TTS + feed.xml)..."
@@ -344,3 +362,36 @@ else
   pstate finish cast-daily 0 || echo "[WARN] pstate failed" >&2
   bash "$SEND" zundamon "face:surprised\nsay:CAST 配信確認待ち" 2>/dev/null || true
 fi
+
+# --- 次弾装填（バックグラウンド）---
+# 配信完了後、明日の日付で台本を先生成して stock_script.json に保存する。
+# 次回実行時に今日の生成が失敗/短すぎた場合の即時フォールバックとして使用。
+# nohup + disown で親プロセスから完全に切り離す（macOS互換）。
+STOCK_TOMORROW=$(TZ=Asia/Tokyo date -v+1d +%Y-%m-%d)
+STOCK_PROMPT=$(mktemp)
+sed "s|${TODAY}|${STOCK_TOMORROW}|g" "$PROMPT_FILE" > "$STOCK_PROMPT" 2>/dev/null || true
+nohup bash -c '{
+  set +euo pipefail
+  _log() { echo "$(date '+%Y-%m-%d %H:%M:%S') [stock] $*" >> "$LOG"; }
+  _log "次弾装填開始 (date=${STOCK_TOMORROW})"
+  rm -f "$PENDING"
+  if timeout 1500 bash -c "CLAUDE_PIPELINE_MODE=1 claude -p --model \"$CLAUDE_MODEL_SONNET\" --permission-mode bypassPermissions < \"$STOCK_PROMPT\"" >> "$LOG" 2>&1; then
+    if [ -f "$PENDING" ]; then
+      _sc=$(python3 -c "import json; d=json.load(open(\"$PENDING\")); print(sum(len(s.get(\"text\",\"\")) for s in d.get(\"script\",[])))" 2>/dev/null || echo "0")
+      if [ "${_sc:-0}" -ge 20000 ]; then
+        mv "$PENDING" "$STOCK"
+        _log "装填完了: ${_sc}chars → stock_script.json"
+      else
+        _log "短すぎ (${_sc}chars)、stock 更新せず"
+        rm -f "$PENDING"
+      fi
+    else
+      _log "pending_script.json 未生成"
+    fi
+  else
+    _log "claude -p 失敗、次回実行まで stock なし"
+    rm -f "$PENDING"
+  fi
+  rm -f "$STOCK_PROMPT"
+}' > /dev/null 2>&1 &
+disown
