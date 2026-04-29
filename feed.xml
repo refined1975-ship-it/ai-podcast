@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-21</title><description>Transformerの推論を位相転移で丸裸にするスペクトル幾何学論文、KVキャッシュのFP16系統誤差問題、MCTSによるエージェントスキル二層最適化、NSA諜報活動にAnthropicのMythos採用、カナダAI登録制度が隠すもの、ファストフードのAI化最前線、日本新聞協会とGoogle AI検索の権利闘争
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-21.mp3" length="30355437" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-21</guid><pubDate>Tue, 21 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:03:14</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-23</title><description>エリザベス・ウォーレンのAI金融危機警告、DeezerのAI音楽検出パラドックス（97%聞き分け不能vs85%詐欺判定）、AI創薬候補の選別スタートアップ、GoogleとThinking Machines Lab数十億ドル契約、Easy Samples論文（自己進化LLM）、ARES自動赤チーム修復システム、SonyのAI卓球ロボットがプロ選手を撃破。
+    <item><title>AI蒸留ラジオ - 2026-04-23</title><description>エリザベス・ウォーレンのAI金融危機警告、DeezerのAI音楽検出パラドックス（97%聞き分け不能vs85%詐欺判定）、AI創薬候補の選別スタートアップ、GoogleとThinking Machines Lab数十億ドル契約、Easy Samples論文（自己進化LLM）、ARES自動赤チーム修復システム、SonyのAI卓球ロボットがプロ選手を撃破。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -66,5 +59,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-27.mp3" length="36433773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-27</guid><pubDate>Mon, 27 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:15:54</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-27.mp3" length="36433773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-27</guid><pubDate>Mon, 27 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:15:54</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-29</title><description>DeepMind創設者David Silverの人間データ不要AI企業（11億ドル調達）、Claudeがクリエイティブツール（Photoshop/Blender/Ableton）に直接統合、Musk対Altman裁判初日でMuskの矛盾が露呈、Anthropic拒否後のGoogleによるPentagon AI拡大、Canvaが「パレスチナ」を自動置換した検閲問題、バチカンがAI説教を禁じた理由と霊的労働の意味、KARL論文による知識境界認識の幻覚抑制技術、Math Takes Two論文が示すAIの協調的推論能力の課題を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-29.mp3" length="31213677" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-29</guid><pubDate>Wed, 29 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:05:01</itunes:duration></item></channel>
 </rss>

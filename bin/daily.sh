@@ -183,7 +183,15 @@ if errors:
 
 total_chars = sum(len(item.get('text', '')) for item in script)
 if total_chars < 25000:
-    print(f'ERROR: script too short ({total_chars} chars, minimum 25000). Each exchange must be substantive — expand every utterance significantly.', file=sys.stderr)
+    deficit = 25000 - total_chars
+    n = len(script)
+    per_entry = (deficit // n + 1) if n else deficit
+    male_lines = [i for i, item in enumerate(script) if item.get('speaker') == 'male']
+    print(f'ERROR: script too short ({total_chars}/25000 chars). '
+          f'Deficit: {deficit} chars across {n} entries ({per_entry} chars/entry on average). '
+          f'There are {len(male_lines)} male lines — prioritize expanding those with technical depth, concrete examples, and real-world implications. '
+          f'Each male utterance should be a substantive paragraph (300+ chars). '
+          f'Rewrite pending_script.json with all entries expanded, then re-run this validation.', file=sys.stderr)
     sys.exit(3)
 
 print(f'Script OK: encoding OK, {len(sections)} sections, no repeated content, {total_chars} chars')
@@ -191,7 +199,7 @@ print(f'Script OK: encoding OK, {len(sections)} sections, no repeated content, {
 \`\`\`
 If encoding fails: rewrite the corrupted parts.
 If exit 2: locate the repeated phrases/topics across sections, rewrite those sections to eliminate repetition, then re-run this check.
-If exit 3: the script is too short. Go back and expand EVERY utterance — both female and male lines should be substantive paragraphs, not one-liners. Target 25,000–35,000 chars total. Then re-run this check.
+If exit 3: read the error message carefully — it shows the exact deficit in chars, the per-entry expansion target, and how many male lines to prioritize. Rewrite pending_script.json: expand every male utterance to 300+ chars with technical depth and concrete examples, then expand female lines to match. Re-run this check after rewriting.
 
 When validation passes, STOP. Do not run TTS, git add, commit, or push. The orchestrator takes over.
 PROMPT_END

@@ -31,6 +31,7 @@ tasks:
 - claude -p リトライは daily.sh 内で完結させる: 外部cronやLaunchAgent再起動で代替すると「失敗を検知してから」ではなく「時刻が来たら」の再実行になり、同日エピソード重複チェック（already exists）に依存した静かなスキップが増える
 - 生成フロー（2026-04-28改訂）: try_generate()1回 → 失敗/短すぎ → stock昇格(date上書き) → stockなし → 30s後リトライ1回 → 全滅でexit 1。配信完了後バックグラウンドで翌日stock生成
 - Step 4バリデーションに文字数チェックあり(exit 3 / 25,000文字未満): Claudeが生成中に自己修正するためのフィードバックループ。daily.shの20,000文字チェックと二重になっているが役割が違う（プロンプト内=Claude自己修正用、daily.sh側=最終安全弁）。どちらも消すな
+- Step 4 exit 3フィードバックは数値付き（不足字数・per-entry目標・male行数）: 抽象的指示ではClaudeが展開量を判断できない。2026-04-28/29の2日連続失敗から得た教訓
 
 ## 負債
 - generate.py 502行・多モード混在: --fetch-only/--script/no-args の3モードが1ファイルに同居。モード分岐は意図的設計（daily.shが直接呼び分ける）。test:null・本番ポッドキャストのため大規模分割は凍結。Promote: バグ修正で触るとき。s Divergent Change: 許容済み・再検査スルー
