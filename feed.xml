@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-24</title><description>2026年4月24日号: Metaが全社員の10%削減とAI投資の矛盾、OpenAI GPT-5.5リリースとスーパーアプリ戦略、AnthropicのMythos機密AIセキュリティ侵害の衝撃、AIサイエンティストは科学的推論をしていないという新論文、MicrosoftのOfficeへのバイブワーキング統合、コンピュータ使用エージェントの危害回復メカニズム研究、敵対的環境がエージェントAIを誤誘導する問題を深掘り。
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-24.mp3" length="27998637" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-24</guid><pubDate>Fri, 24 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:58:19</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-25</title><description>2026年4月25日号: GoogleがAnthropicに最大4兆円投資の衝撃、DeepSeekが最新AIモデルをプレビュー公開、MetaがAmazon AIチップ数百万個と契約、SpaceXがAI向け独自GPU製造に着手、ClaudeがSpotify・Uber Eatsなどに直接接続開始、LLMのツール過剰依存現象の解明、CPU上で乗算なし推論を実現するFairyFuse論文を深掘り。
+    <item><title>AI蒸留ラジオ - 2026-04-25</title><description>2026年4月25日号: GoogleがAnthropicに最大4兆円投資の衝撃、DeepSeekが最新AIモデルをプレビュー公開、MetaがAmazon AIチップ数百万個と契約、SpaceXがAI向け独自GPU製造に着手、ClaudeがSpotify・Uber Eatsなどに直接接続開始、LLMのツール過剰依存現象の解明、CPU上で乗算なし推論を実現するFairyFuse論文を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -73,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-30.mp3" length="28266093" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-30</guid><pubDate>Thu, 30 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:58:53</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-30.mp3" length="28266093" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-30</guid><pubDate>Thu, 30 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:58:53</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-05-01</title><description>2026年5月1日号: DreamProver論文による定理証明エージェントの自己進化と補題ライブラリの転用可能性、Stripe LinkによるAIエージェント向けデジタルウォレットとエージェント経済インフラ、Anthropic 9000億ドル評価額ラウンド間近と基盤モデル市場の成長期待、Legal AI分野でのLegora対Harveyの競争激化と垂直市場AI戦略、Musk証言によるxAIのOpenAIモデル流用問題と裁判への影響、OpenAIがCyberモデルへのアクセスを制限した二重基準とセキュリティモデルのデュアルユース問題、KVキャッシュ削減の情報理論的統一目的関数による推論効率化、Spotifyの「Verified by Spotify」バッジ導入とAI生成音楽との差別化戦略を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-01.mp3" length="31607469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-01</guid><pubDate>Fri, 01 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:05:50</itunes:duration></item></channel>
 </rss>
