@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-25</title><description>2026年4月25日号: GoogleがAnthropicに最大4兆円投資の衝撃、DeepSeekが最新AIモデルをプレビュー公開、MetaがAmazon AIチップ数百万個と契約、SpaceXがAI向け独自GPU製造に着手、ClaudeがSpotify・Uber Eatsなどに直接接続開始、LLMのツール過剰依存現象の解明、CPU上で乗算なし推論を実現するFairyFuse論文を深掘り。
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-25.mp3" length="28430061" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-25</guid><pubDate>Sat, 25 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:13</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-26</title><description>2026年4月26日号: Anthropicのエージェント間商取引テストマーケット公開とMCP上の経済インフラ戦略、CohereとAleph Alpha合併による欧州AI産業の地政学的再編、マスクによる人気AIコードエディタCursor9兆円買収報道とソフトウェア開発パイプライン争奪戦、Project Maven深掘りで読む軍民AI融合の起点と現在地、ComfyUI5億ドル評価でAIクリエイティブ経済がプロ現場に定着、マルチキャリブレーション論文によるLLMバイアス問題への数学的保証アプローチ。
+    <item><title>AI蒸留ラジオ - 2026-04-26</title><description>2026年4月26日号: Anthropicのエージェント間商取引テストマーケット公開とMCP上の経済インフラ戦略、CohereとAleph Alpha合併による欧州AI産業の地政学的再編、マスクによる人気AIコードエディタCursor9兆円買収報道とソフトウェア開発パイプライン争奪戦、Project Maven深掘りで読む軍民AI融合の起点と現在地、ComfyUI5億ドル評価でAIクリエイティブ経済がプロ現場に定着、マルチキャリブレーション論文によるLLMバイアス問題への数学的保証アプローチ。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -73,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-01.mp3" length="31607469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-01</guid><pubDate>Fri, 01 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:05:50</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-01.mp3" length="31607469" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-01</guid><pubDate>Fri, 01 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:05:50</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-05-02</title><description>2026年5月2日号: AIで生成された政策文書が発覚して撤回された事例と透明性の問題、米国防総省がNvidia・Microsoft・AWSと機密ネットワークへのAI導入契約、複合ジェイルブレイク攻撃を体系化したセキュリティ研究、AppleがMacのAI需要に予想外の驚きを見せた市場動向、キリスト教コンテンツクリエイターがFiverrでAI生成動画を外注する構造と労働の変容、機械学習パイプラインを自動生成して自己修復するマルチエージェントシステムの論文、AIの拒否行動を幾何学的に再編成する敵対的ファインチューニング手法、コンピュータ操作エージェントをステップレベルで最適化する研究を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-02.mp3" length="28609773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-02</guid><pubDate>Sat, 02 May 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:36</itunes:duration></item></channel>
 </rss>
