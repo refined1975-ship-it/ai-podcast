@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-26</title><description>2026年4月26日号: Anthropicのエージェント間商取引テストマーケット公開とMCP上の経済インフラ戦略、CohereとAleph Alpha合併による欧州AI産業の地政学的再編、マスクによる人気AIコードエディタCursor9兆円買収報道とソフトウェア開発パイプライン争奪戦、Project Maven深掘りで読む軍民AI融合の起点と現在地、ComfyUI5億ドル評価でAIクリエイティブ経済がプロ現場に定着、マルチキャリブレーション論文によるLLMバイアス問題への数学的保証アプローチ。
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-26.mp3" length="28391085" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-26</guid><pubDate>Sun, 26 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:08</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-27</title><description>2026年4月27日号: MITが発表したLLM訓練効率を最大40%向上させる動的バッチ手法の革新性、規制がドライバーとなって急成長する「AIアシュアランス」新市場の構造、日本政府AIホワイトペーパー2.0が描く「AIで動く国」への構造転換とエージェント対応行政サービスの野心、大学教育現場で顕在化したAI丸投げによる理解度低下問題と課題設計の抜本的見直しの必要性、生成AIネーティブなWave Terminalが体現する次世代開発環境の設計思想と透明性の両立、データサイエンスにおける伝統的機械学習・深層学習・LLMの使い分け基準と流行に流されない技術選択の重要性、権威ある写真コンテストが下した「写真とは何か」の判断とAI時代の創作メディア定義問題、自動化への社会的反発が突きつける人間中心設計への原点回帰と労働外部化の構造を深掘り。
+    <item><title>AI蒸留ラジオ - 2026-04-27</title><description>2026年4月27日号: MITが発表したLLM訓練効率を最大40%向上させる動的バッチ手法の革新性、規制がドライバーとなって急成長する「AIアシュアランス」新市場の構造、日本政府AIホワイトペーパー2.0が描く「AIで動く国」への構造転換とエージェント対応行政サービスの野心、大学教育現場で顕在化したAI丸投げによる理解度低下問題と課題設計の抜本的見直しの必要性、生成AIネーティブなWave Terminalが体現する次世代開発環境の設計思想と透明性の両立、データサイエンスにおける伝統的機械学習・深層学習・LLMの使い分け基準と流行に流されない技術選択の重要性、権威ある写真コンテストが下した「写真とは何か」の判断とAI時代の創作メディア定義問題、自動化への社会的反発が突きつける人間中心設計への原点回帰と労働外部化の構造を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -73,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-02.mp3" length="28609773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-02</guid><pubDate>Sat, 02 May 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:36</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-02.mp3" length="28609773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-02</guid><pubDate>Sat, 02 May 2026 14:00:00 GMT</pubDate><itunes:duration>00:59:36</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-05-03</title><description>2026年5月3日号: Metaのヒューマノイドロボット買収とAIエージェントの物理世界展開戦略、アカデミー賞がAI生成俳優・脚本を対象外にした創作の定義問題、スタンフォード報告書が警告する学習データ枯渇とAI業界の構造的リスク、実験室の光学装置が自律的に科学発見を進めるクローズドループシステム、本番環境でLLMを安全に移行するためのEnd-of-Lifeフレームワーク、Replit CEOが語るCursor買収騒動と開発ツール市場の競争、Geminiの車載AIアシスタント展開とプラットフォーム拡大戦略、MicrosoftがWord内に法務AIエージェントを組み込む専門職変容の動きを深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-03.mp3" length="29209965" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-03</guid><pubDate>Sun, 03 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:51</itunes:duration></item></channel>
 </rss>
