@@ -6,6 +6,7 @@ AIの最前線を毎日インプットしたいが、長文記事を読む集中
 
 ## ナビ
 entry: bin/daily.sh
+stack: Shell + Python 3(venv, edge-tts) + HTML/CSS/JS
 ok: [bin/, scripts/, app.js, style.css, index.html]
 skip: [audio/, feed.xml, artwork.jpg]
 test: null

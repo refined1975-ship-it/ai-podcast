@@ -24,14 +24,7 @@
     <itunes:type>episodic</itunes:type>
     <itunes:image href="https://refined1975-ship-it.github.io/ai-podcast/artwork.jpg" />
     <atom:link href="https://refined1975-ship-it.github.io/ai-podcast/feed.xml" rel="self" type="application/rss+xml" />
-    <item><title>AI蒸留ラジオ - 2026-04-27</title><description>2026年4月27日号: MITが発表したLLM訓練効率を最大40%向上させる動的バッチ手法の革新性、規制がドライバーとなって急成長する「AIアシュアランス」新市場の構造、日本政府AIホワイトペーパー2.0が描く「AIで動く国」への構造転換とエージェント対応行政サービスの野心、大学教育現場で顕在化したAI丸投げによる理解度低下問題と課題設計の抜本的見直しの必要性、生成AIネーティブなWave Terminalが体現する次世代開発環境の設計思想と透明性の両立、データサイエンスにおける伝統的機械学習・深層学習・LLMの使い分け基準と流行に流されない技術選択の重要性、権威ある写真コンテストが下した「写真とは何か」の判断とAI時代の創作メディア定義問題、自動化への社会的反発が突きつける人間中心設計への原点回帰と労働外部化の構造を深掘り。
-
-【クレジット】
-音声: Microsoft Edge TTS
-ニュースソース: Google News, TechCrunch, The Verge, arXiv
-制作: Claude Code による自動生成
-
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-04-27.mp3" length="36433773" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-04-27</guid><pubDate>Mon, 27 Apr 2026 14:00:00 GMT</pubDate><itunes:duration>01:15:54</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-04-29</title><description>DeepMind創設者David Silverの人間データ不要AI企業（11億ドル調達）、Claudeがクリエイティブツール（Photoshop/Blender/Ableton）に直接統合、Musk対Altman裁判初日でMuskの矛盾が露呈、Anthropic拒否後のGoogleによるPentagon AI拡大、Canvaが「パレスチナ」を自動置換した検閲問題、バチカンがAI説教を禁じた理由と霊的労働の意味、KARL論文による知識境界認識の幻覚抑制技術、Math Takes Two論文が示すAIの協調的推論能力の課題を深掘り。
+    <item><title>AI蒸留ラジオ - 2026-04-29</title><description>DeepMind創設者David Silverの人間データ不要AI企業（11億ドル調達）、Claudeがクリエイティブツール（Photoshop/Blender/Ableton）に直接統合、Musk対Altman裁判初日でMuskの矛盾が露呈、Anthropic拒否後のGoogleによるPentagon AI拡大、Canvaが「パレスチナ」を自動置換した検閲問題、バチカンがAI説教を禁じた理由と霊的労働の意味、KARL論文による知識境界認識の幻覚抑制技術、Math Takes Two論文が示すAIの協調的推論能力の課題を深掘り。
 
 【クレジット】
 音声: Microsoft Edge TTS
@@ -73,5 +66,12 @@
 ニュースソース: Google News, TechCrunch, The Verge, arXiv
 制作: Claude Code による自動生成
 
-※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-03.mp3" length="29209965" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-03</guid><pubDate>Sun, 03 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:51</itunes:duration></item></channel>
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-03.mp3" length="29209965" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-03</guid><pubDate>Sun, 03 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:00:51</itunes:duration></item><item><title>AI蒸留ラジオ - 2026-05-04</title><description>2026年5月4日号: ハーバード研究でAIが救急診断で医師2人を上回った医療AIの実用性と協働モデル、人気ミーム作者の著作権訴訟が問うAI学習データ使用の法的枠組み、noteが生成AI流入で成功する一方メディアがゼロクリック問題に苦しむ対照的状況、中国での労働者AI代替訴訟勝訴が示す適正手続きの重要性、日本の従業員がAIよりキャリア不確実性を恐れる構造的問題、天体物理学者Loebが説く高品質データの科学的価値、自己学習AIエージェントの継続学習能力とリスク管理の必要性を深掘り。
+
+【クレジット】
+音声: Microsoft Edge TTS
+ニュースソース: Google News, TechCrunch, The Verge, arXiv
+制作: Claude Code による自動生成
+
+※この番組はAIによる自動生成です。内容の正確性は保証されません。情報の利用は自己責任でお願いします。</description><enclosure url="https://refined1975-ship-it.github.io/ai-podcast/audio/episodes/episode-2026-05-04.mp3" length="30917037" type="audio/mpeg" /><guid isPermaLink="false">dair-2026-05-04</guid><pubDate>Mon, 04 May 2026 14:00:00 GMT</pubDate><itunes:duration>01:04:24</itunes:duration></item></channel>
 </rss>
