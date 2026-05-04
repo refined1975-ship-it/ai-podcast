@@ -1,6 +1,6 @@
 # CAST Policy — Topic Selection & Script Style
 
-## Topic Selection (Select 5-8 topics)
+## Topic Selection (Select 3-5 topics)
 
 ### Step 1: Cluster before selecting
 Multiple sources often report the same event under different headlines.
@@ -14,7 +14,7 @@ Each cluster = one unique story. Select at most ONE article per cluster.
 4. Skip: press releases, events, opinion without data
 
 ### Step 3: Verify no duplicates
-After selecting your 5-8 topics, confirm each covers a distinct event.
+After selecting your 3-5 topics, confirm each covers a distinct event.
 If two selected topics describe the same underlying story, drop one.
 A topic may appear ONLY ONCE in the entire script — never reference the same event in different segments.
 
@@ -38,8 +38,8 @@ AI蒸留ラジオ — high-density AI news, no filler, no fluff
 
 ## Script Requirements
 
-- 25,000〜35,000文字（~60 min at +15% speed）
-- Each topic: 8〜12 exchanges of substantive dialogue
+- 12,000〜17,000文字（~30 min at +15% speed）
+- Each topic: 5〜8 exchanges of substantive dialogue
 - Real analysis, not scripted Q&A
 - NO standalone filler phrases
 - Opening: date + topic preview, Closing: takeaways + goodnight

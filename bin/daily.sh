@@ -182,8 +182,8 @@ if errors:
     sys.exit(2)
 
 total_chars = sum(len(item.get('text', '')) for item in script)
-if total_chars < 25000:
-    deficit = 25000 - total_chars
+if total_chars < 12000:
+    deficit = 12000 - total_chars
     n = len(script)
     per_entry = (deficit // n + 1) if n else deficit
     male_lines = [i for i, item in enumerate(script) if item.get('speaker') == 'male']
@@ -244,7 +244,7 @@ try_generate() {
   SCRIPT_DATE=$(GUARD_FILE="$PENDING" python3 -c "import json,os; print(json.load(open(os.environ['GUARD_FILE'])).get('date',''))" 2>/dev/null || echo "")
   if [ -z "$SCRIPT_DATE" ] || [ "$SCRIPT_DATE" != "$TODAY" ]; then return 1; fi
   SCRIPT_CHARS=$(python3 -c "import json; d=json.load(open('$PENDING')); print(sum(len(s.get('text','')) for s in d.get('script',[])))" 2>/dev/null || echo "0")
-  if [ "${SCRIPT_CHARS:-0}" -lt 20000 ]; then return 1; fi
+  if [ "${SCRIPT_CHARS:-0}" -lt 10000 ]; then return 1; fi
   return 0
 }
 
@@ -386,7 +386,7 @@ nohup bash -c '{
   if timeout 1500 bash -c "CLAUDE_PIPELINE_MODE=1 claude -p --model \"$CLAUDE_MODEL_SONNET\" --permission-mode bypassPermissions < \"$STOCK_PROMPT\"" >> "$LOG" 2>&1; then
     if [ -f "$PENDING" ]; then
       _sc=$(python3 -c "import json; d=json.load(open(\"$PENDING\")); print(sum(len(s.get(\"text\",\"\")) for s in d.get(\"script\",[])))" 2>/dev/null || echo "0")
-      if [ "${_sc:-0}" -ge 20000 ]; then
+      if [ "${_sc:-0}" -ge 10000 ]; then
         mv "$PENDING" "$STOCK"
         _log "装填完了: ${_sc}chars → stock_script.json"
       else
